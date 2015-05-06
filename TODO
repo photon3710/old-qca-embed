@@ -1,0 +1,24 @@
+This file is a running list of things that should be done in the code.
+
+Embedding algorithm:
+	- Longest chains in limited adjacency embedding correspond to cases when a
+	wire is being embedded from both end without considering that they must
+	meet up at some point. A number of possible fixes.
+		- post processing: forget old qubits and paths for a chain. Try to find
+		a new path from the start and end of the wire that has a number of
+		qubits >= the number of cells in the chain.
+		- during embedding: something like a simulataneous A*, adding a term
+		to the multiSourceSearch algorithm that penalizes wire ends moving
+		away from one another (might end up bunching at the center)
+	- Astar extender for multiSourceSearch algorithm (non-essential)
+		
+Model conversion:
+	- finish generation of vertex-models from optimized solution: internal and
+	external couplers.
+	- Add in LP-relaxation with rounding (non-essential).
+
+Parsing:
+	- Current implementation does not separate circuit into clock regions:
+		- group cells into clock regions (either list or dict)
+		- keep track of outputs/inputs form/to each clock region
+

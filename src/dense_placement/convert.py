@@ -26,7 +26,7 @@ _adj = {}       # adjacency dict for the chain structure
 _chains = {}    # end-point keyed dict of lists of chain nodes
 _end_occ = {}   # end_point keyed dict of lists of local chains
 
-LP_FILE = '../../sols/lp-sol.lp'
+LP_FILE = '../sols/lp-sol.lp'
 DEL_LP_FILE = True
 WRITE_MAX = True
 
@@ -166,8 +166,8 @@ def extendChain(ch, start=True):
         # assert _end_occ consistency
         n = len(_end_occ[ch[i]])
         try:
-            assert(n in [1, 2], 'Lost track of _end_occ: %d' % n)
-            assert(ch in _end_occ[ch[i]], 'End point lost')
+            assert n in [1, 2], 'Lost track of _end_occ: %d' % n
+            assert ch in _end_occ[ch[i]], 'End point lost'
         except AssertionError:
             return ch
 

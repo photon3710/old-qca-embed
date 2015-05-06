@@ -1,0 +1,33 @@
+This directory contains all scripts for running the Dense Placement embedding
+algorithm.
+
+#------------------------------------------------------------------------------
+Scripts:
+
+embed.py: 	main script which runs the embedding, calls routing.py sub-routines
+routing.py: handles qubit chain routing between assigned qubits in embedding
+
+convert: 	converts qubit-chain model to vertex-model representation for ease
+			of parameter assignment and also for comparison against D-Wave's
+			heuristic algorithm.
+			
+			
+#------------------------------------------------------------------------------
+
+Calling the embedding algorithm is done in two stages:
+
+	1. 	Parameters which depend only on the processor layout are set. These 
+		parameters are taken to be constant for each attempted embedding of a
+		circuit or set of circuits and hence only need to be initialise once.
+		
+		1a: First call setChimeraSize(M, N, L) for an MxN grid of tile with 2L
+		qubits per tile (L each for horizontal and vertical). 
+		
+		1b: For a list each of disable qubits and couplers (linear indexed) get
+		the coupler flags using cf = getCouplerFlags(dis_coup, dis_qbits). 
+		
+		1c: Set (or reset) the qbit adjacency dict for the chimera graph using
+		setQbitAdj(cf).
+		
+	2.	To run a trial of the embedding algorithm, you need the source graph
+		as an adjacency dict.

@@ -77,7 +77,7 @@ MAX_SEARCH_COUNT = 3    # maximum number of additional times to run the
                         # multisource search algorithm before failure asserted
 
 VERBOSE = False
-WRITE = True
+WRITE = False
 
 WRITE_DIR = '../sols/temp/'
 WRITE_PATH = None
@@ -168,6 +168,7 @@ def portSol(ext=None):
 
 # checked
 def initLog():
+    '''Initialise log file'''
     global _fp_log
 
     if LOGGING:
@@ -176,6 +177,7 @@ def initLog():
 
 # checked
 def killLog():
+    '''Close log file'''
     global _fp_log
 
     if LOGGING:
@@ -184,6 +186,7 @@ def killLog():
 
 # checked
 def log(txt):
+    '''Log if LOGGING flag'''
     global _fp_log
 
     if LOGGING:
@@ -387,8 +390,7 @@ def getCouplerFlags(dis_coup=[], dis_qbits=[]):
 
 # checked, possibly include pro-processing for wire attraction
 def initialize(source):
-    '''
-    '''
+    '''Initialise embedding solver'''
 
     global _source, M, N, L
 
@@ -409,8 +411,7 @@ def initialize(source):
 
 # checked
 def reset():
-    '''
-    '''
+    '''Reset all trial specific parameters'''
 
     global _numAdj, _numAdj2, _qbitAdj, _tile_occ, _source
     global _reserved, _cells, _qubits, _qbit_paths, _paths, _vacancy
@@ -527,9 +528,7 @@ def setTileOcc(qbits, dec=False):
 
 # checked, complete
 def setVacancy():
-    '''
-    update and set _vacancy
-    '''
+    '''update and set _vacancy'''
 
     global _tile_occ, _vacancy
 
@@ -697,8 +696,7 @@ def firstQubit(cell, M1=False):
 
 # checked
 def assignQubit(cell, qbit):
-    '''
-    '''
+    '''Assign a qubit to QCA cell'''
 
     global _numAdj, _source, _qubits, _cells
     global _cell_flags, _qbit_flags, _qbitAdj
@@ -731,8 +729,8 @@ def assignQubit(cell, qbit):
 
 # unchecked
 def assignPaths(paths):
-    '''
-    '''
+    '''Flag and assign routed paths'''
+
     global _qbit_flags, _qbit_paths, _paths, _cells
 
     reserve_check = set()
@@ -888,7 +886,8 @@ def forgetQubit(qbit, check=True):
 
 # unchecked
 def forgetPath(key, check=True):
-    '''
+    '''Free up qubits of the path with the given key and update appropriate
+    flags. If check==True, also check qubit reservations for nearby qubits.
     '''
     global _paths, _qbit_flags, _qbit_paths
 
@@ -920,8 +919,7 @@ def forgetPath(key, check=True):
 
 # checked, modify cost scheme if necessary
 def extend_Dijkstra(src):
-    '''
-    '''
+    '''Generator for Dijkstra search extension'''
     global _qbitAdj, _qbit_flags, M, N
 
     BIG_VAL = 2*len(_qbitAdj)   # large value for initial node cost
@@ -1048,7 +1046,7 @@ def multiSourceSearch(srcs, adj, forb=set(), typ='Dijkstra'):
 
 # checked
 def checkSol():
-    ''' '''
+    '''Check that embedding solution is valid'''
     global _qubits, _paths, _source, _qbitAdj
 
     log('\n\nChecking Solution...\n\n')
@@ -1088,10 +1086,10 @@ def checkSol():
         raise Exception('Qubit shared among multiple paths')
 
 
-# always changing
+# always changing... tentatively done
 def suitability(qbit, srcs=[]):
-    '''
-    '''
+    '''Determine the effective number of free adjacent qubits. Effected by the
+    number of mutual free qubits for in-tile assigned qubits'''
     global _reserved, _qbit_flags, _numAdj, _cells, L
 
     s = 0
@@ -1278,7 +1276,8 @@ def placeCell(cell):
 
 # unchecked
 def availableSeams(qbits):
-    ''' returns a list of possible seam to split about a given qubit '''
+    ''' returns a list of possible seams to split given a list of qbits. Seams
+    are candidates if they are next to one of the qubits and can be'''
 
     global _vacancy, N, M, _tile_occ
 

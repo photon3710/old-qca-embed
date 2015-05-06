@@ -1,12 +1,20 @@
-from DensePlacement.embed import denseEmbed, setChimeraSize, \
+#---------------------------------------------------------
+# Name: dense_test.py
+# Purpose: Test code for the dense placement algorithm
+# Author:	Jacob Retallick
+# Created: 08.02.2014
+# Last Modified: 06.05.2015
+#---------------------------------------------------------
+
+from dense_placement.embed import denseEmbed, setChimeraSize, \
     getCouplerFlags, setQbitAdj
+from dense_placement.convert import convertToModels
 
 from build import createInv, createMAJ, createWire
 from auxil import generateAdjDict, adjToCoef, coefToConn, \
     convertToNearestNeighbour
 
 from parse_qca import parseQCAFile
-from convert import convertToModels
 from random import random
 import sys
 
@@ -17,8 +25,8 @@ ndis = 0
 dis_coup = []
 dis_qbits = list(set(map(int, [random()*M*N*L*2 for _ in xrange(ndis)])))
 
-typ = 'inv'
-NEAREST = False
+typ = 'maj'
+NEAREST = True
 
 setChimeraSize(M, N, L)
 CF = getCouplerFlags(dis_coup, dis_qbits)
@@ -54,12 +62,13 @@ if False:
 
 print '\n\n'
 i, j = 1, 0
-while j < 1:
-    print 'RUNNING TRIAL %d :: %d\n\n' % (i, j)
+while j < 5:
+    print '\n\nRUNNING TRIAL %d :: %d\n\n' % (i, j)
     i += 1
     try:
         cell_map, paths = denseEmbed(source)
-        print sum(map(lambda x: len(x)-2, paths.values()))
+        n_ex = sum(map(lambda x: len(x)-2, paths.values()))
+        print 'Extra qubits needed: %d' % n_ex
         j += 1
     except Exception as e:
         #print e.message

@@ -1,14 +1,14 @@
 #!usr/bin/python
 
-import sys,time
+import sys
 import numpy as np
 import scipy.sparse as sp
 
 ADJ_RADIUS = 1.5
-TYPEMAP =  {'QCAD_CELL_NORMAL'    :0,\
-            'QCAD_CELL_OUTPUT'    :1,\
-            'QCAD_CELL_FIXED'    :2,\
-            'QCAD_CELL_INPUT'    :3}
+TYPEMAP = {'QCAD_CELL_NORMAL': 0,
+           'QCAD_CELL_OUTPUT': 1,
+           'QCAD_CELL_FIXED': 2,
+           'QCAD_CELL_INPUT': 3}
 
 # physical parameters
 EK0 = 300e-3        # kink energy in eV

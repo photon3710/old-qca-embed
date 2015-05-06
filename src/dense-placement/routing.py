@@ -1,4 +1,10 @@
-#!bin/usr/python
+#---------------------------------------------------------
+# Name: routing.py
+# Purpose: Code for routing qubit chains between assigned qubits.
+# Author:	Jacob Retallick
+# Created: 06.08.2014
+# Last Modified: 06.05.2015
+#---------------------------------------------------------
 
 from math import exp
 from copy import deepcopy as cp
@@ -7,7 +13,7 @@ from copy import deepcopy as cp
 
 # VARIABLES
 
-_paths = []         # potential paths during
+_paths = []         # potential paths during each iteration
 _allPaths = {}      # path for each route
 _curr_used = {}     # flag for path inclusion of a qbit (by any path)
 
@@ -196,9 +202,13 @@ def bestPath(route, reserved):
     return output
 
 
+# not implemented
 def writeToFile(writePath):
     ''' '''
     global _allPaths
+
+    print('writeToFile for routing is not implemented')
+    return
 
     fp = open(writePath, 'a')    # append to file
     fp.write('new:\n')

@@ -1,3 +1,11 @@
+#---------------------------------------------------------
+# Name: embed.py
+# Purpose: Main loop for running Dense Placement embedding.
+# Author:	Jacob Retallick
+# Created: 06.08.2014
+# Last Modified: 06.05.2015
+#---------------------------------------------------------
+
 #######################################################################
 ### IMPORTS ###
 
@@ -8,7 +16,7 @@ from random import random, shuffle
 from copy import copy as cp
 import numpy as np
 import sys
-import os
+import os   # for avoiding file overwriting
 import re
 import itertools
 
@@ -19,7 +27,7 @@ import routing as Routing
 ### GLOBALS ###
 
 # default Chimera parameters
-M = 8   # number of tile rows
+M = 8       # number of tile rows
 N = 8	  # number of tile columns
 L = 4	  # number of qubits per half tile
 
@@ -45,25 +53,25 @@ _cell_flags = {}    # source keyed flag dict for each cell
 _qbit_flags = {}    # 4-tup keyed flag dict for each qubit
 _reserved = {}      # source keyed dict of sets of reserved adjacent qubits
 
-_paths = {}	       # source keyed dict of all paths in the embedding
+_paths = {}	     # source keyed dict of all paths in the embedding
 
 
 ### handles
 
-FIRST_PROB_POW = 4         # power for firstCell probabilistic method
+FIRST_PROB_POW = 4          # power for firstCell probabilistic method
 FIRST_QBIT_SIG = .3         # gaussian dist. tile select standard dev.
 FIRST_QBIT_ATTEMPTS = 5     # number of attempts to find starting qbit
 
 # search costs
-IN_TILE_COST = 1
-OUT_TILE_COST = 1.9
-EDGE_REP_COST = 0.5
+IN_TILE_COST = 1        # cost for a new qubit in the same tile
+OUT_TILE_COST = 1.9     # cost for a new qubit outside the same tile
+EDGE_REP_COST = 0.5     # linear cost for tiles closer to the processor edge
 
 # seam ranking weights
-SEAM_QBIT_COST = 30     # cost for an assigned qbit to a broken qbit
-SEAM_PATH_COST = 40     # cost for breaking a path
+SEAM_QBIT_COST = 3      # cost for an assigned qbit to a broken qbit
+SEAM_PATH_COST = 4      # cost for breaking a path
 SEAM_EXT_COST = 0       # cost for each extended connection
-SEAM_DIST_COST = 30      # cost for the distance between the seam and av. qbit
+SEAM_DIST_COST = 3      # cost for the distance between the seam and av. qbit
 
 MAX_SEARCH_COUNT = 3    # maximum number of additional times to run the
                         # multisource search algorithm before failure asserted
@@ -73,7 +81,8 @@ WRITE = True
 
 WRITE_DIR = '../sols/temp/'
 WRITE_PATH = None
-ROUTE_PATH = 'routing' if WRITE else ''
+#ROUTE_PATH = 'routing' if WRITE else ''
+ROUTE_PATH = None
 PORT_PATH = '../bin/temp/port'
 
 

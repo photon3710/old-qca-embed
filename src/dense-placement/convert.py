@@ -3,9 +3,9 @@
 # Purpose:  Conversion between qbits and paths to vertex models: minimizes
 #           maximum model size
 #
-# Author:   Jake
-#
-# Created:  20/02/2015
+# Author:   Jacob Retallick
+# Created:  20.02.2015
+# Last modified: 06.05.2015
 #------------------------------------------------------------------------------
 
 #from scipy.optimize import linprog     # need scipy.__version__ >= 0.15.1

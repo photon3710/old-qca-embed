@@ -28,10 +28,16 @@ dis_qbits = list(set(map(int, [random()*M*N*L*2 for _ in xrange(ndis)])))
 typ = 'inv'
 NEAREST = True
 
+# initialise chimera parameters
 setChimeraSize(M, N, L)
+
+# get coupler flags
 CF = getCouplerFlags(dis_coup, dis_qbits)
+
+# set up chimera qbit adjacency dict
 setQbitAdj(CF)
 
+# read from file or use default generator to build QCA circuit
 try:
     fname = sys.argv[1]
     cells, spacing = parseQCAFile(fname)
@@ -74,4 +80,6 @@ while j < 5:
         #print e.message
         pass
 
+
+# run conversion method to minimize maximum model size
 models, max_model = convertToModels(paths, cell_map)

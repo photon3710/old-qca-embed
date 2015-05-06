@@ -21,4 +21,23 @@ Parsing:
 	- Current implementation does not separate circuit into clock regions:
 		- group cells into clock regions (either list or dict)
 		- keep track of outputs/inputs form/to each clock region
+	- Not sure if the ambiguity of drivers without the polarization as the name
+	has been fixed yet.
+
+Formatting:
+
+
+- Given a QCA Circuit the work flow should be as follows:
+	1. Generate a set of clock regions and inputs/ouputs between clock 
+	regions.
+	2. For each clock region, find the best possible embedding (smallest
+	vertex model size).
+	3. For each relevant set of inputs to the circuit, set up the first
+	clock zone and run the annealing process.
+	4. Based on the output(s) from the first clock zone,
+	
+Question: Is it better to run each clock zone based on the outputs from the
+previous, or is it better to treat each clock zone as independent and correlate
+the output from the full system by matching output/input conditions at each
+junction?
 

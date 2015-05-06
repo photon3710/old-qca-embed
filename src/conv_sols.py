@@ -90,7 +90,7 @@ def loadSol(fname):
     return sol_dict
 
 
-def main(fname):
+def runFile(fname):
     ''' '''
 
     sol_dict = loadSol(fname)
@@ -118,7 +118,7 @@ def runDirectory(dname):
         os.mkdir(write_dir)
 
     for fname in fnames:
-        models, max_model = main(dname + fname)
+        models, max_model = runFile(dname + fname)
         if not models is None:
             # write model to file
             fn = write_dir + fname

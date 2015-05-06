@@ -26,9 +26,9 @@ _adj = {}       # adjacency dict for the chain structure
 _chains = {}    # end-point keyed dict of lists of chain nodes
 _end_occ = {}   # end_point keyed dict of lists of local chains
 
-LP_FILE = '../sols/lp-sol.lp'
-DEL_LP_FILE = True
-WRITE_MAX = True
+LP_FILE = '../sols/lp-sol.lp'   # temp file for lp problem file
+DEL_LP_FILE = True              # delete temp file after use
+WRITE_MAX = True                # write larger model size in header
 
 
 ####################################################################
@@ -155,7 +155,8 @@ def addNode(ch, start=True):
 
 
 def extendChain(ch, start=True):
-    ''' '''
+    '''Extend either the start or end of a chain by one node. Merge two
+    connecting chains if connected by a node with 2 connections (wire)'''
 
     global _chains, _end_occ, _adj
 
@@ -182,7 +183,7 @@ def extendChain(ch, start=True):
 
 
 def extendChains(chains):
-    ''''''
+    '''Extend all chains until they terminate at high adjacency nodes '''
 
     global _adj, _chains, _end_occ
 
@@ -226,7 +227,7 @@ def extendChains(chains):
 
 
 def formatProblem(extended_chains, qbits):
-    ''' '''
+    '''Construct a problem dict object with useful values'''
 
     global _adj
 
@@ -307,10 +308,11 @@ def allocateChain(seq_n, seq_m, seq_left, chain, chain_qb, models):
 
 
 def solToModels(sol, prob_dict):
-    ''' '''
+    '''Convert optimized solution parameters to vertex-models'''
 
     global _adj
-
+    
+    # assign parameters to shorter variable names
     qbits = prob_dict['qbits']  # cell -> qbit map
     keys = prob_dict['keys']    # chain keys
     chains = prob_dict['chains']    # list of nodes in each chain
@@ -406,7 +408,7 @@ def solveLP(prob_dict, verbose):
 
     ### set up problem
 
-    ## parameters
+    ## parameter dicts for LpVariable generation
     if USE_LPR:
         par_dict = {'lowBound': 0, 'upBound': None, 'cat': pulp.LpContinuous}
     else:
@@ -414,9 +416,10 @@ def solveLP(prob_dict, verbose):
 
     mu_dict = {'lowBound': 0, 'upBound': None, 'cat': pulp.LpContinuous}
 
-    n = [pulp.LpVariable('n%d' % i, **par_dict) for i in xrange(K)]
-    m = [pulp.LpVariable('m%d' % i, **par_dict) for i in xrange(K)]
-    mu = pulp.LpVariable('mu', **mu_dict)
+    # variable to be optimized
+    n = [pulp.LpVariable('n%d' % i, **par_dict) for i in xrange(K)]  # starts
+    m = [pulp.LpVariable('m%d' % i, **par_dict) for i in xrange(K)]  # end
+    mu = pulp.LpVariable('mu', **mu_dict)   # max model size
 
     ## objective function
 
@@ -435,6 +438,7 @@ def solveLP(prob_dict, verbose):
         prob += M[i] - n[i] - m[i] <= mu*N[i]
         prob += n[i] + m[i] <= M[i] - N[i]
 
+    # chain without internal nodes must have n+m==M
     for i in prob_dict['ind_none']:
         prob += n[i] + m[i] == M[i]
 
@@ -505,6 +509,10 @@ def convertToModels(paths, qbits, verbose=False):
                     'int_coup'  := list of internal couplers in model
                     'ext_coup'  := cell keyed dict of external couplers to
                                    adjacent cell models.
+
+    CURRENT IMPLEMENTATION ONLY CONSIDERS model['qbits'] AS THAT IS ALL THAT
+    IS NEEDED TO MATCH OUTPUT FROM D-WAVE'S HEURISTIC ALGORITHM. SHOULD
+    IMPLEMENT COUPLERS FOR COMPLETENESS.
     '''
 
     global _adj

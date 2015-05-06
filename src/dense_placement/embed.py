@@ -1392,7 +1392,7 @@ def genSeamDict(seam, adj_qbits):
         tg = target_qb(qb)
         # throw exception unless target qbit exists and is suitable
         try:
-            assert(len(_qbitAdj[tg]) >= len(_source[_cells[qb]]))
+            assert len(_qbitAdj[tg]) >= len(_source[_cells[qb]])
         except:
             qbit_confs.append(qb)
 
@@ -1536,8 +1536,7 @@ def movePath(key, path, tg_fn):
 
 # unchecked
 def openSeam(sm, dr, cost, qbits, paths, qb_conf, pt_conf, tg_fn, par):
-    ''' recursively open seam
-    '''
+    ''' recursively open seam'''
 
     global _cells, _numAdj, M, N, L, _qbitAdj, _cell_flags, _qubits, _reserved
     ## erase conflicts

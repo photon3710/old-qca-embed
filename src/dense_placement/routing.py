@@ -28,18 +28,18 @@ _hist_cost = {}        # persistent cost
 
 # CONSTANTS
 
-COST_BASE = 1.0
-COST_HISTORY = 1.0
-COST_BREAK = 9999
-COST_DISABLED = int(1e8)
+COST_BASE = 1.0             # base cost for adding a new qubit
+COST_HISTORY = 1.0          # increment in hist_cost for a qubit being shared
+COST_BREAK = 9999           # cost threshold for detecting a failed routing
+COST_DISABLED = int(1e8)    # arbitrary high cost for disabled qubit
 
-INC_SHARING = 1.0
-BREAK_SHARING = 20
-RATE_FORGET = 0.001
+INC_SHARING = 1.0       # increment in sharing cost per iteration
+BREAK_SHARING = 20      # threshold for sharing cost to assert failed routing
+RATE_FORGET = 0.001     # forget rate for hist_cost: as exp(-RATE_FORGET)
 
 
 def initialize(qbitAdj):
-    ''' '''
+    '''Initialise routing solver. Only call once per embedding trial'''
     global _paths, _allPaths, _curr_used, _is_shared
     global _is_used, _active, _qbitAdj, _hist_cost, _sharing_cost
 
@@ -59,7 +59,7 @@ def initialize(qbitAdj):
 
 
 def resetFlags():
-    ''' '''
+    '''Reset is_shared and is_used flags'''
 
     global _is_shared, _is_used, _allPaths
 
@@ -69,7 +69,7 @@ def resetFlags():
 
 
 def updateFlags():
-    ''' '''
+    '''Update is_shared and is_used flags'''
     global _allPaths, _is_shared, _is_used
 
     resetFlags()
@@ -94,7 +94,7 @@ def updateFlags():
 
 
 def resetData():
-    ''' '''
+    '''Reset trial specific data'''
     global _paths, _is_used, _qbitAdj, _sharing_cost
 
     _is_used = {k: 0 for k in _qbitAdj}
@@ -103,7 +103,7 @@ def resetData():
 
 
 def genHist():
-    ''' '''
+    '''Update hist_cost'''
     global _hist_cost, _is_shared
 
     for key in _hist_cost:
@@ -114,7 +114,7 @@ def genHist():
 
 
 def sortPaths():
-    ''' '''
+    '''Sort paths by cost '''
     global _paths
 
     if len(_paths) == 0:
@@ -126,7 +126,7 @@ def sortPaths():
 
 
 def nodeCost(qbit):
-    ''' '''
+    '''Calculate cost of given node'''
     global _is_used, _is_shared, _hist_cost, _sharing_cost
 
     if _is_shared[qbit]:
@@ -136,7 +136,7 @@ def nodeCost(qbit):
 
 
 def expandPath():
-    ''' '''
+    '''Expand lowest cost path'''
     global _paths, _is_used, _curr_used, _qbitAdj
 
     # select expanding path, remove path from list of paths
@@ -162,7 +162,7 @@ def expandPath():
 
 
 def bestPath(route, reserved):
-    ''' '''
+    '''Determine the best path for the given route'''
     global _paths, _curr_used
 
     if route[0] == route[1]:
@@ -204,7 +204,7 @@ def bestPath(route, reserved):
 
 # not implemented
 def writeToFile(writePath):
-    ''' '''
+    '''Write routing status to file'''
     global _allPaths
 
     print('writeToFile for routing is not implemented')
@@ -219,6 +219,7 @@ def writeToFile(writePath):
 
 
 def enableQubits(qbits):
+    '''enable given qubits if inactive'''
     global _active, _hist_cost
 
     #print('\n***Enabling qubits: \n%s\n' % str(qbits))
@@ -230,7 +231,7 @@ def enableQubits(qbits):
 
 
 def disableQubits(qbits):
-    ''' '''
+    '''disable given qubits if active'''
     global _active, _hist_cost
 
     #print('\n***Disabling qubits: \n%s\n' % str(qbits))
@@ -242,7 +243,7 @@ def disableQubits(qbits):
 
 
 def resetQubits():
-    ''' '''
+    '''Reset active status and hist_cost of all qubits'''
 
     for qbit in _active:
         _active[qbit] = True
@@ -250,30 +251,32 @@ def resetQubits():
 
 
 def getPaths():
-    ''' '''
+    '''Return paths'''
     return _allPaths
 
 
 def Routing(routes, reserved, writePath=''):
-    ''' '''
+    '''Run routing algorithm. Find the lowest cost mutual paths for the list
+    of routes to facilitate. Special consideration is given to reserved qubits
+    so they must be passed as an input.'''
     global _flags, _paths, _allPaths, _sharing_cost, _curr_used
 
     ## Reset Data
     resetData()
 
-    ## Check that route is valid
-
     ## Negotiated Congestion and Routing
 
     _is_shared[_is_shared.keys()[0]] = True    # set loop condition
 
-    rt_set = set([it for rt in routes for it in rt])
-    res_qbits = set()
+    rt_set = set([it for rt in routes for it in rt])    # list of route qbits
+    res_qbits = set()   # set of reserved qubits.
     for s in reserved.values():
         res_qbits.update(s)
 
+    # enable end qubits for routes
     enableQubits(rt_set)
 
+    # iteration loop
     while any(_is_shared.values()):
 
         # release flags
@@ -281,7 +284,7 @@ def Routing(routes, reserved, writePath=''):
         _allPaths = {}
 
         for i in xrange(len(routes)):
-            # mark off all end-points
+            # mark off all end-points as used
             for rt in routes:
                 _curr_used[rt[0]] = True
                 _curr_used[rt[1]] = True
@@ -291,7 +294,7 @@ def Routing(routes, reserved, writePath=''):
             _allPaths[i] = bestPath(rt, reserved)  # find best path for route
             updateFlags()                # update flags
 
-        genHist()
+        genHist()   # update hist_cost
 
         # write to file
         if writePath:

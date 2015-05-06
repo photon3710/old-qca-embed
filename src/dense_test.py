@@ -27,6 +27,7 @@ dis_qbits = list(set(map(int, [random()*M*N*L*2 for _ in xrange(ndis)])))
 
 typ = 'inv'
 NEAREST = True
+NUM_SUCCESS = 5
 
 # initialise chimera parameters
 setChimeraSize(M, N, L)
@@ -67,8 +68,9 @@ if False:
 
 
 print '\n\n'
-i, j = 1, 0
-while j < 5:
+i = 1   # iteration count
+j = 0   # number of successful embeddings
+while j < NUM_SUCCESS:
     print '\n\nRUNNING TRIAL %d :: %d\n\n' % (i, j)
     i += 1
     try:

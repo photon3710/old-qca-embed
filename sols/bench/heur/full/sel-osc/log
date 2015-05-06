@@ -1,0 +1,404 @@
+Source file: ../dat/bench_circ/selectable_oscillator_bench
+Timestamp: 2015-03-09 14:53:17
+Trials: 100
+Successes: 100
+
+Solution 0
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution0
+time (seconds): 0.15764
+
+Solution 1
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution1
+time (seconds): 0.171263
+
+Solution 2
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution2
+time (seconds): 0.156882
+
+Solution 3
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution3
+time (seconds): 0.256634
+
+Solution 4
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution4
+time (seconds): 0.202964
+
+Solution 5
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution5
+time (seconds): 0.218815
+
+Solution 6
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution6
+time (seconds): 0.203395
+
+Solution 7
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution7
+time (seconds): 0.173535
+
+Solution 8
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution8
+time (seconds): 0.179298
+
+Solution 9
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution9
+time (seconds): 0.150833
+
+Solution 10
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution10
+time (seconds): 0.145989
+
+Solution 11
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution11
+time (seconds): 0.292627
+
+Solution 12
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution12
+time (seconds): 0.271314
+
+Solution 13
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution13
+time (seconds): 0.168845
+
+Solution 14
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution14
+time (seconds): 0.168612
+
+Solution 15
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution15
+time (seconds): 0.186709
+
+Solution 16
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution16
+time (seconds): 0.184115
+
+Solution 17
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution17
+time (seconds): 0.173992
+
+Solution 18
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution18
+time (seconds): 0.229484
+
+Solution 19
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution19
+time (seconds): 0.223703
+
+Solution 20
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution20
+time (seconds): 0.191006
+
+Solution 21
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution21
+time (seconds): 0.206818
+
+Solution 22
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution22
+time (seconds): 0.161844
+
+Solution 23
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution23
+time (seconds): 0.180646
+
+Solution 24
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution24
+time (seconds): 0.246706
+
+Solution 25
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution25
+time (seconds): 0.243338
+
+Solution 26
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution26
+time (seconds): 0.214486
+
+Solution 27
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution27
+time (seconds): 0.222711
+
+Solution 28
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution28
+time (seconds): 0.214052
+
+Solution 29
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution29
+time (seconds): 0.221552
+
+Solution 30
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution30
+time (seconds): 0.24226
+
+Solution 31
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution31
+time (seconds): 0.18547
+
+Solution 32
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution32
+time (seconds): 0.201022
+
+Solution 33
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution33
+time (seconds): 0.294408
+
+Solution 34
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution34
+time (seconds): 0.200159
+
+Solution 35
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution35
+time (seconds): 0.197982
+
+Solution 36
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution36
+time (seconds): 0.228265
+
+Solution 37
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution37
+time (seconds): 0.175032
+
+Solution 38
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution38
+time (seconds): 0.224335
+
+Solution 39
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution39
+time (seconds): 0.199568
+
+Solution 40
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution40
+time (seconds): 0.222249
+
+Solution 41
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution41
+time (seconds): 0.252194
+
+Solution 42
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution42
+time (seconds): 0.207776
+
+Solution 43
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution43
+time (seconds): 0.286054
+
+Solution 44
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution44
+time (seconds): 0.257324
+
+Solution 45
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution45
+time (seconds): 0.219571
+
+Solution 46
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution46
+time (seconds): 0.160963
+
+Solution 47
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution47
+time (seconds): 0.216348
+
+Solution 48
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution48
+time (seconds): 0.221529
+
+Solution 49
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution49
+time (seconds): 0.33273
+
+Solution 50
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution50
+time (seconds): 0.207795
+
+Solution 51
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution51
+time (seconds): 0.236774
+
+Solution 52
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution52
+time (seconds): 0.1668
+
+Solution 53
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution53
+time (seconds): 0.193383
+
+Solution 54
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution54
+time (seconds): 0.274849
+
+Solution 55
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution55
+time (seconds): 0.174551
+
+Solution 56
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution56
+time (seconds): 0.23082
+
+Solution 57
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution57
+time (seconds): 0.204768
+
+Solution 58
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution58
+time (seconds): 0.156837
+
+Solution 59
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution59
+time (seconds): 0.197463
+
+Solution 60
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution60
+time (seconds): 0.253822
+
+Solution 61
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution61
+time (seconds): 0.201678
+
+Solution 62
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution62
+time (seconds): 0.247044
+
+Solution 63
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution63
+time (seconds): 0.200448
+
+Solution 64
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution64
+time (seconds): 0.182115
+
+Solution 65
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution65
+time (seconds): 0.244949
+
+Solution 66
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution66
+time (seconds): 0.205448
+
+Solution 67
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution67
+time (seconds): 0.259729
+
+Solution 68
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution68
+time (seconds): 0.290943
+
+Solution 69
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution69
+time (seconds): 0.183319
+
+Solution 70
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution70
+time (seconds): 0.201051
+
+Solution 71
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution71
+time (seconds): 0.181435
+
+Solution 72
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution72
+time (seconds): 0.253552
+
+Solution 73
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution73
+time (seconds): 0.209414
+
+Solution 74
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution74
+time (seconds): 0.199729
+
+Solution 75
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution75
+time (seconds): 0.211369
+
+Solution 76
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution76
+time (seconds): 0.197653
+
+Solution 77
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution77
+time (seconds): 0.189009
+
+Solution 78
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution78
+time (seconds): 0.190705
+
+Solution 79
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution79
+time (seconds): 0.212674
+
+Solution 80
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution80
+time (seconds): 0.267381
+
+Solution 81
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution81
+time (seconds): 0.255437
+
+Solution 82
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution82
+time (seconds): 0.24944
+
+Solution 83
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution83
+time (seconds): 0.256453
+
+Solution 84
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution84
+time (seconds): 0.300212
+
+Solution 85
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution85
+time (seconds): 0.360627
+
+Solution 86
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution86
+time (seconds): 0.331405
+
+Solution 87
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution87
+time (seconds): 0.302568
+
+Solution 88
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution88
+time (seconds): 0.253274
+
+Solution 89
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution89
+time (seconds): 0.253779
+
+Solution 90
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution90
+time (seconds): 0.262545
+
+Solution 91
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution91
+time (seconds): 0.266161
+
+Solution 92
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution92
+time (seconds): 0.318144
+
+Solution 93
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution93
+time (seconds): 0.254474
+
+Solution 94
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution94
+time (seconds): 0.444673
+
+Solution 95
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution95
+time (seconds): 0.280046
+
+Solution 96
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution96
+time (seconds): 0.234661
+
+Solution 97
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution97
+time (seconds): 0.307281
+
+Solution 98
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution98
+time (seconds): 0.274406
+
+Solution 99
+file: ../sols/temp/full/selectable_oscillator_bench/session0/solution99
+time (seconds): 0.214662

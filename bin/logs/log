@@ -1,0 +1,155 @@
+Starting embedding
+
+Target Conditions:
+M:8	 N:8	 L:4
+
+Generating numAdj...complete
+Generating numAdj2...complete
+Setting flags...complete
+Initializing routing algorithm
+
+Selecting first cell
+	running method 2: probabilistic...done
+	selected cell 3
+
+Selecting first Qubit
+	running method 2: gaussian dist... done
+	selected qbit: (4, 3, 0, 2)
+
+
+
+**************************************************
+**************************************************
+**************************************************
+toDo: [0, 1, 2, 7, 8]
+
+##############################
+Placing cell: 0
+Adjacent qbits: [(4, 3, 0, 2)]
+Required availability: 3
+Found 1 candidate qubits: ['(4, 3, 1, 1)'] 
+Trying qbit: (4, 3, 1, 1) with suitability 6 ...	 success
+Placed on qubit: (4, 3, 1, 1)
+
+
+##############################
+Placing cell: 1
+Adjacent qbits: [(4, 3, 1, 1), (4, 3, 0, 2)]
+Required availability: 3
+Found 2 candidate qubits: ['(4, 3, 1, 0)', '(4, 3, 0, 3)'] 
+Trying qbit: (4, 3, 1, 0) with suitability 6 ...	 success
+Placed on qubit: (4, 3, 1, 0)
+
+
+##############################
+Placing cell: 2
+Adjacent qbits: [(4, 3, 1, 1), (4, 3, 0, 2)]
+Required availability: 3
+Found 2 candidate qubits: ['(4, 3, 1, 3)', '(4, 3, 0, 1)'] 
+Trying qbit: (4, 3, 1, 3) with suitability 5 ...	 success
+Placed on qubit: (4, 3, 1, 3)
+
+
+##############################
+Placing cell: 7
+Adjacent qbits: [(4, 3, 1, 3), (4, 3, 0, 2)]
+Required availability: 3
+Found 2 candidate qubits: ['(4, 3, 1, 2)', '(4, 3, 0, 3)'] 
+Trying qbit: (4, 3, 1, 2) with suitability 4 ...	 success
+Placed on qubit: (4, 3, 1, 2)
+
+
+##############################
+Placing cell: 8
+Adjacent qbits: [(4, 3, 0, 2), (4, 3, 1, 2)]
+Required availability: 3
+Found 2 candidate qubits: ['(3, 4, 1, 2)', '(3, 4, 0, 2)'] 
+Trying qbit: (3, 4, 1, 2) with suitability 6 ...	 success
+Placed on qubit: (3, 4, 1, 2)
+
+
+
+**************************************************
+**************************************************
+**************************************************
+toDo: [4]
+
+##############################
+Placing cell: 4
+Adjacent qbits: [(4, 3, 1, 0), (3, 4, 1, 2)]
+Required availability: 3
+Found 1 candidate qubits: ['(4, 4, 0, 1)'] 
+Trying qbit: (4, 4, 0, 1) with suitability 5 ...	 success
+Placed on qubit: (4, 4, 0, 1)
+
+
+
+**************************************************
+**************************************************
+**************************************************
+toDo: [5]
+
+##############################
+Placing cell: 5
+Adjacent qbits: [(4, 4, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: ['(4, 4, 1, 3)'] 
+Trying qbit: (4, 4, 1, 3) with suitability 4 ...	 success
+Placed on qubit: (4, 4, 1, 3)
+
+
+
+**************************************************
+**************************************************
+**************************************************
+toDo: [6]
+
+##############################
+Placing cell: 6
+Adjacent qbits: [(4, 4, 1, 3)]
+Required availability: 1
+Found 1 candidate qubits: ['(4, 4, 0, 3)'] 
+Trying qbit: (4, 4, 0, 3) with suitability 4 ...	 success
+Placed on qubit: (4, 4, 0, 3)
+
+
+
+Checking Solution...
+
+
+
+***Embedding complete
+
+
+
+******************************
+
+Cell Mapping:
+
+0: (4, 3, 1, 1)
+1: (4, 3, 1, 0)
+2: (4, 3, 1, 3)
+3: (4, 3, 0, 2)
+4: (4, 4, 0, 1)
+5: (4, 4, 1, 3)
+6: (4, 4, 0, 3)
+7: (4, 3, 1, 2)
+8: (3, 4, 1, 2)
+
+
+Paths:
+
+0 <> 1 : 	 [(4, 3, 1, 1), (4, 3, 0, 0), (4, 3, 1, 0)]
+2 <> 7 : 	 [(4, 3, 1, 3), (4, 3, 0, 3), (4, 3, 1, 2)]
+3 <> 2 : 	 [(4, 3, 0, 2), (4, 3, 1, 3)]
+3 <> 0 : 	 [(4, 3, 0, 2), (4, 3, 1, 1)]
+3 <> 1 : 	 [(4, 3, 0, 2), (4, 3, 1, 0)]
+1 <> 4 : 	 [(4, 3, 1, 0), (4, 4, 1, 0), (4, 4, 0, 1)]
+3 <> 8 : 	 [(4, 3, 0, 2), (3, 3, 0, 2), (3, 3, 1, 2), (3, 4, 1, 2)]
+4 <> 5 : 	 [(4, 4, 0, 1), (4, 4, 1, 3)]
+5 <> 6 : 	 [(4, 4, 1, 3), (4, 4, 0, 3)]
+3 <> 7 : 	 [(4, 3, 0, 2), (4, 3, 1, 2)]
+7 <> 8 : 	 [(4, 3, 1, 2), (4, 4, 1, 2), (4, 4, 0, 0), (3, 4, 0, 0), (3, 4, 1, 2)]
+0 <> 2 : 	 [(4, 3, 1, 1), (4, 3, 0, 1), (4, 3, 1, 3)]
+8 <> 4 : 	 [(3, 4, 1, 2), (3, 4, 0, 1), (4, 4, 0, 1)]
+Number of qubit: 19

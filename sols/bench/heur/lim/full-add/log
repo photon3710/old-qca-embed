@@ -1,0 +1,404 @@
+Source file: ../dat/bench_circ/Full_Adder3
+Timestamp: 2015-03-09 14:44:56
+Trials: 100
+Successes: 100
+
+Solution 0
+file: ../sols/temp/lim/Full_Adder3/session0/solution0
+time (seconds): 0.693498
+
+Solution 1
+file: ../sols/temp/lim/Full_Adder3/session0/solution1
+time (seconds): 0.4833
+
+Solution 2
+file: ../sols/temp/lim/Full_Adder3/session0/solution2
+time (seconds): 0.513664
+
+Solution 3
+file: ../sols/temp/lim/Full_Adder3/session0/solution3
+time (seconds): 0.664399
+
+Solution 4
+file: ../sols/temp/lim/Full_Adder3/session0/solution4
+time (seconds): 0.740055
+
+Solution 5
+file: ../sols/temp/lim/Full_Adder3/session0/solution5
+time (seconds): 0.850431
+
+Solution 6
+file: ../sols/temp/lim/Full_Adder3/session0/solution6
+time (seconds): 1.013354
+
+Solution 7
+file: ../sols/temp/lim/Full_Adder3/session0/solution7
+time (seconds): 0.761981
+
+Solution 8
+file: ../sols/temp/lim/Full_Adder3/session0/solution8
+time (seconds): 0.405939
+
+Solution 9
+file: ../sols/temp/lim/Full_Adder3/session0/solution9
+time (seconds): 0.549633
+
+Solution 10
+file: ../sols/temp/lim/Full_Adder3/session0/solution10
+time (seconds): 0.530629
+
+Solution 11
+file: ../sols/temp/lim/Full_Adder3/session0/solution11
+time (seconds): 0.859862
+
+Solution 12
+file: ../sols/temp/lim/Full_Adder3/session0/solution12
+time (seconds): 0.938281
+
+Solution 13
+file: ../sols/temp/lim/Full_Adder3/session0/solution13
+time (seconds): 1.235692
+
+Solution 14
+file: ../sols/temp/lim/Full_Adder3/session0/solution14
+time (seconds): 0.769205
+
+Solution 15
+file: ../sols/temp/lim/Full_Adder3/session0/solution15
+time (seconds): 0.581338
+
+Solution 16
+file: ../sols/temp/lim/Full_Adder3/session0/solution16
+time (seconds): 0.561933
+
+Solution 17
+file: ../sols/temp/lim/Full_Adder3/session0/solution17
+time (seconds): 0.669048
+
+Solution 18
+file: ../sols/temp/lim/Full_Adder3/session0/solution18
+time (seconds): 0.707523
+
+Solution 19
+file: ../sols/temp/lim/Full_Adder3/session0/solution19
+time (seconds): 0.671012
+
+Solution 20
+file: ../sols/temp/lim/Full_Adder3/session0/solution20
+time (seconds): 0.448848
+
+Solution 21
+file: ../sols/temp/lim/Full_Adder3/session0/solution21
+time (seconds): 0.736009
+
+Solution 22
+file: ../sols/temp/lim/Full_Adder3/session0/solution22
+time (seconds): 0.586871
+
+Solution 23
+file: ../sols/temp/lim/Full_Adder3/session0/solution23
+time (seconds): 0.809403
+
+Solution 24
+file: ../sols/temp/lim/Full_Adder3/session0/solution24
+time (seconds): 0.364945
+
+Solution 25
+file: ../sols/temp/lim/Full_Adder3/session0/solution25
+time (seconds): 0.780387
+
+Solution 26
+file: ../sols/temp/lim/Full_Adder3/session0/solution26
+time (seconds): 1.178216
+
+Solution 27
+file: ../sols/temp/lim/Full_Adder3/session0/solution27
+time (seconds): 1.02506
+
+Solution 28
+file: ../sols/temp/lim/Full_Adder3/session0/solution28
+time (seconds): 0.761404
+
+Solution 29
+file: ../sols/temp/lim/Full_Adder3/session0/solution29
+time (seconds): 0.955337
+
+Solution 30
+file: ../sols/temp/lim/Full_Adder3/session0/solution30
+time (seconds): 1.008923
+
+Solution 31
+file: ../sols/temp/lim/Full_Adder3/session0/solution31
+time (seconds): 0.866181
+
+Solution 32
+file: ../sols/temp/lim/Full_Adder3/session0/solution32
+time (seconds): 0.925804
+
+Solution 33
+file: ../sols/temp/lim/Full_Adder3/session0/solution33
+time (seconds): 0.653856
+
+Solution 34
+file: ../sols/temp/lim/Full_Adder3/session0/solution34
+time (seconds): 1.238806
+
+Solution 35
+file: ../sols/temp/lim/Full_Adder3/session0/solution35
+time (seconds): 0.60911
+
+Solution 36
+file: ../sols/temp/lim/Full_Adder3/session0/solution36
+time (seconds): 0.628981
+
+Solution 37
+file: ../sols/temp/lim/Full_Adder3/session0/solution37
+time (seconds): 1.023801
+
+Solution 38
+file: ../sols/temp/lim/Full_Adder3/session0/solution38
+time (seconds): 0.978095
+
+Solution 39
+file: ../sols/temp/lim/Full_Adder3/session0/solution39
+time (seconds): 1.367315
+
+Solution 40
+file: ../sols/temp/lim/Full_Adder3/session0/solution40
+time (seconds): 0.786986
+
+Solution 41
+file: ../sols/temp/lim/Full_Adder3/session0/solution41
+time (seconds): 0.629391
+
+Solution 42
+file: ../sols/temp/lim/Full_Adder3/session0/solution42
+time (seconds): 0.818041
+
+Solution 43
+file: ../sols/temp/lim/Full_Adder3/session0/solution43
+time (seconds): 0.447218
+
+Solution 44
+file: ../sols/temp/lim/Full_Adder3/session0/solution44
+time (seconds): 0.889916
+
+Solution 45
+file: ../sols/temp/lim/Full_Adder3/session0/solution45
+time (seconds): 0.682061
+
+Solution 46
+file: ../sols/temp/lim/Full_Adder3/session0/solution46
+time (seconds): 0.529629
+
+Solution 47
+file: ../sols/temp/lim/Full_Adder3/session0/solution47
+time (seconds): 0.909816
+
+Solution 48
+file: ../sols/temp/lim/Full_Adder3/session0/solution48
+time (seconds): 0.928449
+
+Solution 49
+file: ../sols/temp/lim/Full_Adder3/session0/solution49
+time (seconds): 1.203645
+
+Solution 50
+file: ../sols/temp/lim/Full_Adder3/session0/solution50
+time (seconds): 1.036323
+
+Solution 51
+file: ../sols/temp/lim/Full_Adder3/session0/solution51
+time (seconds): 0.700519
+
+Solution 52
+file: ../sols/temp/lim/Full_Adder3/session0/solution52
+time (seconds): 0.675849
+
+Solution 53
+file: ../sols/temp/lim/Full_Adder3/session0/solution53
+time (seconds): 0.755421
+
+Solution 54
+file: ../sols/temp/lim/Full_Adder3/session0/solution54
+time (seconds): 0.618442
+
+Solution 55
+file: ../sols/temp/lim/Full_Adder3/session0/solution55
+time (seconds): 0.644678
+
+Solution 56
+file: ../sols/temp/lim/Full_Adder3/session0/solution56
+time (seconds): 0.699519
+
+Solution 57
+file: ../sols/temp/lim/Full_Adder3/session0/solution57
+time (seconds): 0.712586
+
+Solution 58
+file: ../sols/temp/lim/Full_Adder3/session0/solution58
+time (seconds): 0.551402
+
+Solution 59
+file: ../sols/temp/lim/Full_Adder3/session0/solution59
+time (seconds): 0.695576
+
+Solution 60
+file: ../sols/temp/lim/Full_Adder3/session0/solution60
+time (seconds): 0.860643
+
+Solution 61
+file: ../sols/temp/lim/Full_Adder3/session0/solution61
+time (seconds): 0.747678
+
+Solution 62
+file: ../sols/temp/lim/Full_Adder3/session0/solution62
+time (seconds): 0.598945
+
+Solution 63
+file: ../sols/temp/lim/Full_Adder3/session0/solution63
+time (seconds): 0.66706
+
+Solution 64
+file: ../sols/temp/lim/Full_Adder3/session0/solution64
+time (seconds): 0.76783
+
+Solution 65
+file: ../sols/temp/lim/Full_Adder3/session0/solution65
+time (seconds): 0.88452
+
+Solution 66
+file: ../sols/temp/lim/Full_Adder3/session0/solution66
+time (seconds): 0.748541
+
+Solution 67
+file: ../sols/temp/lim/Full_Adder3/session0/solution67
+time (seconds): 0.508774
+
+Solution 68
+file: ../sols/temp/lim/Full_Adder3/session0/solution68
+time (seconds): 0.522917
+
+Solution 69
+file: ../sols/temp/lim/Full_Adder3/session0/solution69
+time (seconds): 0.906729
+
+Solution 70
+file: ../sols/temp/lim/Full_Adder3/session0/solution70
+time (seconds): 0.690944
+
+Solution 71
+file: ../sols/temp/lim/Full_Adder3/session0/solution71
+time (seconds): 0.805387
+
+Solution 72
+file: ../sols/temp/lim/Full_Adder3/session0/solution72
+time (seconds): 0.631687
+
+Solution 73
+file: ../sols/temp/lim/Full_Adder3/session0/solution73
+time (seconds): 1.086687
+
+Solution 74
+file: ../sols/temp/lim/Full_Adder3/session0/solution74
+time (seconds): 0.468301
+
+Solution 75
+file: ../sols/temp/lim/Full_Adder3/session0/solution75
+time (seconds): 0.776459
+
+Solution 76
+file: ../sols/temp/lim/Full_Adder3/session0/solution76
+time (seconds): 0.540271
+
+Solution 77
+file: ../sols/temp/lim/Full_Adder3/session0/solution77
+time (seconds): 0.99469
+
+Solution 78
+file: ../sols/temp/lim/Full_Adder3/session0/solution78
+time (seconds): 1.067959
+
+Solution 79
+file: ../sols/temp/lim/Full_Adder3/session0/solution79
+time (seconds): 1.345498
+
+Solution 80
+file: ../sols/temp/lim/Full_Adder3/session0/solution80
+time (seconds): 0.613589
+
+Solution 81
+file: ../sols/temp/lim/Full_Adder3/session0/solution81
+time (seconds): 0.638521
+
+Solution 82
+file: ../sols/temp/lim/Full_Adder3/session0/solution82
+time (seconds): 0.663598
+
+Solution 83
+file: ../sols/temp/lim/Full_Adder3/session0/solution83
+time (seconds): 0.816964
+
+Solution 84
+file: ../sols/temp/lim/Full_Adder3/session0/solution84
+time (seconds): 0.649588
+
+Solution 85
+file: ../sols/temp/lim/Full_Adder3/session0/solution85
+time (seconds): 0.580028
+
+Solution 86
+file: ../sols/temp/lim/Full_Adder3/session0/solution86
+time (seconds): 0.968042
+
+Solution 87
+file: ../sols/temp/lim/Full_Adder3/session0/solution87
+time (seconds): 0.687712
+
+Solution 88
+file: ../sols/temp/lim/Full_Adder3/session0/solution88
+time (seconds): 0.787295
+
+Solution 89
+file: ../sols/temp/lim/Full_Adder3/session0/solution89
+time (seconds): 1.276859
+
+Solution 90
+file: ../sols/temp/lim/Full_Adder3/session0/solution90
+time (seconds): 0.774555
+
+Solution 91
+file: ../sols/temp/lim/Full_Adder3/session0/solution91
+time (seconds): 0.513724
+
+Solution 92
+file: ../sols/temp/lim/Full_Adder3/session0/solution92
+time (seconds): 0.780565
+
+Solution 93
+file: ../sols/temp/lim/Full_Adder3/session0/solution93
+time (seconds): 0.737838
+
+Solution 94
+file: ../sols/temp/lim/Full_Adder3/session0/solution94
+time (seconds): 0.764234
+
+Solution 95
+file: ../sols/temp/lim/Full_Adder3/session0/solution95
+time (seconds): 0.691018
+
+Solution 96
+file: ../sols/temp/lim/Full_Adder3/session0/solution96
+time (seconds): 0.837974
+
+Solution 97
+file: ../sols/temp/lim/Full_Adder3/session0/solution97
+time (seconds): 1.099982
+
+Solution 98
+file: ../sols/temp/lim/Full_Adder3/session0/solution98
+time (seconds): 0.75573
+
+Solution 99
+file: ../sols/temp/lim/Full_Adder3/session0/solution99
+time (seconds): 0.457894

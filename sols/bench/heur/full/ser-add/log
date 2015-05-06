@@ -1,0 +1,404 @@
+Source file: ../dat/bench_circ/serial_adder_bench
+Timestamp: 2015-03-09 15:01:57
+Trials: 102
+Successes: 100
+
+Solution 0
+file: ../sols/temp/full/serial_adder_bench/session0/solution0
+time (seconds): 1.349904
+
+Solution 1
+file: ../sols/temp/full/serial_adder_bench/session0/solution1
+time (seconds): 1.308531
+
+Solution 2
+file: ../sols/temp/full/serial_adder_bench/session0/solution2
+time (seconds): 2.379164
+
+Solution 3
+file: ../sols/temp/full/serial_adder_bench/session0/solution3
+time (seconds): 1.102813
+
+Solution 4
+file: ../sols/temp/full/serial_adder_bench/session0/solution4
+time (seconds): 1.414928
+
+Solution 5
+file: ../sols/temp/full/serial_adder_bench/session0/solution5
+time (seconds): 2.461797
+
+Solution 6
+file: ../sols/temp/full/serial_adder_bench/session0/solution6
+time (seconds): 4.478371
+
+Solution 7
+file: ../sols/temp/full/serial_adder_bench/session0/solution7
+time (seconds): 1.775949
+
+Solution 8
+file: ../sols/temp/full/serial_adder_bench/session0/solution8
+time (seconds): 2.086121
+
+Solution 9
+file: ../sols/temp/full/serial_adder_bench/session0/solution9
+time (seconds): 2.250107
+
+Solution 10
+file: ../sols/temp/full/serial_adder_bench/session0/solution10
+time (seconds): 2.808932
+
+Solution 11
+file: ../sols/temp/full/serial_adder_bench/session0/solution11
+time (seconds): 1.614824
+
+Solution 12
+file: ../sols/temp/full/serial_adder_bench/session0/solution12
+time (seconds): 2.551131
+
+Solution 13
+file: ../sols/temp/full/serial_adder_bench/session0/solution13
+time (seconds): 2.265587
+
+Solution 14
+file: ../sols/temp/full/serial_adder_bench/session0/solution14
+time (seconds): 2.305087
+
+Solution 15
+file: ../sols/temp/full/serial_adder_bench/session0/solution15
+time (seconds): 2.895645
+
+Solution 16
+file: ../sols/temp/full/serial_adder_bench/session0/solution16
+time (seconds): 2.51806
+
+Solution 17
+file: ../sols/temp/full/serial_adder_bench/session0/solution17
+time (seconds): 2.344658
+
+Solution 18
+file: ../sols/temp/full/serial_adder_bench/session0/solution18
+time (seconds): 3.053607
+
+Solution 19
+file: ../sols/temp/full/serial_adder_bench/session0/solution19
+time (seconds): 2.880151
+
+Solution 20
+file: ../sols/temp/full/serial_adder_bench/session0/solution20
+time (seconds): 2.063726
+
+Solution 21
+file: ../sols/temp/full/serial_adder_bench/session0/solution21
+time (seconds): 2.84163
+
+Solution 22
+file: ../sols/temp/full/serial_adder_bench/session0/solution22
+time (seconds): 1.818103
+
+Solution 23
+file: ../sols/temp/full/serial_adder_bench/session0/solution23
+time (seconds): 2.321525
+
+Solution 24
+file: ../sols/temp/full/serial_adder_bench/session0/solution24
+time (seconds): 4.521834
+
+Solution 25
+file: ../sols/temp/full/serial_adder_bench/session0/solution25
+time (seconds): 2.625978
+
+Solution 26
+file: ../sols/temp/full/serial_adder_bench/session0/solution26
+time (seconds): 1.862591
+
+Solution 27
+file: ../sols/temp/full/serial_adder_bench/session0/solution27
+time (seconds): 2.1819
+
+Solution 28
+file: ../sols/temp/full/serial_adder_bench/session0/solution28
+time (seconds): 2.387033
+
+Solution 29
+file: ../sols/temp/full/serial_adder_bench/session0/solution29
+time (seconds): 2.32051
+
+Solution 30
+file: ../sols/temp/full/serial_adder_bench/session0/solution30
+time (seconds): 2.214339
+
+Solution 31
+file: ../sols/temp/full/serial_adder_bench/session0/solution31
+time (seconds): 3.902703
+
+Solution 32
+file: ../sols/temp/full/serial_adder_bench/session0/solution32
+time (seconds): 1.925492
+
+Solution 33
+file: ../sols/temp/full/serial_adder_bench/session0/solution33
+time (seconds): 1.289411
+
+Solution 34
+file: ../sols/temp/full/serial_adder_bench/session0/solution34
+time (seconds): 1.796597
+
+Solution 35
+file: ../sols/temp/full/serial_adder_bench/session0/solution35
+time (seconds): 1.546974
+
+Solution 36
+file: ../sols/temp/full/serial_adder_bench/session0/solution36
+time (seconds): 1.663183
+
+Solution 37
+file: ../sols/temp/full/serial_adder_bench/session0/solution37
+time (seconds): 4.544669
+
+Solution 38
+file: ../sols/temp/full/serial_adder_bench/session0/solution38
+time (seconds): 3.411339
+
+Solution 39
+file: ../sols/temp/full/serial_adder_bench/session0/solution39
+time (seconds): 4.875922
+
+Solution 40
+file: ../sols/temp/full/serial_adder_bench/session0/solution40
+time (seconds): 2.34841
+
+Solution 41
+file: ../sols/temp/full/serial_adder_bench/session0/solution41
+time (seconds): 3.197489
+
+Solution 42
+file: ../sols/temp/full/serial_adder_bench/session0/solution42
+time (seconds): 2.633803
+
+Solution 43
+file: ../sols/temp/full/serial_adder_bench/session0/solution43
+time (seconds): 2.232682
+
+Solution 44
+file: ../sols/temp/full/serial_adder_bench/session0/solution44
+time (seconds): 1.775801
+
+Solution 45
+file: ../sols/temp/full/serial_adder_bench/session0/solution45
+time (seconds): 2.122728
+
+Solution 46
+file: ../sols/temp/full/serial_adder_bench/session0/solution46
+time (seconds): 2.642882
+
+Solution 47
+file: ../sols/temp/full/serial_adder_bench/session0/solution47
+time (seconds): 2.124019
+
+Solution 48
+file: ../sols/temp/full/serial_adder_bench/session0/solution48
+time (seconds): 1.946665
+
+Solution 49
+file: ../sols/temp/full/serial_adder_bench/session0/solution49
+time (seconds): 1.165524
+
+Solution 50
+file: ../sols/temp/full/serial_adder_bench/session0/solution50
+time (seconds): 3.03388
+
+Solution 51
+file: ../sols/temp/full/serial_adder_bench/session0/solution51
+time (seconds): 2.318428
+
+Solution 52
+file: ../sols/temp/full/serial_adder_bench/session0/solution52
+time (seconds): 1.673762
+
+Solution 53
+file: ../sols/temp/full/serial_adder_bench/session0/solution53
+time (seconds): 1.405203
+
+Solution 54
+file: ../sols/temp/full/serial_adder_bench/session0/solution54
+time (seconds): 2.073424
+
+Solution 55
+file: ../sols/temp/full/serial_adder_bench/session0/solution55
+time (seconds): 2.28417
+
+Solution 56
+file: ../sols/temp/full/serial_adder_bench/session0/solution56
+time (seconds): 1.419007
+
+Solution 57
+file: ../sols/temp/full/serial_adder_bench/session0/solution57
+time (seconds): 1.59201
+
+Solution 58
+file: ../sols/temp/full/serial_adder_bench/session0/solution58
+time (seconds): 2.790762
+
+Solution 59
+file: ../sols/temp/full/serial_adder_bench/session0/solution59
+time (seconds): 2.291303
+
+Solution 60
+file: ../sols/temp/full/serial_adder_bench/session0/solution60
+time (seconds): 1.450306
+
+Solution 61
+file: ../sols/temp/full/serial_adder_bench/session0/solution61
+time (seconds): 2.857492
+
+Solution 62
+file: ../sols/temp/full/serial_adder_bench/session0/solution62
+time (seconds): 1.854752
+
+Solution 63
+file: ../sols/temp/full/serial_adder_bench/session0/solution63
+time (seconds): 1.290754
+
+Solution 64
+file: ../sols/temp/full/serial_adder_bench/session0/solution64
+time (seconds): 2.632169
+
+Solution 65
+file: ../sols/temp/full/serial_adder_bench/session0/solution65
+time (seconds): 2.099213
+
+Solution 66
+file: ../sols/temp/full/serial_adder_bench/session0/solution66
+time (seconds): 2.719462
+
+Solution 67
+file: ../sols/temp/full/serial_adder_bench/session0/solution67
+time (seconds): 1.67706
+
+Solution 68
+file: ../sols/temp/full/serial_adder_bench/session0/solution68
+time (seconds): 3.735393
+
+Solution 69
+file: ../sols/temp/full/serial_adder_bench/session0/solution69
+time (seconds): 1.672603
+
+Solution 70
+file: ../sols/temp/full/serial_adder_bench/session0/solution70
+time (seconds): 2.277051
+
+Solution 71
+file: ../sols/temp/full/serial_adder_bench/session0/solution71
+time (seconds): 2.490603
+
+Solution 72
+file: ../sols/temp/full/serial_adder_bench/session0/solution72
+time (seconds): 2.130182
+
+Solution 73
+file: ../sols/temp/full/serial_adder_bench/session0/solution73
+time (seconds): 1.847848
+
+Solution 74
+file: ../sols/temp/full/serial_adder_bench/session0/solution74
+time (seconds): 1.148302
+
+Solution 75
+file: ../sols/temp/full/serial_adder_bench/session0/solution75
+time (seconds): 1.951958
+
+Solution 76
+file: ../sols/temp/full/serial_adder_bench/session0/solution76
+time (seconds): 1.640038
+
+Solution 77
+file: ../sols/temp/full/serial_adder_bench/session0/solution77
+time (seconds): 1.681936
+
+Solution 78
+file: ../sols/temp/full/serial_adder_bench/session0/solution78
+time (seconds): 2.878924
+
+Solution 79
+file: ../sols/temp/full/serial_adder_bench/session0/solution79
+time (seconds): 1.320529
+
+Solution 80
+file: ../sols/temp/full/serial_adder_bench/session0/solution80
+time (seconds): 1.592169
+
+Solution 81
+file: ../sols/temp/full/serial_adder_bench/session0/solution81
+time (seconds): 3.081981
+
+Solution 82
+file: ../sols/temp/full/serial_adder_bench/session0/solution82
+time (seconds): 1.562081
+
+Solution 83
+file: ../sols/temp/full/serial_adder_bench/session0/solution83
+time (seconds): 1.982251
+
+Solution 84
+file: ../sols/temp/full/serial_adder_bench/session0/solution84
+time (seconds): 3.470261
+
+Solution 85
+file: ../sols/temp/full/serial_adder_bench/session0/solution85
+time (seconds): 1.653617
+
+Solution 86
+file: ../sols/temp/full/serial_adder_bench/session0/solution86
+time (seconds): 2.87322
+
+Solution 87
+file: ../sols/temp/full/serial_adder_bench/session0/solution87
+time (seconds): 3.804258
+
+Solution 88
+file: ../sols/temp/full/serial_adder_bench/session0/solution88
+time (seconds): 1.372804
+
+Solution 89
+file: ../sols/temp/full/serial_adder_bench/session0/solution89
+time (seconds): 3.402278
+
+Solution 90
+file: ../sols/temp/full/serial_adder_bench/session0/solution90
+time (seconds): 2.325177
+
+Solution 91
+file: ../sols/temp/full/serial_adder_bench/session0/solution91
+time (seconds): 2.92
+
+Solution 92
+file: ../sols/temp/full/serial_adder_bench/session0/solution92
+time (seconds): 2.777047
+
+Solution 93
+file: ../sols/temp/full/serial_adder_bench/session0/solution93
+time (seconds): 1.837828
+
+Solution 94
+file: ../sols/temp/full/serial_adder_bench/session0/solution94
+time (seconds): 1.524391
+
+Solution 95
+file: ../sols/temp/full/serial_adder_bench/session0/solution95
+time (seconds): 2.99419
+
+Solution 96
+file: ../sols/temp/full/serial_adder_bench/session0/solution96
+time (seconds): 2.333841
+
+Solution 97
+file: ../sols/temp/full/serial_adder_bench/session0/solution97
+time (seconds): 2.134445
+
+Solution 98
+file: ../sols/temp/full/serial_adder_bench/session0/solution98
+time (seconds): 3.454191
+
+Solution 99
+file: ../sols/temp/full/serial_adder_bench/session0/solution99
+time (seconds): 2.342071

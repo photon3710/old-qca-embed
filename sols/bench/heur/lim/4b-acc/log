@@ -1,0 +1,404 @@
+Source file: ../dat/bench_circ/4_bit_accumulator_bench
+Timestamp: 2015-03-11 14:27:32
+Trials: 289
+Successes: 100
+
+Solution 0
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution0
+time (seconds): 17.802146
+
+Solution 1
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution1
+time (seconds): 8.668602
+
+Solution 2
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution2
+time (seconds): 6.909594
+
+Solution 3
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution3
+time (seconds): 12.183772
+
+Solution 4
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution4
+time (seconds): 11.18069
+
+Solution 5
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution5
+time (seconds): 28.542262
+
+Solution 6
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution6
+time (seconds): 11.389429
+
+Solution 7
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution7
+time (seconds): 5.564688
+
+Solution 8
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution8
+time (seconds): 22.169031
+
+Solution 9
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution9
+time (seconds): 11.603524
+
+Solution 10
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution10
+time (seconds): 17.06112
+
+Solution 11
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution11
+time (seconds): 18.11031
+
+Solution 12
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution12
+time (seconds): 19.755857
+
+Solution 13
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution13
+time (seconds): 11.435307
+
+Solution 14
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution14
+time (seconds): 16.192417
+
+Solution 15
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution15
+time (seconds): 24.085925
+
+Solution 16
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution16
+time (seconds): 18.807772
+
+Solution 17
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution17
+time (seconds): 8.940668
+
+Solution 18
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution18
+time (seconds): 20.412914
+
+Solution 19
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution19
+time (seconds): 24.249632
+
+Solution 20
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution20
+time (seconds): 6.474107
+
+Solution 21
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution21
+time (seconds): 15.052714
+
+Solution 22
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution22
+time (seconds): 19.279983
+
+Solution 23
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution23
+time (seconds): 8.550478
+
+Solution 24
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution24
+time (seconds): 12.851699
+
+Solution 25
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution25
+time (seconds): 14.588743
+
+Solution 26
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution26
+time (seconds): 27.105017
+
+Solution 27
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution27
+time (seconds): 13.053373
+
+Solution 28
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution28
+time (seconds): 22.959393
+
+Solution 29
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution29
+time (seconds): 22.52097
+
+Solution 30
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution30
+time (seconds): 19.612677
+
+Solution 31
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution31
+time (seconds): 14.03166
+
+Solution 32
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution32
+time (seconds): 13.969876
+
+Solution 33
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution33
+time (seconds): 13.930394
+
+Solution 34
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution34
+time (seconds): 10.609534
+
+Solution 35
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution35
+time (seconds): 11.235286
+
+Solution 36
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution36
+time (seconds): 8.215401
+
+Solution 37
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution37
+time (seconds): 12.865274
+
+Solution 38
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution38
+time (seconds): 11.699556
+
+Solution 39
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution39
+time (seconds): 23.431615
+
+Solution 40
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution40
+time (seconds): 9.850315
+
+Solution 41
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution41
+time (seconds): 13.842124
+
+Solution 42
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution42
+time (seconds): 11.809473
+
+Solution 43
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution43
+time (seconds): 22.423496
+
+Solution 44
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution44
+time (seconds): 8.254487
+
+Solution 45
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution45
+time (seconds): 4.397325
+
+Solution 46
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution46
+time (seconds): 10.613785
+
+Solution 47
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution47
+time (seconds): 18.889466
+
+Solution 48
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution48
+time (seconds): 13.533119
+
+Solution 49
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution49
+time (seconds): 12.68379
+
+Solution 50
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution50
+time (seconds): 10.642756
+
+Solution 51
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution51
+time (seconds): 14.461177
+
+Solution 52
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution52
+time (seconds): 20.785606
+
+Solution 53
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution53
+time (seconds): 9.465156
+
+Solution 54
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution54
+time (seconds): 12.231952
+
+Solution 55
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution55
+time (seconds): 17.016107
+
+Solution 56
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution56
+time (seconds): 11.94223
+
+Solution 57
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution57
+time (seconds): 17.059987
+
+Solution 58
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution58
+time (seconds): 6.620443
+
+Solution 59
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution59
+time (seconds): 8.578464
+
+Solution 60
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution60
+time (seconds): 19.619044
+
+Solution 61
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution61
+time (seconds): 8.735981
+
+Solution 62
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution62
+time (seconds): 6.375668
+
+Solution 63
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution63
+time (seconds): 13.842993
+
+Solution 64
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution64
+time (seconds): 10.363426
+
+Solution 65
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution65
+time (seconds): 29.206105
+
+Solution 66
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution66
+time (seconds): 12.176522
+
+Solution 67
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution67
+time (seconds): 13.277676
+
+Solution 68
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution68
+time (seconds): 8.44976
+
+Solution 69
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution69
+time (seconds): 11.34113
+
+Solution 70
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution70
+time (seconds): 17.434812
+
+Solution 71
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution71
+time (seconds): 6.998324
+
+Solution 72
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution72
+time (seconds): 19.184225
+
+Solution 73
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution73
+time (seconds): 19.405303
+
+Solution 74
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution74
+time (seconds): 10.942994
+
+Solution 75
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution75
+time (seconds): 12.806463
+
+Solution 76
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution76
+time (seconds): 10.10653
+
+Solution 77
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution77
+time (seconds): 19.326916
+
+Solution 78
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution78
+time (seconds): 19.509989
+
+Solution 79
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution79
+time (seconds): 6.022045
+
+Solution 80
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution80
+time (seconds): 12.425389
+
+Solution 81
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution81
+time (seconds): 20.817007
+
+Solution 82
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution82
+time (seconds): 9.847155
+
+Solution 83
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution83
+time (seconds): 10.655458
+
+Solution 84
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution84
+time (seconds): 16.687245
+
+Solution 85
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution85
+time (seconds): 10.37555
+
+Solution 86
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution86
+time (seconds): 19.595954
+
+Solution 87
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution87
+time (seconds): 12.794756
+
+Solution 88
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution88
+time (seconds): 10.092425
+
+Solution 89
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution89
+time (seconds): 14.996931
+
+Solution 90
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution90
+time (seconds): 17.395406
+
+Solution 91
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution91
+time (seconds): 13.652618
+
+Solution 92
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution92
+time (seconds): 13.762177
+
+Solution 93
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution93
+time (seconds): 9.223363
+
+Solution 94
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution94
+time (seconds): 14.37771
+
+Solution 95
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution95
+time (seconds): 11.735584
+
+Solution 96
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution96
+time (seconds): 11.530434
+
+Solution 97
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution97
+time (seconds): 9.22466
+
+Solution 98
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution98
+time (seconds): 16.768437
+
+Solution 99
+file: ../sols/temp/lim/4_bit_accumulator_bench/session0/solution99
+time (seconds): 16.960182

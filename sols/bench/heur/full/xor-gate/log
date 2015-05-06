@@ -1,0 +1,404 @@
+Source file: ../dat/bench_circ/xor_gate_bench
+Timestamp: 2015-03-09 14:54:35
+Trials: 100
+Successes: 100
+
+Solution 0
+file: ../sols/temp/full/xor_gate_bench/session0/solution0
+time (seconds): 0.743992
+
+Solution 1
+file: ../sols/temp/full/xor_gate_bench/session0/solution1
+time (seconds): 0.625795
+
+Solution 2
+file: ../sols/temp/full/xor_gate_bench/session0/solution2
+time (seconds): 0.542729
+
+Solution 3
+file: ../sols/temp/full/xor_gate_bench/session0/solution3
+time (seconds): 0.771937
+
+Solution 4
+file: ../sols/temp/full/xor_gate_bench/session0/solution4
+time (seconds): 0.814612
+
+Solution 5
+file: ../sols/temp/full/xor_gate_bench/session0/solution5
+time (seconds): 0.826051
+
+Solution 6
+file: ../sols/temp/full/xor_gate_bench/session0/solution6
+time (seconds): 1.374879
+
+Solution 7
+file: ../sols/temp/full/xor_gate_bench/session0/solution7
+time (seconds): 0.938518
+
+Solution 8
+file: ../sols/temp/full/xor_gate_bench/session0/solution8
+time (seconds): 0.825427
+
+Solution 9
+file: ../sols/temp/full/xor_gate_bench/session0/solution9
+time (seconds): 0.688479
+
+Solution 10
+file: ../sols/temp/full/xor_gate_bench/session0/solution10
+time (seconds): 0.881367
+
+Solution 11
+file: ../sols/temp/full/xor_gate_bench/session0/solution11
+time (seconds): 0.847884
+
+Solution 12
+file: ../sols/temp/full/xor_gate_bench/session0/solution12
+time (seconds): 0.676415
+
+Solution 13
+file: ../sols/temp/full/xor_gate_bench/session0/solution13
+time (seconds): 0.914857
+
+Solution 14
+file: ../sols/temp/full/xor_gate_bench/session0/solution14
+time (seconds): 0.88877
+
+Solution 15
+file: ../sols/temp/full/xor_gate_bench/session0/solution15
+time (seconds): 0.815077
+
+Solution 16
+file: ../sols/temp/full/xor_gate_bench/session0/solution16
+time (seconds): 0.644131
+
+Solution 17
+file: ../sols/temp/full/xor_gate_bench/session0/solution17
+time (seconds): 0.731193
+
+Solution 18
+file: ../sols/temp/full/xor_gate_bench/session0/solution18
+time (seconds): 0.827405
+
+Solution 19
+file: ../sols/temp/full/xor_gate_bench/session0/solution19
+time (seconds): 0.653942
+
+Solution 20
+file: ../sols/temp/full/xor_gate_bench/session0/solution20
+time (seconds): 0.701835
+
+Solution 21
+file: ../sols/temp/full/xor_gate_bench/session0/solution21
+time (seconds): 1.025667
+
+Solution 22
+file: ../sols/temp/full/xor_gate_bench/session0/solution22
+time (seconds): 0.759478
+
+Solution 23
+file: ../sols/temp/full/xor_gate_bench/session0/solution23
+time (seconds): 0.496754
+
+Solution 24
+file: ../sols/temp/full/xor_gate_bench/session0/solution24
+time (seconds): 0.777087
+
+Solution 25
+file: ../sols/temp/full/xor_gate_bench/session0/solution25
+time (seconds): 0.812206
+
+Solution 26
+file: ../sols/temp/full/xor_gate_bench/session0/solution26
+time (seconds): 0.662848
+
+Solution 27
+file: ../sols/temp/full/xor_gate_bench/session0/solution27
+time (seconds): 1.290104
+
+Solution 28
+file: ../sols/temp/full/xor_gate_bench/session0/solution28
+time (seconds): 1.36286
+
+Solution 29
+file: ../sols/temp/full/xor_gate_bench/session0/solution29
+time (seconds): 0.725754
+
+Solution 30
+file: ../sols/temp/full/xor_gate_bench/session0/solution30
+time (seconds): 0.736788
+
+Solution 31
+file: ../sols/temp/full/xor_gate_bench/session0/solution31
+time (seconds): 0.893458
+
+Solution 32
+file: ../sols/temp/full/xor_gate_bench/session0/solution32
+time (seconds): 1.277496
+
+Solution 33
+file: ../sols/temp/full/xor_gate_bench/session0/solution33
+time (seconds): 1.156081
+
+Solution 34
+file: ../sols/temp/full/xor_gate_bench/session0/solution34
+time (seconds): 0.969818
+
+Solution 35
+file: ../sols/temp/full/xor_gate_bench/session0/solution35
+time (seconds): 0.727746
+
+Solution 36
+file: ../sols/temp/full/xor_gate_bench/session0/solution36
+time (seconds): 0.859815
+
+Solution 37
+file: ../sols/temp/full/xor_gate_bench/session0/solution37
+time (seconds): 0.803913
+
+Solution 38
+file: ../sols/temp/full/xor_gate_bench/session0/solution38
+time (seconds): 1.222779
+
+Solution 39
+file: ../sols/temp/full/xor_gate_bench/session0/solution39
+time (seconds): 0.967749
+
+Solution 40
+file: ../sols/temp/full/xor_gate_bench/session0/solution40
+time (seconds): 1.354102
+
+Solution 41
+file: ../sols/temp/full/xor_gate_bench/session0/solution41
+time (seconds): 1.116211
+
+Solution 42
+file: ../sols/temp/full/xor_gate_bench/session0/solution42
+time (seconds): 1.018274
+
+Solution 43
+file: ../sols/temp/full/xor_gate_bench/session0/solution43
+time (seconds): 0.897405
+
+Solution 44
+file: ../sols/temp/full/xor_gate_bench/session0/solution44
+time (seconds): 1.207195
+
+Solution 45
+file: ../sols/temp/full/xor_gate_bench/session0/solution45
+time (seconds): 1.053232
+
+Solution 46
+file: ../sols/temp/full/xor_gate_bench/session0/solution46
+time (seconds): 0.991782
+
+Solution 47
+file: ../sols/temp/full/xor_gate_bench/session0/solution47
+time (seconds): 0.783418
+
+Solution 48
+file: ../sols/temp/full/xor_gate_bench/session0/solution48
+time (seconds): 1.231129
+
+Solution 49
+file: ../sols/temp/full/xor_gate_bench/session0/solution49
+time (seconds): 0.959214
+
+Solution 50
+file: ../sols/temp/full/xor_gate_bench/session0/solution50
+time (seconds): 0.821622
+
+Solution 51
+file: ../sols/temp/full/xor_gate_bench/session0/solution51
+time (seconds): 0.833096
+
+Solution 52
+file: ../sols/temp/full/xor_gate_bench/session0/solution52
+time (seconds): 1.111307
+
+Solution 53
+file: ../sols/temp/full/xor_gate_bench/session0/solution53
+time (seconds): 1.086716
+
+Solution 54
+file: ../sols/temp/full/xor_gate_bench/session0/solution54
+time (seconds): 0.891487
+
+Solution 55
+file: ../sols/temp/full/xor_gate_bench/session0/solution55
+time (seconds): 1.099625
+
+Solution 56
+file: ../sols/temp/full/xor_gate_bench/session0/solution56
+time (seconds): 0.990405
+
+Solution 57
+file: ../sols/temp/full/xor_gate_bench/session0/solution57
+time (seconds): 0.833521
+
+Solution 58
+file: ../sols/temp/full/xor_gate_bench/session0/solution58
+time (seconds): 0.93102
+
+Solution 59
+file: ../sols/temp/full/xor_gate_bench/session0/solution59
+time (seconds): 0.72851
+
+Solution 60
+file: ../sols/temp/full/xor_gate_bench/session0/solution60
+time (seconds): 1.102863
+
+Solution 61
+file: ../sols/temp/full/xor_gate_bench/session0/solution61
+time (seconds): 0.86539
+
+Solution 62
+file: ../sols/temp/full/xor_gate_bench/session0/solution62
+time (seconds): 1.255118
+
+Solution 63
+file: ../sols/temp/full/xor_gate_bench/session0/solution63
+time (seconds): 1.285578
+
+Solution 64
+file: ../sols/temp/full/xor_gate_bench/session0/solution64
+time (seconds): 1.521301
+
+Solution 65
+file: ../sols/temp/full/xor_gate_bench/session0/solution65
+time (seconds): 2.254019
+
+Solution 66
+file: ../sols/temp/full/xor_gate_bench/session0/solution66
+time (seconds): 0.816344
+
+Solution 67
+file: ../sols/temp/full/xor_gate_bench/session0/solution67
+time (seconds): 0.840138
+
+Solution 68
+file: ../sols/temp/full/xor_gate_bench/session0/solution68
+time (seconds): 0.724538
+
+Solution 69
+file: ../sols/temp/full/xor_gate_bench/session0/solution69
+time (seconds): 1.828788
+
+Solution 70
+file: ../sols/temp/full/xor_gate_bench/session0/solution70
+time (seconds): 0.753202
+
+Solution 71
+file: ../sols/temp/full/xor_gate_bench/session0/solution71
+time (seconds): 0.754254
+
+Solution 72
+file: ../sols/temp/full/xor_gate_bench/session0/solution72
+time (seconds): 1.501661
+
+Solution 73
+file: ../sols/temp/full/xor_gate_bench/session0/solution73
+time (seconds): 1.254941
+
+Solution 74
+file: ../sols/temp/full/xor_gate_bench/session0/solution74
+time (seconds): 0.625977
+
+Solution 75
+file: ../sols/temp/full/xor_gate_bench/session0/solution75
+time (seconds): 0.734148
+
+Solution 76
+file: ../sols/temp/full/xor_gate_bench/session0/solution76
+time (seconds): 1.008519
+
+Solution 77
+file: ../sols/temp/full/xor_gate_bench/session0/solution77
+time (seconds): 0.901383
+
+Solution 78
+file: ../sols/temp/full/xor_gate_bench/session0/solution78
+time (seconds): 0.91913
+
+Solution 79
+file: ../sols/temp/full/xor_gate_bench/session0/solution79
+time (seconds): 0.748019
+
+Solution 80
+file: ../sols/temp/full/xor_gate_bench/session0/solution80
+time (seconds): 0.699021
+
+Solution 81
+file: ../sols/temp/full/xor_gate_bench/session0/solution81
+time (seconds): 1.412244
+
+Solution 82
+file: ../sols/temp/full/xor_gate_bench/session0/solution82
+time (seconds): 0.876113
+
+Solution 83
+file: ../sols/temp/full/xor_gate_bench/session0/solution83
+time (seconds): 0.941045
+
+Solution 84
+file: ../sols/temp/full/xor_gate_bench/session0/solution84
+time (seconds): 0.810255
+
+Solution 85
+file: ../sols/temp/full/xor_gate_bench/session0/solution85
+time (seconds): 0.760853
+
+Solution 86
+file: ../sols/temp/full/xor_gate_bench/session0/solution86
+time (seconds): 0.984391
+
+Solution 87
+file: ../sols/temp/full/xor_gate_bench/session0/solution87
+time (seconds): 0.958971
+
+Solution 88
+file: ../sols/temp/full/xor_gate_bench/session0/solution88
+time (seconds): 1.886108
+
+Solution 89
+file: ../sols/temp/full/xor_gate_bench/session0/solution89
+time (seconds): 0.755978
+
+Solution 90
+file: ../sols/temp/full/xor_gate_bench/session0/solution90
+time (seconds): 0.849738
+
+Solution 91
+file: ../sols/temp/full/xor_gate_bench/session0/solution91
+time (seconds): 1.674383
+
+Solution 92
+file: ../sols/temp/full/xor_gate_bench/session0/solution92
+time (seconds): 0.688942
+
+Solution 93
+file: ../sols/temp/full/xor_gate_bench/session0/solution93
+time (seconds): 0.894307
+
+Solution 94
+file: ../sols/temp/full/xor_gate_bench/session0/solution94
+time (seconds): 0.946537
+
+Solution 95
+file: ../sols/temp/full/xor_gate_bench/session0/solution95
+time (seconds): 1.050036
+
+Solution 96
+file: ../sols/temp/full/xor_gate_bench/session0/solution96
+time (seconds): 1.149143
+
+Solution 97
+file: ../sols/temp/full/xor_gate_bench/session0/solution97
+time (seconds): 1.103923
+
+Solution 98
+file: ../sols/temp/full/xor_gate_bench/session0/solution98
+time (seconds): 1.062389
+
+Solution 99
+file: ../sols/temp/full/xor_gate_bench/session0/solution99
+time (seconds): 0.875417

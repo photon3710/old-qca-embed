@@ -1,0 +1,404 @@
+Source file: ../dat/bench_circ/walus_loop_memory_cell_bench
+Timestamp: 2015-03-09 14:45:55
+Trials: 100
+Successes: 100
+
+Solution 0
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution0
+time (seconds): 0.505549
+
+Solution 1
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution1
+time (seconds): 0.561656
+
+Solution 2
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution2
+time (seconds): 0.735737
+
+Solution 3
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution3
+time (seconds): 0.664775
+
+Solution 4
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution4
+time (seconds): 0.822172
+
+Solution 5
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution5
+time (seconds): 0.574996
+
+Solution 6
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution6
+time (seconds): 0.808928
+
+Solution 7
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution7
+time (seconds): 0.655336
+
+Solution 8
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution8
+time (seconds): 0.716346
+
+Solution 9
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution9
+time (seconds): 0.770672
+
+Solution 10
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution10
+time (seconds): 0.817799
+
+Solution 11
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution11
+time (seconds): 0.82259
+
+Solution 12
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution12
+time (seconds): 1.065034
+
+Solution 13
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution13
+time (seconds): 0.896232
+
+Solution 14
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution14
+time (seconds): 0.85527
+
+Solution 15
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution15
+time (seconds): 0.818379
+
+Solution 16
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution16
+time (seconds): 0.919145
+
+Solution 17
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution17
+time (seconds): 0.67527
+
+Solution 18
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution18
+time (seconds): 0.770705
+
+Solution 19
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution19
+time (seconds): 0.746078
+
+Solution 20
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution20
+time (seconds): 0.877109
+
+Solution 21
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution21
+time (seconds): 0.882166
+
+Solution 22
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution22
+time (seconds): 1.117952
+
+Solution 23
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution23
+time (seconds): 0.669349
+
+Solution 24
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution24
+time (seconds): 0.775172
+
+Solution 25
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution25
+time (seconds): 0.636054
+
+Solution 26
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution26
+time (seconds): 0.592465
+
+Solution 27
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution27
+time (seconds): 0.614612
+
+Solution 28
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution28
+time (seconds): 0.817376
+
+Solution 29
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution29
+time (seconds): 0.78363
+
+Solution 30
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution30
+time (seconds): 0.935809
+
+Solution 31
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution31
+time (seconds): 0.436891
+
+Solution 32
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution32
+time (seconds): 0.776115
+
+Solution 33
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution33
+time (seconds): 0.68813
+
+Solution 34
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution34
+time (seconds): 0.646169
+
+Solution 35
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution35
+time (seconds): 0.543482
+
+Solution 36
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution36
+time (seconds): 0.997386
+
+Solution 37
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution37
+time (seconds): 0.654897
+
+Solution 38
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution38
+time (seconds): 1.212569
+
+Solution 39
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution39
+time (seconds): 0.851902
+
+Solution 40
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution40
+time (seconds): 0.929595
+
+Solution 41
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution41
+time (seconds): 0.951367
+
+Solution 42
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution42
+time (seconds): 1.364555
+
+Solution 43
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution43
+time (seconds): 1.275142
+
+Solution 44
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution44
+time (seconds): 0.823863
+
+Solution 45
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution45
+time (seconds): 1.224942
+
+Solution 46
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution46
+time (seconds): 0.857812
+
+Solution 47
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution47
+time (seconds): 0.854708
+
+Solution 48
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution48
+time (seconds): 1.020381
+
+Solution 49
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution49
+time (seconds): 1.23128
+
+Solution 50
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution50
+time (seconds): 1.12564
+
+Solution 51
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution51
+time (seconds): 1.454191
+
+Solution 52
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution52
+time (seconds): 0.659032
+
+Solution 53
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution53
+time (seconds): 0.496696
+
+Solution 54
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution54
+time (seconds): 0.87814
+
+Solution 55
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution55
+time (seconds): 0.766458
+
+Solution 56
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution56
+time (seconds): 0.82028
+
+Solution 57
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution57
+time (seconds): 0.853967
+
+Solution 58
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution58
+time (seconds): 1.138508
+
+Solution 59
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution59
+time (seconds): 0.530311
+
+Solution 60
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution60
+time (seconds): 1.014052
+
+Solution 61
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution61
+time (seconds): 0.677535
+
+Solution 62
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution62
+time (seconds): 0.761622
+
+Solution 63
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution63
+time (seconds): 0.437027
+
+Solution 64
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution64
+time (seconds): 0.707633
+
+Solution 65
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution65
+time (seconds): 0.904239
+
+Solution 66
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution66
+time (seconds): 0.621409
+
+Solution 67
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution67
+time (seconds): 1.266302
+
+Solution 68
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution68
+time (seconds): 0.616566
+
+Solution 69
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution69
+time (seconds): 1.037707
+
+Solution 70
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution70
+time (seconds): 0.552768
+
+Solution 71
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution71
+time (seconds): 0.639958
+
+Solution 72
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution72
+time (seconds): 1.043439
+
+Solution 73
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution73
+time (seconds): 0.886404
+
+Solution 74
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution74
+time (seconds): 0.793604
+
+Solution 75
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution75
+time (seconds): 1.125617
+
+Solution 76
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution76
+time (seconds): 0.775954
+
+Solution 77
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution77
+time (seconds): 0.855152
+
+Solution 78
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution78
+time (seconds): 1.150747
+
+Solution 79
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution79
+time (seconds): 0.993658
+
+Solution 80
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution80
+time (seconds): 1.038238
+
+Solution 81
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution81
+time (seconds): 0.827279
+
+Solution 82
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution82
+time (seconds): 0.972966
+
+Solution 83
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution83
+time (seconds): 0.671018
+
+Solution 84
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution84
+time (seconds): 0.555455
+
+Solution 85
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution85
+time (seconds): 0.705193
+
+Solution 86
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution86
+time (seconds): 0.913849
+
+Solution 87
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution87
+time (seconds): 1.206475
+
+Solution 88
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution88
+time (seconds): 0.940322
+
+Solution 89
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution89
+time (seconds): 0.684744
+
+Solution 90
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution90
+time (seconds): 0.560485
+
+Solution 91
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution91
+time (seconds): 0.649501
+
+Solution 92
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution92
+time (seconds): 0.789414
+
+Solution 93
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution93
+time (seconds): 0.668753
+
+Solution 94
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution94
+time (seconds): 0.571231
+
+Solution 95
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution95
+time (seconds): 0.604889
+
+Solution 96
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution96
+time (seconds): 0.793495
+
+Solution 97
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution97
+time (seconds): 0.993473
+
+Solution 98
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution98
+time (seconds): 0.893858
+
+Solution 99
+file: ../sols/temp/lim/walus_loop_memory_cell_bench/session0/solution99
+time (seconds): 0.768838

@@ -1,0 +1,404 @@
+Source file: ../dat/bench_circ/4-bit_2-1_mux_bench
+Timestamp: 2015-03-09 14:51:03
+Trials: 100
+Successes: 100
+
+Solution 0
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution0
+time (seconds): 2.821735
+
+Solution 1
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution1
+time (seconds): 2.182897
+
+Solution 2
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution2
+time (seconds): 1.870099
+
+Solution 3
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution3
+time (seconds): 3.541583
+
+Solution 4
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution4
+time (seconds): 2.13898
+
+Solution 5
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution5
+time (seconds): 1.861433
+
+Solution 6
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution6
+time (seconds): 2.307021
+
+Solution 7
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution7
+time (seconds): 2.543343
+
+Solution 8
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution8
+time (seconds): 1.884205
+
+Solution 9
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution9
+time (seconds): 1.930732
+
+Solution 10
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution10
+time (seconds): 3.736564
+
+Solution 11
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution11
+time (seconds): 2.782904
+
+Solution 12
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution12
+time (seconds): 2.884212
+
+Solution 13
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution13
+time (seconds): 1.774334
+
+Solution 14
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution14
+time (seconds): 2.963473
+
+Solution 15
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution15
+time (seconds): 2.473517
+
+Solution 16
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution16
+time (seconds): 2.02455
+
+Solution 17
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution17
+time (seconds): 2.938246
+
+Solution 18
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution18
+time (seconds): 3.10261
+
+Solution 19
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution19
+time (seconds): 3.269824
+
+Solution 20
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution20
+time (seconds): 2.120377
+
+Solution 21
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution21
+time (seconds): 3.689997
+
+Solution 22
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution22
+time (seconds): 2.270572
+
+Solution 23
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution23
+time (seconds): 2.550033
+
+Solution 24
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution24
+time (seconds): 1.644889
+
+Solution 25
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution25
+time (seconds): 2.482593
+
+Solution 26
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution26
+time (seconds): 2.295648
+
+Solution 27
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution27
+time (seconds): 2.898447
+
+Solution 28
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution28
+time (seconds): 2.507234
+
+Solution 29
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution29
+time (seconds): 1.813033
+
+Solution 30
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution30
+time (seconds): 2.127144
+
+Solution 31
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution31
+time (seconds): 2.887059
+
+Solution 32
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution32
+time (seconds): 4.105815
+
+Solution 33
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution33
+time (seconds): 4.948944
+
+Solution 34
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution34
+time (seconds): 3.264413
+
+Solution 35
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution35
+time (seconds): 4.84174
+
+Solution 36
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution36
+time (seconds): 4.655694
+
+Solution 37
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution37
+time (seconds): 2.574952
+
+Solution 38
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution38
+time (seconds): 2.707994
+
+Solution 39
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution39
+time (seconds): 2.994813
+
+Solution 40
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution40
+time (seconds): 2.718456
+
+Solution 41
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution41
+time (seconds): 3.307423
+
+Solution 42
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution42
+time (seconds): 4.29331
+
+Solution 43
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution43
+time (seconds): 5.747838
+
+Solution 44
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution44
+time (seconds): 4.620911
+
+Solution 45
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution45
+time (seconds): 3.29377
+
+Solution 46
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution46
+time (seconds): 2.588111
+
+Solution 47
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution47
+time (seconds): 3.347662
+
+Solution 48
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution48
+time (seconds): 2.244974
+
+Solution 49
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution49
+time (seconds): 3.453976
+
+Solution 50
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution50
+time (seconds): 2.940061
+
+Solution 51
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution51
+time (seconds): 2.93782
+
+Solution 52
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution52
+time (seconds): 3.931978
+
+Solution 53
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution53
+time (seconds): 3.00599
+
+Solution 54
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution54
+time (seconds): 3.400155
+
+Solution 55
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution55
+time (seconds): 1.681305
+
+Solution 56
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution56
+time (seconds): 2.52148
+
+Solution 57
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution57
+time (seconds): 2.344603
+
+Solution 58
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution58
+time (seconds): 2.766459
+
+Solution 59
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution59
+time (seconds): 2.644128
+
+Solution 60
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution60
+time (seconds): 3.948846
+
+Solution 61
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution61
+time (seconds): 3.017841
+
+Solution 62
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution62
+time (seconds): 6.835389
+
+Solution 63
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution63
+time (seconds): 3.941138
+
+Solution 64
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution64
+time (seconds): 2.486128
+
+Solution 65
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution65
+time (seconds): 2.575802
+
+Solution 66
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution66
+time (seconds): 3.626307
+
+Solution 67
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution67
+time (seconds): 1.629411
+
+Solution 68
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution68
+time (seconds): 2.032898
+
+Solution 69
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution69
+time (seconds): 2.126176
+
+Solution 70
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution70
+time (seconds): 2.130318
+
+Solution 71
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution71
+time (seconds): 3.068994
+
+Solution 72
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution72
+time (seconds): 1.960476
+
+Solution 73
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution73
+time (seconds): 2.765983
+
+Solution 74
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution74
+time (seconds): 3.674009
+
+Solution 75
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution75
+time (seconds): 3.419691
+
+Solution 76
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution76
+time (seconds): 1.134366
+
+Solution 77
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution77
+time (seconds): 1.549178
+
+Solution 78
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution78
+time (seconds): 2.240955
+
+Solution 79
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution79
+time (seconds): 2.092982
+
+Solution 80
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution80
+time (seconds): 2.300412
+
+Solution 81
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution81
+time (seconds): 3.510337
+
+Solution 82
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution82
+time (seconds): 2.124687
+
+Solution 83
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution83
+time (seconds): 3.21991
+
+Solution 84
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution84
+time (seconds): 2.024079
+
+Solution 85
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution85
+time (seconds): 1.969885
+
+Solution 86
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution86
+time (seconds): 2.726451
+
+Solution 87
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution87
+time (seconds): 3.59945
+
+Solution 88
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution88
+time (seconds): 3.205843
+
+Solution 89
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution89
+time (seconds): 1.734082
+
+Solution 90
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution90
+time (seconds): 4.81942
+
+Solution 91
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution91
+time (seconds): 1.958415
+
+Solution 92
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution92
+time (seconds): 1.659336
+
+Solution 93
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution93
+time (seconds): 1.922897
+
+Solution 94
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution94
+time (seconds): 5.410098
+
+Solution 95
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution95
+time (seconds): 2.5411
+
+Solution 96
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution96
+time (seconds): 2.995818
+
+Solution 97
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution97
+time (seconds): 3.496792
+
+Solution 98
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution98
+time (seconds): 5.191673
+
+Solution 99
+file: ../sols/temp/lim/4-bit_2-1_mux_bench/session0/solution99
+time (seconds): 2.450426

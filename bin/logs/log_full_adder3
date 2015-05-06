@@ -1,0 +1,1130 @@
+Starting embedding
+
+Target Conditions:
+M:8	 N:8	 L:4
+
+Generating numAdj...complete
+Generating numAdj2...complete
+Setting flags...complete
+Initializing routing algorithm
+
+Selecting first cell
+	running method 2: probabilistic...done
+	selected cell 39
+
+Selecting first Qubit
+	running method 2: gaussian dist... done
+	selected qbit: (3, 4, 1, 0)
+
+toDo: [38, 40]
+
+##############################
+Placing cell: 38
+Adjacent qbits: [(3, 4, 1, 0)]
+Required availability: 4
+Found 1 candidate qubits: [(3, 4, 0, 2)] 
+Trying qbit: (3, 4, 0, 2) ...success...
+Placed on qubit: (3, 4, 0, 2)
+
+
+##############################
+Placing cell: 40
+Adjacent qbits: [(3, 4, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 4, 0, 3)] 
+Trying qbit: (3, 4, 0, 3) ...success...
+Placed on qubit: (3, 4, 0, 3)
+
+toDo: [32, 48, 37, 41]
+
+##############################
+Placing cell: 32
+Adjacent qbits: [(3, 4, 0, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 4, 1, 2)] 
+Trying qbit: (3, 4, 1, 2) ...success...
+Placed on qubit: (3, 4, 1, 2)
+
+
+##############################
+Placing cell: 48
+Adjacent qbits: [(3, 4, 0, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 4, 1, 3)] 
+Trying qbit: (3, 4, 1, 3) ...success...
+Placed on qubit: (3, 4, 1, 3)
+
+
+##############################
+Placing cell: 37
+Adjacent qbits: [(3, 4, 0, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 4, 1, 1)] 
+Trying qbit: (3, 4, 1, 1) ...success...
+Placed on qubit: (3, 4, 1, 1)
+
+
+##############################
+Placing cell: 41
+Adjacent qbits: [(3, 4, 0, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 4, 0, 3)] 
+Trying qbit: (4, 4, 0, 3) ...success...
+Placed on qubit: (4, 4, 0, 3)
+
+toDo: [29, 36, 42, 52]
+
+##############################
+Placing cell: 29
+Adjacent qbits: [(3, 4, 1, 2)]
+Required availability: 3
+Found 1 candidate qubits: [(3, 4, 0, 0)] 
+Trying qbit: (3, 4, 0, 0) ...success...
+Placed on qubit: (3, 4, 0, 0)
+
+
+##############################
+Placing cell: 36
+Adjacent qbits: [(3, 4, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 4, 0, 1)] 
+Trying qbit: (3, 4, 0, 1) ...success...
+Placed on qubit: (3, 4, 0, 1)
+
+
+##############################
+Placing cell: 42
+Adjacent qbits: [(4, 4, 0, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 4, 1, 0)] 
+Trying qbit: (4, 4, 1, 0) ...success...
+Placed on qubit: (4, 4, 1, 0)
+
+
+##############################
+Placing cell: 52
+Adjacent qbits: [(3, 4, 1, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 5, 1, 3)] 
+Trying qbit: (3, 5, 1, 3) ...success...
+Placed on qubit: (3, 5, 1, 3)
+
+toDo: [56, 25, 26, 35, 43]
+
+##############################
+Placing cell: 56
+Adjacent qbits: [(3, 5, 1, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 5, 0, 2)] 
+Trying qbit: (3, 5, 0, 2) ...success...
+Placed on qubit: (3, 5, 0, 2)
+
+
+##############################
+Placing cell: 25
+Adjacent qbits: [(3, 4, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 4, 0, 0)] 
+Trying qbit: (2, 4, 0, 0) ...success...
+Placed on qubit: (2, 4, 0, 0)
+
+
+##############################
+Placing cell: 26
+Adjacent qbits: [(3, 4, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 4, 0, 0)] 
+Trying qbit: (4, 4, 0, 0) ...success...
+Placed on qubit: (4, 4, 0, 0)
+
+
+##############################
+Placing cell: 35
+Adjacent qbits: [(3, 4, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 4, 0, 1)] 
+Trying qbit: (2, 4, 0, 1) ...success...
+Placed on qubit: (2, 4, 0, 1)
+
+
+##############################
+Placing cell: 43
+Adjacent qbits: [(4, 4, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 4, 0, 2)] 
+Trying qbit: (4, 4, 0, 2) ...success...
+Placed on qubit: (4, 4, 0, 2)
+
+toDo: [44, 20, 61, 22, 47]
+
+##############################
+Placing cell: 44
+Adjacent qbits: [(4, 4, 0, 2)]
+Required availability: 4
+Found 1 candidate qubits: [(4, 4, 1, 2)] 
+Trying qbit: (4, 4, 1, 2) ...success...
+Placed on qubit: (4, 4, 1, 2)
+
+
+##############################
+Placing cell: 20
+Adjacent qbits: [(2, 4, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 4, 1, 0)] 
+Trying qbit: (2, 4, 1, 0) ...success...
+Placed on qubit: (2, 4, 1, 0)
+
+
+##############################
+Placing cell: 61
+Adjacent qbits: [(3, 5, 0, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 5, 1, 2)] 
+Trying qbit: (3, 5, 1, 2) ...success...
+Placed on qubit: (3, 5, 1, 2)
+
+
+##############################
+Placing cell: 22
+Adjacent qbits: [(4, 4, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 4, 1, 3)] 
+Trying qbit: (4, 4, 1, 3) ...success...
+Placed on qubit: (4, 4, 1, 3)
+
+
+##############################
+Placing cell: 47
+Adjacent qbits: [(2, 4, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 4, 1, 1)] 
+Trying qbit: (2, 4, 1, 1) ...success...
+Placed on qubit: (2, 4, 1, 1)
+
+toDo: [33, 67, 49, 51, 21, 45]
+
+##############################
+Placing cell: 33
+Adjacent qbits: [(4, 4, 1, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 4, 0, 1)] 
+Trying qbit: (4, 4, 0, 1) ...success...
+Placed on qubit: (4, 4, 0, 1)
+
+
+##############################
+Placing cell: 67
+Adjacent qbits: [(3, 5, 1, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 5, 0, 3)] 
+Trying qbit: (3, 5, 0, 3) ...success...
+Placed on qubit: (3, 5, 0, 3)
+
+
+##############################
+Placing cell: 49
+Adjacent qbits: [(4, 4, 1, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 5, 1, 2)] 
+Trying qbit: (4, 5, 1, 2) ...success...
+Placed on qubit: (4, 5, 1, 2)
+
+
+##############################
+Placing cell: 51
+Adjacent qbits: [(2, 4, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 4, 0, 3)] 
+Trying qbit: (2, 4, 0, 3) ...success...
+Placed on qubit: (2, 4, 0, 3)
+
+
+##############################
+Placing cell: 21
+Adjacent qbits: [(2, 4, 1, 0), (4, 4, 1, 3)]
+Required availability: 3
+Found 1 candidate qubits: [(3, 3, 0, 2)] 
+Trying qbit: (3, 3, 0, 2) ...success...
+Placed on qubit: (3, 3, 0, 2)
+
+
+##############################
+Placing cell: 45
+Adjacent qbits: [(4, 4, 1, 2)]
+Required availability: 1
+Found 1 candidate qubits: [(4, 3, 1, 2)] 
+Trying qbit: (4, 3, 1, 2) ...success...
+Placed on qubit: (4, 3, 1, 2)
+
+toDo: [73, 53, 17, 30, 55]
+
+##############################
+Placing cell: 73
+Adjacent qbits: [(3, 5, 0, 3)]
+Required availability: 4
+Found 1 candidate qubits: [(3, 5, 1, 0)] 
+Trying qbit: (3, 5, 1, 0) ...success...
+Placed on qubit: (3, 5, 1, 0)
+
+
+##############################
+Placing cell: 53
+Adjacent qbits: [(4, 5, 1, 2)]
+Required availability: 3
+Found 1 candidate qubits: [(4, 5, 0, 0)] 
+Trying qbit: (4, 5, 0, 0) ...success...
+Placed on qubit: (4, 5, 0, 0)
+
+
+##############################
+Placing cell: 17
+Adjacent qbits: [(3, 3, 0, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 3, 1, 0)] 
+Trying qbit: (3, 3, 1, 0) ...success...
+Placed on qubit: (3, 3, 1, 0)
+
+
+##############################
+Placing cell: 30
+Adjacent qbits: [(4, 4, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 4, 1, 1)] 
+Trying qbit: (4, 4, 1, 1) ...success...
+Placed on qubit: (4, 4, 1, 1)
+
+
+##############################
+Placing cell: 55
+Adjacent qbits: [(2, 4, 0, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 4, 1, 2)] 
+Trying qbit: (2, 4, 1, 2) ...success...
+Placed on qubit: (2, 4, 1, 2)
+
+toDo: [72, 74, 14, 79, 57, 58, 27, 60]
+
+##############################
+Placing cell: 72
+Adjacent qbits: [(3, 5, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 5, 0, 1)] 
+Trying qbit: (3, 5, 0, 1) ...success...
+Placed on qubit: (3, 5, 0, 1)
+
+
+##############################
+Placing cell: 74
+Adjacent qbits: [(3, 5, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 5, 0, 0)] 
+Trying qbit: (3, 5, 0, 0) ...success...
+Placed on qubit: (3, 5, 0, 0)
+
+
+##############################
+Placing cell: 14
+Adjacent qbits: [(3, 3, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 3, 0, 1)] 
+Trying qbit: (3, 3, 0, 1) ...success...
+Placed on qubit: (3, 3, 0, 1)
+
+
+##############################
+Placing cell: 79
+Adjacent qbits: [(3, 5, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 6, 1, 0)] 
+Trying qbit: (3, 6, 1, 0) ...success...
+Placed on qubit: (3, 6, 1, 0)
+
+
+##############################
+Placing cell: 57
+Adjacent qbits: [(4, 5, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 5, 1, 3)] 
+Trying qbit: (4, 5, 1, 3) ...success...
+Placed on qubit: (4, 5, 1, 3)
+
+
+##############################
+Placing cell: 58
+Adjacent qbits: [(4, 5, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 5, 1, 1)] 
+Trying qbit: (4, 5, 1, 1) ...success...
+Placed on qubit: (4, 5, 1, 1)
+
+
+##############################
+Placing cell: 27
+Adjacent qbits: [(4, 4, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 3, 1, 1)] 
+Trying qbit: (4, 3, 1, 1) ...success...
+Placed on qubit: (4, 3, 1, 1)
+
+
+##############################
+Placing cell: 60
+Adjacent qbits: [(2, 4, 1, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 4, 0, 2)] 
+Trying qbit: (2, 4, 0, 2) ...success...
+Placed on qubit: (2, 4, 0, 2)
+
+toDo: [6, 64, 66, 71, 75, 83, 23, 62]
+
+##############################
+Placing cell: 6
+Adjacent qbits: [(3, 3, 0, 1)]
+Required availability: 3
+Found 1 candidate qubits: [(3, 3, 1, 1)] 
+Trying qbit: (3, 3, 1, 1) ...success...
+Placed on qubit: (3, 3, 1, 1)
+
+
+##############################
+Placing cell: 64
+Adjacent qbits: [(4, 5, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 5, 0, 2)] 
+Trying qbit: (4, 5, 0, 2) ...success...
+Placed on qubit: (4, 5, 0, 2)
+
+
+##############################
+Placing cell: 66
+Adjacent qbits: [(2, 4, 0, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 4, 1, 3)] 
+Trying qbit: (2, 4, 1, 3) ...success...
+Placed on qubit: (2, 4, 1, 3)
+
+
+##############################
+Placing cell: 71
+Adjacent qbits: [(3, 5, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 5, 1, 1)] 
+Trying qbit: (3, 5, 1, 1) ...success...
+Placed on qubit: (3, 5, 1, 1)
+
+
+##############################
+Placing cell: 75
+Adjacent qbits: [(3, 5, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 5, 0, 0)] 
+Trying qbit: (2, 5, 0, 0) ...success...
+Placed on qubit: (2, 5, 0, 0)
+
+
+##############################
+Placing cell: 83
+Adjacent qbits: [(3, 6, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 6, 0, 3)] 
+Trying qbit: (3, 6, 0, 3) ...success...
+Placed on qubit: (3, 6, 0, 3)
+
+
+##############################
+Placing cell: 23
+Adjacent qbits: [(4, 3, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 3, 0, 0)] 
+Trying qbit: (4, 3, 0, 0) ...success...
+Placed on qubit: (4, 3, 0, 0)
+
+
+##############################
+Placing cell: 62
+Adjacent qbits: [(4, 5, 1, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 5, 0, 3)] 
+Trying qbit: (4, 5, 0, 3) ...success...
+Placed on qubit: (4, 5, 0, 3)
+
+toDo: [5, 7, 76, 18, 92, 63, 70]
+
+##############################
+Placing cell: 5
+Adjacent qbits: [(3, 3, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 3, 0, 0)] 
+Trying qbit: (3, 3, 0, 0) ...success...
+Placed on qubit: (3, 3, 0, 0)
+
+
+##############################
+Placing cell: 7
+Adjacent qbits: [(3, 3, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 3, 0, 3)] 
+Trying qbit: (3, 3, 0, 3) ...success...
+Placed on qubit: (3, 3, 0, 3)
+
+
+##############################
+Placing cell: 76
+Adjacent qbits: [(2, 5, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 5, 1, 1)] 
+Trying qbit: (2, 5, 1, 1) ...success...
+Placed on qubit: (2, 5, 1, 1)
+
+
+##############################
+Placing cell: 18
+Adjacent qbits: [(4, 3, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 3, 1, 0)] 
+Trying qbit: (4, 3, 1, 0) ...success...
+Placed on qubit: (4, 3, 1, 0)
+
+
+##############################
+Placing cell: 92
+Adjacent qbits: [(3, 6, 0, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 6, 1, 3)] 
+Trying qbit: (3, 6, 1, 3) ...success...
+Placed on qubit: (3, 6, 1, 3)
+
+
+##############################
+Placing cell: 63
+Adjacent qbits: [(4, 5, 0, 3), (4, 5, 0, 2)]
+Required availability: 3
+Found 1 candidate qubits: [(4, 5, 1, 0)] 
+Trying qbit: (4, 5, 1, 0) ...success...
+Placed on qubit: (4, 5, 1, 0)
+
+
+##############################
+Placing cell: 70
+Adjacent qbits: [(2, 4, 1, 3), (3, 5, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 6, 0, 2)] 
+Trying qbit: (2, 6, 0, 2) ...success...
+Placed on qubit: (2, 6, 0, 2)
+
+toDo: [4, 8, 15, 80, 68, 91]
+
+##############################
+Placing cell: 4
+Adjacent qbits: [(3, 3, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 3, 1, 2)] 
+Trying qbit: (3, 3, 1, 2) ...success...
+Placed on qubit: (3, 3, 1, 2)
+
+
+##############################
+Placing cell: 8
+Adjacent qbits: [(3, 3, 0, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 3, 1, 3)] 
+Trying qbit: (3, 3, 1, 3) ...success...
+Placed on qubit: (3, 3, 1, 3)
+
+
+##############################
+Placing cell: 15
+Adjacent qbits: [(4, 3, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 3, 0, 1)] 
+Trying qbit: (4, 3, 0, 1) ...success...
+Placed on qubit: (4, 3, 0, 1)
+
+
+##############################
+Placing cell: 80
+Adjacent qbits: [(2, 5, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 5, 0, 1)] 
+Trying qbit: (2, 5, 0, 1) ...success...
+Placed on qubit: (2, 5, 0, 1)
+
+
+##############################
+Placing cell: 68
+Adjacent qbits: [(4, 5, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 5, 0, 1)] 
+Trying qbit: (4, 5, 0, 1) ...success...
+Placed on qubit: (4, 5, 0, 1)
+
+
+##############################
+Placing cell: 91
+Adjacent qbits: [(3, 6, 1, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 6, 0, 0)] 
+Trying qbit: (3, 6, 0, 0) ...success...
+Placed on qubit: (3, 6, 0, 0)
+
+toDo: [3, 9, 12, 77, 84, 90]
+
+##############################
+Placing cell: 3
+Adjacent qbits: [(3, 3, 1, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 2, 1, 2)] 
+Trying qbit: (3, 2, 1, 2) ...success...
+Placed on qubit: (3, 2, 1, 2)
+
+
+##############################
+Placing cell: 9
+Adjacent qbits: [(3, 3, 1, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 2, 1, 3)] 
+Trying qbit: (3, 2, 1, 3) ...success...
+Placed on qubit: (3, 2, 1, 3)
+
+
+##############################
+Placing cell: 12
+Adjacent qbits: [(4, 3, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(5, 3, 0, 1)] 
+Trying qbit: (5, 3, 0, 1) ...success...
+Placed on qubit: (5, 3, 0, 1)
+
+
+##############################
+Placing cell: 77
+Adjacent qbits: [(4, 5, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(5, 5, 0, 1)] 
+Trying qbit: (5, 5, 0, 1) ...success...
+Placed on qubit: (5, 5, 0, 1)
+
+
+##############################
+Placing cell: 84
+Adjacent qbits: [(2, 5, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 5, 1, 0)] 
+Trying qbit: (2, 5, 1, 0) ...success...
+Placed on qubit: (2, 5, 1, 0)
+
+
+##############################
+Placing cell: 90
+Adjacent qbits: [(3, 6, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 6, 1, 2)] 
+Trying qbit: (3, 6, 1, 2) ...success...
+Placed on qubit: (3, 6, 1, 2)
+
+toDo: [2, 10, 11, 81, 89, 93]
+
+##############################
+Placing cell: 2
+Adjacent qbits: [(3, 2, 1, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 2, 0, 1)] 
+Trying qbit: (3, 2, 0, 1) ...success...
+Placed on qubit: (3, 2, 0, 1)
+
+
+##############################
+Placing cell: 10
+Adjacent qbits: [(3, 2, 1, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 2, 0, 0)] 
+Trying qbit: (3, 2, 0, 0) ...success...
+Placed on qubit: (3, 2, 0, 0)
+
+
+##############################
+Placing cell: 11
+Adjacent qbits: [(3, 2, 0, 0), (5, 3, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(5, 2, 0, 0)] 
+Trying qbit: (5, 2, 0, 0) ...success...
+Placed on qubit: (5, 2, 0, 0)
+
+
+##############################
+Placing cell: 81
+Adjacent qbits: [(5, 5, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(5, 5, 1, 1)] 
+Trying qbit: (5, 5, 1, 1) ...success...
+Placed on qubit: (5, 5, 1, 1)
+
+
+##############################
+Placing cell: 89
+Adjacent qbits: [(3, 6, 1, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 6, 0, 1)] 
+Trying qbit: (3, 6, 0, 1) ...success...
+Placed on qubit: (3, 6, 0, 1)
+
+
+##############################
+Placing cell: 93
+Adjacent qbits: [(2, 5, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 5, 0, 2)] 
+Trying qbit: (2, 5, 0, 2) ...success...
+Placed on qubit: (2, 5, 0, 2)
+
+toDo: [88, 1, 85, 94]
+
+##############################
+Placing cell: 88
+Adjacent qbits: [(3, 6, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 6, 0, 1)] 
+Trying qbit: (4, 6, 0, 1) ...success...
+Placed on qubit: (4, 6, 0, 1)
+
+
+##############################
+Placing cell: 1
+Adjacent qbits: [(3, 2, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 2, 1, 1)] 
+Trying qbit: (3, 2, 1, 1) ...success...
+Placed on qubit: (3, 2, 1, 1)
+
+
+##############################
+Placing cell: 85
+Adjacent qbits: [(5, 5, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(5, 5, 0, 0)] 
+Trying qbit: (5, 5, 0, 0) ...success...
+Placed on qubit: (5, 5, 0, 0)
+
+
+##############################
+Placing cell: 94
+Adjacent qbits: [(2, 5, 0, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 5, 1, 2)] 
+Trying qbit: (2, 5, 1, 2) ...success...
+Placed on qubit: (2, 5, 1, 2)
+
+toDo: [96, 0, 95, 87]
+
+##############################
+Placing cell: 96
+Adjacent qbits: [(5, 5, 0, 0)]
+Required availability: 3
+Found 1 candidate qubits: [(5, 5, 1, 0)] 
+Trying qbit: (5, 5, 1, 0) ...success...
+Placed on qubit: (5, 5, 1, 0)
+
+
+##############################
+Placing cell: 0
+Adjacent qbits: [(3, 2, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 2, 0, 3)] 
+Trying qbit: (3, 2, 0, 3) ...success...
+Placed on qubit: (3, 2, 0, 3)
+
+
+##############################
+Placing cell: 95
+Adjacent qbits: [(2, 5, 1, 2), (5, 5, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 7, 0, 1)] 
+Trying qbit: (4, 7, 0, 1) ...success...
+Placed on qubit: (4, 7, 0, 1)
+
+
+##############################
+Placing cell: 87
+Adjacent qbits: [(4, 6, 0, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 6, 1, 1)] 
+Trying qbit: (4, 6, 1, 1) ...success...
+Placed on qubit: (4, 6, 1, 1)
+
+toDo: [13, 86, 97]
+
+##############################
+Placing cell: 13
+Adjacent qbits: [(3, 2, 0, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 2, 1, 0)] 
+Trying qbit: (3, 2, 1, 0) ...success...
+Placed on qubit: (3, 2, 1, 0)
+
+
+##############################
+Placing cell: 86
+Adjacent qbits: [(4, 6, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 6, 0, 0)] 
+Trying qbit: (4, 6, 0, 0) ...success...
+Placed on qubit: (4, 6, 0, 0)
+
+
+##############################
+Placing cell: 97
+Adjacent qbits: [(5, 5, 1, 0)]
+Required availability: 1
+Found 1 candidate qubits: [(5, 5, 0, 3)] 
+Trying qbit: (5, 5, 0, 3) ...success...
+Placed on qubit: (5, 5, 0, 3)
+
+toDo: [16, 82]
+
+##############################
+Placing cell: 16
+Adjacent qbits: [(3, 2, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(3, 2, 0, 2)] 
+Trying qbit: (3, 2, 0, 2) ...success...
+Placed on qubit: (3, 2, 0, 2)
+
+
+##############################
+Placing cell: 82
+Adjacent qbits: [(4, 6, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 6, 1, 0)] 
+Trying qbit: (4, 6, 1, 0) ...success...
+Placed on qubit: (4, 6, 1, 0)
+
+toDo: [19, 78]
+
+##############################
+Placing cell: 19
+Adjacent qbits: [(3, 2, 0, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 2, 0, 2)] 
+Trying qbit: (2, 2, 0, 2) ...success...
+Placed on qubit: (2, 2, 0, 2)
+
+
+##############################
+Placing cell: 78
+Adjacent qbits: [(4, 6, 1, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 6, 0, 3)] 
+Trying qbit: (4, 6, 0, 3) ...success...
+Placed on qubit: (4, 6, 0, 3)
+
+toDo: [24, 69]
+
+##############################
+Placing cell: 24
+Adjacent qbits: [(2, 2, 0, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 2, 1, 1)] 
+Trying qbit: (2, 2, 1, 1) ...success...
+Placed on qubit: (2, 2, 1, 1)
+
+
+##############################
+Placing cell: 69
+Adjacent qbits: [(4, 6, 0, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 6, 1, 2)] 
+Trying qbit: (4, 6, 1, 2) ...success...
+Placed on qubit: (4, 6, 1, 2)
+
+toDo: [65, 28]
+
+##############################
+Placing cell: 65
+Adjacent qbits: [(4, 6, 1, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 6, 0, 2)] 
+Trying qbit: (4, 6, 0, 2) ...success...
+Placed on qubit: (4, 6, 0, 2)
+
+
+##############################
+Placing cell: 28
+Adjacent qbits: [(2, 2, 1, 1)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 2, 0, 3)] 
+Trying qbit: (2, 2, 0, 3) ...success...
+Placed on qubit: (2, 2, 0, 3)
+
+toDo: [59, 31]
+
+##############################
+Placing cell: 59
+Adjacent qbits: [(4, 6, 0, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 6, 1, 3)] 
+Trying qbit: (4, 6, 1, 3) ...success...
+Placed on qubit: (4, 6, 1, 3)
+
+
+##############################
+Placing cell: 31
+Adjacent qbits: [(2, 2, 0, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 2, 1, 2)] 
+Trying qbit: (2, 2, 1, 2) ...success...
+Placed on qubit: (2, 2, 1, 2)
+
+toDo: [34, 54]
+
+##############################
+Placing cell: 34
+Adjacent qbits: [(2, 2, 1, 2)]
+Required availability: 2
+Found 1 candidate qubits: [(2, 2, 0, 0)] 
+Trying qbit: (2, 2, 0, 0) ...success...
+Placed on qubit: (2, 2, 0, 0)
+
+
+##############################
+Placing cell: 54
+Adjacent qbits: [(4, 6, 1, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 7, 1, 3)] 
+Trying qbit: (4, 7, 1, 3) ...success...
+Placed on qubit: (4, 7, 1, 3)
+
+toDo: [50, 46]
+
+##############################
+Placing cell: 50
+Adjacent qbits: [(4, 7, 1, 3)]
+Required availability: 2
+Found 1 candidate qubits: [(4, 7, 0, 0)] 
+Trying qbit: (4, 7, 0, 0) ...success...
+Placed on qubit: (4, 7, 0, 0)
+
+
+##############################
+Placing cell: 46
+Adjacent qbits: [(2, 2, 0, 0), (4, 7, 0, 0)]
+Required availability: 2
+Found 1 candidate qubits: [(1, 5, 1, 2)] 
+Trying qbit: (1, 5, 1, 2) ...success...
+Placed on qubit: (1, 5, 1, 2)
+
+
+
+***Embedding complete
+
+
+
+******************************
+
+Cell Mapping:
+
+0: (3, 2, 0, 3)
+1: (3, 2, 1, 1)
+2: (3, 2, 0, 1)
+3: (3, 2, 1, 2)
+4: (3, 3, 1, 2)
+5: (3, 3, 0, 0)
+6: (3, 3, 1, 1)
+7: (3, 3, 0, 3)
+8: (3, 3, 1, 3)
+9: (3, 2, 1, 3)
+10: (3, 2, 0, 0)
+11: (5, 2, 0, 0)
+12: (5, 3, 0, 1)
+13: (3, 2, 1, 0)
+14: (3, 3, 0, 1)
+15: (4, 3, 0, 1)
+16: (3, 2, 0, 2)
+17: (3, 3, 1, 0)
+18: (4, 3, 1, 0)
+19: (2, 2, 0, 2)
+20: (2, 4, 1, 0)
+21: (3, 3, 0, 2)
+22: (4, 4, 1, 3)
+23: (4, 3, 0, 0)
+24: (2, 2, 1, 1)
+25: (2, 4, 0, 0)
+26: (4, 4, 0, 0)
+27: (4, 3, 1, 1)
+28: (2, 2, 0, 3)
+29: (3, 4, 0, 0)
+30: (4, 4, 1, 1)
+31: (2, 2, 1, 2)
+32: (3, 4, 1, 2)
+33: (4, 4, 0, 1)
+34: (2, 2, 0, 0)
+35: (2, 4, 0, 1)
+36: (3, 4, 0, 1)
+37: (3, 4, 1, 1)
+38: (3, 4, 0, 2)
+39: (3, 4, 1, 0)
+40: (3, 4, 0, 3)
+41: (4, 4, 0, 3)
+42: (4, 4, 1, 0)
+43: (4, 4, 0, 2)
+44: (4, 4, 1, 2)
+45: (4, 3, 1, 2)
+46: (1, 5, 1, 2)
+47: (2, 4, 1, 1)
+48: (3, 4, 1, 3)
+49: (4, 5, 1, 2)
+50: (4, 7, 0, 0)
+51: (2, 4, 0, 3)
+52: (3, 5, 1, 3)
+53: (4, 5, 0, 0)
+54: (4, 7, 1, 3)
+55: (2, 4, 1, 2)
+56: (3, 5, 0, 2)
+57: (4, 5, 1, 3)
+58: (4, 5, 1, 1)
+59: (4, 6, 1, 3)
+60: (2, 4, 0, 2)
+61: (3, 5, 1, 2)
+62: (4, 5, 0, 3)
+63: (4, 5, 1, 0)
+64: (4, 5, 0, 2)
+65: (4, 6, 0, 2)
+66: (2, 4, 1, 3)
+67: (3, 5, 0, 3)
+68: (4, 5, 0, 1)
+69: (4, 6, 1, 2)
+70: (2, 6, 0, 2)
+71: (3, 5, 1, 1)
+72: (3, 5, 0, 1)
+73: (3, 5, 1, 0)
+74: (3, 5, 0, 0)
+75: (2, 5, 0, 0)
+76: (2, 5, 1, 1)
+77: (5, 5, 0, 1)
+78: (4, 6, 0, 3)
+79: (3, 6, 1, 0)
+80: (2, 5, 0, 1)
+81: (5, 5, 1, 1)
+82: (4, 6, 1, 0)
+83: (3, 6, 0, 3)
+84: (2, 5, 1, 0)
+85: (5, 5, 0, 0)
+86: (4, 6, 0, 0)
+87: (4, 6, 1, 1)
+88: (4, 6, 0, 1)
+89: (3, 6, 0, 1)
+90: (3, 6, 1, 2)
+91: (3, 6, 0, 0)
+92: (3, 6, 1, 3)
+93: (2, 5, 0, 2)
+94: (2, 5, 1, 2)
+95: (4, 7, 0, 1)
+96: (5, 5, 1, 0)
+97: (5, 5, 0, 3)
+
+
+Paths:
+
+46 <> 34 : 	 [(2, 2, 0, 0), (1, 2, 0, 0), (1, 2, 1, 2), (1, 3, 1, 2), (1, 4, 1, 2), (1, 5, 1, 2)]
+46 <> 50 : 	 [(4, 7, 0, 0), (3, 7, 0, 0), (2, 7, 0, 0), (1, 7, 0, 0), (1, 7, 1, 2), (1, 6, 1, 2), (1, 5, 1, 2)]
+34 <> 31 : 	 [(2, 2, 1, 2), (2, 2, 0, 0)]
+19 <> 24 : 	 [(2, 2, 0, 2), (2, 2, 1, 1)]
+19 <> 16 : 	 [(3, 2, 0, 2), (2, 2, 0, 2)]
+28 <> 24 : 	 [(2, 2, 1, 1), (2, 2, 0, 3)]
+28 <> 31 : 	 [(2, 2, 0, 3), (2, 2, 1, 2)]
+25 <> 20 : 	 [(2, 4, 0, 0), (2, 4, 1, 0)]
+25 <> 29 : 	 [(3, 4, 0, 0), (2, 4, 0, 0)]
+35 <> 47 : 	 [(2, 4, 0, 1), (2, 4, 1, 1)]
+35 <> 36 : 	 [(3, 4, 0, 1), (2, 4, 0, 1)]
+60 <> 55 : 	 [(2, 4, 1, 2), (2, 4, 0, 2)]
+60 <> 66 : 	 [(2, 4, 0, 2), (2, 4, 1, 3)]
+51 <> 47 : 	 [(2, 4, 1, 1), (2, 4, 0, 3)]
+51 <> 55 : 	 [(2, 4, 0, 3), (2, 4, 1, 2)]
+20 <> 21 : 	 [(2, 4, 1, 0), (2, 3, 1, 0), (2, 3, 0, 2), (3, 3, 0, 2)]
+66 <> 70 : 	 [(2, 4, 1, 3), (2, 5, 1, 3), (2, 6, 1, 3), (2, 6, 0, 2)]
+75 <> 76 : 	 [(2, 5, 0, 0), (2, 5, 1, 1)]
+75 <> 74 : 	 [(3, 5, 0, 0), (2, 5, 0, 0)]
+80 <> 84 : 	 [(2, 5, 0, 1), (2, 5, 1, 0)]
+80 <> 76 : 	 [(2, 5, 1, 1), (2, 5, 0, 1)]
+93 <> 84 : 	 [(2, 5, 1, 0), (2, 5, 0, 2)]
+93 <> 94 : 	 [(2, 5, 0, 2), (2, 5, 1, 2)]
+94 <> 95 : 	 [(2, 5, 1, 2), (2, 6, 1, 2), (2, 7, 1, 2), (2, 7, 0, 1), (3, 7, 0, 1), (4, 7, 0, 1)]
+70 <> 71 : 	 [(3, 5, 1, 1), (3, 6, 1, 1), (3, 6, 0, 2), (2, 6, 0, 2)]
+10 <> 9 : 	 [(3, 2, 1, 3), (3, 2, 0, 0)]
+10 <> 11 : 	 [(3, 2, 0, 0), (4, 2, 0, 0), (5, 2, 0, 0)]
+2 <> 1 : 	 [(3, 2, 0, 1), (3, 2, 1, 1)]
+2 <> 3 : 	 [(3, 2, 1, 2), (3, 2, 0, 1)]
+16 <> 13 : 	 [(3, 2, 1, 0), (3, 2, 0, 2)]
+0 <> 13 : 	 [(3, 2, 0, 3), (3, 2, 1, 0)]
+0 <> 1 : 	 [(3, 2, 1, 1), (3, 2, 0, 3)]
+3 <> 4 : 	 [(3, 3, 1, 2), (3, 2, 1, 2)]
+9 <> 8 : 	 [(3, 3, 1, 3), (3, 2, 1, 3)]
+5 <> 6 : 	 [(3, 3, 1, 1), (3, 3, 0, 0)]
+5 <> 4 : 	 [(3, 3, 0, 0), (3, 3, 1, 2)]
+14 <> 17 : 	 [(3, 3, 1, 0), (3, 3, 0, 1)]
+14 <> 6 : 	 [(3, 3, 0, 1), (3, 3, 1, 1)]
+21 <> 17 : 	 [(3, 3, 0, 2), (3, 3, 1, 0)]
+21 <> 22 : 	 [(4, 4, 1, 3), (4, 3, 1, 3), (4, 3, 0, 2), (3, 3, 0, 2)]
+7 <> 6 : 	 [(3, 3, 1, 1), (3, 3, 0, 3)]
+7 <> 8 : 	 [(3, 3, 0, 3), (3, 3, 1, 3)]
+29 <> 32 : 	 [(3, 4, 1, 2), (3, 4, 0, 0)]
+29 <> 26 : 	 [(3, 4, 0, 0), (4, 4, 0, 0)]
+36 <> 37 : 	 [(3, 4, 1, 1), (3, 4, 0, 1)]
+38 <> 39 : 	 [(3, 4, 1, 0), (3, 4, 0, 2)]
+38 <> 37 : 	 [(3, 4, 0, 2), (3, 4, 1, 1)]
+38 <> 32 : 	 [(3, 4, 0, 2), (3, 4, 1, 2)]
+38 <> 48 : 	 [(3, 4, 0, 2), (3, 4, 1, 3)]
+40 <> 39 : 	 [(3, 4, 1, 0), (3, 4, 0, 3)]
+40 <> 41 : 	 [(3, 4, 0, 3), (4, 4, 0, 3)]
+48 <> 52 : 	 [(3, 4, 1, 3), (3, 5, 1, 3)]
+74 <> 73 : 	 [(3, 5, 1, 0), (3, 5, 0, 0)]
+72 <> 73 : 	 [(3, 5, 1, 0), (3, 5, 0, 1)]
+72 <> 71 : 	 [(3, 5, 0, 1), (3, 5, 1, 1)]
+56 <> 61 : 	 [(3, 5, 0, 2), (3, 5, 1, 2)]
+56 <> 52 : 	 [(3, 5, 1, 3), (3, 5, 0, 2)]
+67 <> 73 : 	 [(3, 5, 0, 3), (3, 5, 1, 0)]
+67 <> 61 : 	 [(3, 5, 1, 2), (3, 5, 0, 3)]
+73 <> 79 : 	 [(3, 5, 1, 0), (3, 6, 1, 0)]
+91 <> 90 : 	 [(3, 6, 0, 0), (3, 6, 1, 2)]
+91 <> 92 : 	 [(3, 6, 1, 3), (3, 6, 0, 0)]
+89 <> 90 : 	 [(3, 6, 1, 2), (3, 6, 0, 1)]
+89 <> 88 : 	 [(3, 6, 0, 1), (4, 6, 0, 1)]
+83 <> 79 : 	 [(3, 6, 1, 0), (3, 6, 0, 3)]
+83 <> 92 : 	 [(3, 6, 0, 3), (3, 6, 1, 3)]
+23 <> 18 : 	 [(4, 3, 0, 0), (4, 3, 1, 0)]
+23 <> 27 : 	 [(4, 3, 1, 1), (4, 3, 0, 0)]
+15 <> 18 : 	 [(4, 3, 1, 0), (4, 3, 0, 1)]
+15 <> 12 : 	 [(4, 3, 0, 1), (5, 3, 0, 1)]
+27 <> 30 : 	 [(4, 4, 1, 1), (4, 3, 1, 1)]
+45 <> 44 : 	 [(4, 4, 1, 2), (4, 3, 1, 2)]
+26 <> 22 : 	 [(4, 4, 0, 0), (4, 4, 1, 3)]
+33 <> 30 : 	 [(4, 4, 0, 1), (4, 4, 1, 1)]
+33 <> 44 : 	 [(4, 4, 1, 2), (4, 4, 0, 1)]
+43 <> 42 : 	 [(4, 4, 1, 0), (4, 4, 0, 2)]
+43 <> 44 : 	 [(4, 4, 0, 2), (4, 4, 1, 2)]
+41 <> 42 : 	 [(4, 4, 0, 3), (4, 4, 1, 0)]
+44 <> 49 : 	 [(4, 4, 1, 2), (4, 5, 1, 2)]
+53 <> 58 : 	 [(4, 5, 0, 0), (4, 5, 1, 1)]
+53 <> 49 : 	 [(4, 5, 1, 2), (4, 5, 0, 0)]
+53 <> 57 : 	 [(4, 5, 0, 0), (4, 5, 1, 3)]
+68 <> 63 : 	 [(4, 5, 1, 0), (4, 5, 0, 1)]
+68 <> 77 : 	 [(4, 5, 0, 1), (5, 5, 0, 1)]
+64 <> 63 : 	 [(4, 5, 0, 2), (4, 5, 1, 0)]
+64 <> 58 : 	 [(4, 5, 1, 1), (4, 5, 0, 2)]
+62 <> 63 : 	 [(4, 5, 0, 3), (4, 5, 1, 0)]
+62 <> 57 : 	 [(4, 5, 1, 3), (4, 5, 0, 3)]
+86 <> 82 : 	 [(4, 6, 0, 0), (4, 6, 1, 0)]
+86 <> 87 : 	 [(4, 6, 1, 1), (4, 6, 0, 0)]
+88 <> 87 : 	 [(4, 6, 0, 1), (4, 6, 1, 1)]
+65 <> 69 : 	 [(4, 6, 1, 2), (4, 6, 0, 2)]
+65 <> 59 : 	 [(4, 6, 0, 2), (4, 6, 1, 3)]
+78 <> 82 : 	 [(4, 6, 1, 0), (4, 6, 0, 3)]
+78 <> 69 : 	 [(4, 6, 0, 3), (4, 6, 1, 2)]
+59 <> 54 : 	 [(4, 6, 1, 3), (4, 7, 1, 3)]
+50 <> 54 : 	 [(4, 7, 1, 3), (4, 7, 0, 0)]
+95 <> 96 : 	 [(5, 5, 1, 0), (5, 6, 1, 0), (5, 7, 1, 0), (5, 7, 0, 1), (4, 7, 0, 1)]
+11 <> 12 : 	 [(5, 3, 0, 1), (5, 3, 1, 0), (5, 2, 1, 0), (5, 2, 0, 0)]
+85 <> 96 : 	 [(5, 5, 0, 0), (5, 5, 1, 0)]
+85 <> 81 : 	 [(5, 5, 1, 1), (5, 5, 0, 0)]
+77 <> 81 : 	 [(5, 5, 0, 1), (5, 5, 1, 1)]
+97 <> 96 : 	 [(5, 5, 1, 0), (5, 5, 0, 3)]
+Number of qubit: 125

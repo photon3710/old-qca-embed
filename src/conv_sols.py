@@ -1,5 +1,14 @@
 #!/usr/bin/python
 
+#---------------------------------------------------------
+# Name: conv_sols.py
+# Purpose:  Script for converting solution files from the Dense Placement
+#           algorithm to vertex-model formatted files.
+# Author:	Jacob Retallick
+# Created: 02.03.2015
+# Last Modified: 06.05.2015
+#---------------------------------------------------------
+
 from convert import convertToModels, writeSol
 #from math import ceil
 import os
@@ -14,7 +23,7 @@ def strToQbit(s):
 
 
 def readSub(data):
-    ''' '''
+    '''Read subsection of < ... /> architecture.'''
 
     read_flag = False
     rx = re.compile('<.*>')
@@ -91,7 +100,7 @@ def loadSol(fname):
 
 
 def runFile(fname):
-    ''' '''
+    '''Convert single solution file'''
 
     sol_dict = loadSol(fname)
     models, max_models = convertToModels(sol_dict['paths'], sol_dict['qbits'])
@@ -99,7 +108,7 @@ def runFile(fname):
 
 
 def runDirectory(dname):
-    ''' '''
+    '''Convert all files in a directory'''
 
     regex = re.compile('^sol[0-9]+$')
 
@@ -131,6 +140,7 @@ def runDirectory(dname):
 
 if __name__ == '__main__':
 
+    # format passed in directory
     try:
         dname = sys.argv[1]
         runDirectory(dname)

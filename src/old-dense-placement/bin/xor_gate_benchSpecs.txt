@@ -1,0 +1,435 @@
+Tries Per Size: 10
+Maximum Grid Size: 20
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 223
+Couplers Used: 257
+Tiles Used: 47
+Time (seconds): 1.688453
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.258518
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.26059
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 99
+Couplers Used: 118
+Tiles Used: 20
+Time (seconds): 1.017247
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 223
+Couplers Used: 257
+Tiles Used: 47
+Time (seconds): 1.622003
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.244418
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 223
+Couplers Used: 257
+Tiles Used: 47
+Time (seconds): 1.649032
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 99
+Couplers Used: 118
+Tiles Used: 20
+Time (seconds): 1.105892
+
+
+
+xor_gate_benchSolution0 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 203
+Couplers Used: 239
+Tiles Used: 47
+Time (seconds): 1.493357
+Fails Before Solution was Found: 8
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 99
+Couplers Used: 118
+Tiles Used: 20
+Time (seconds): 1.021732
+
+
+
+xor_gate_benchSolution1 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 6
+Used Width: 7
+Qubits Used: 185
+Couplers Used: 221
+Tiles Used: 33
+Time (seconds): 1.446493
+Fails Before Solution was Found: 1
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 223
+Couplers Used: 257
+Tiles Used: 47
+Time (seconds): 1.652148
+
+
+
+xor_gate_benchSolution2 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 189
+Couplers Used: 225
+Tiles Used: 38
+Time (seconds): 1.449317
+Fails Before Solution was Found: 1
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 99
+Couplers Used: 118
+Tiles Used: 20
+Time (seconds): 1.033483
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.260736
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.271907
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 223
+Couplers Used: 257
+Tiles Used: 47
+Time (seconds): 1.629238
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 99
+Couplers Used: 118
+Tiles Used: 20
+Time (seconds): 1.019631
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.261186
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.258029
+
+
+
+xor_gate_benchSolution3 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 203
+Couplers Used: 239
+Tiles Used: 47
+Time (seconds): 1.435353
+Fails Before Solution was Found: 7
+
+
+
+xor_gate_benchSolution4 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 208
+Couplers Used: 244
+Tiles Used: 48
+Time (seconds): 1.434806
+Fails Before Solution was Found: 0
+
+
+
+xor_gate_benchSolution5 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 189
+Couplers Used: 225
+Tiles Used: 38
+Time (seconds): 1.482799
+Fails Before Solution was Found: 0
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.324445
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.276974
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.300858
+
+
+
+xor_gate_benchSolution6 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 189
+Couplers Used: 225
+Tiles Used: 38
+Time (seconds): 1.46979
+Fails Before Solution was Found: 3
+
+
+
+xor_gate_benchSolution7 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 6
+Used Width: 7
+Qubits Used: 185
+Couplers Used: 221
+Tiles Used: 33
+Time (seconds): 1.537465
+Fails Before Solution was Found: 0
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.336124
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 99
+Couplers Used: 118
+Tiles Used: 20
+Time (seconds): 1.089763
+
+
+
+xor_gate_benchSolution8 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 6
+Used Width: 7
+Qubits Used: 185
+Couplers Used: 221
+Tiles Used: 33
+Time (seconds): 1.498054
+Fails Before Solution was Found: 2
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 223
+Couplers Used: 257
+Tiles Used: 47
+Time (seconds): 1.648825
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 5
+Used Width: 7
+Qubits Used: 135
+Couplers Used: 163
+Tiles Used: 32
+Time (seconds): 1.273596
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 99
+Couplers Used: 118
+Tiles Used: 20
+Time (seconds): 1.016027
+
+
+
+xor_gate_benchSolution9 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 189
+Couplers Used: 225
+Tiles Used: 38
+Time (seconds): 1.44005
+Fails Before Solution was Found: 3
+
+
+

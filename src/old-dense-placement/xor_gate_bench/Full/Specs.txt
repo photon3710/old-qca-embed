@@ -1,0 +1,243 @@
+Tries Per Size: 10
+Maximum Grid Size: 20
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 5
+Qubits Used: 143
+Couplers Used: 165
+Tiles Used: 24
+Time (seconds): 1.336082
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 5
+Qubits Used: 143
+Couplers Used: 165
+Tiles Used: 24
+Time (seconds): 1.247224
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 5
+Qubits Used: 129
+Couplers Used: 153
+Tiles Used: 25
+Time (seconds): 1.54204
+
+
+
+Solution0 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 155
+Couplers Used: 183
+Tiles Used: 30
+Time (seconds): 1.556544
+Fails Before Solution was Found: 3
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 5
+Qubits Used: 143
+Couplers Used: 165
+Tiles Used: 24
+Time (seconds): 1.235527
+
+
+
+Solution1 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 155
+Couplers Used: 183
+Tiles Used: 30
+Time (seconds): 1.548099
+Fails Before Solution was Found: 1
+
+
+
+Solution2 Specifications:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 135
+Couplers Used: 164
+Tiles Used: 25
+Time (seconds): 1.337877
+Fails Before Solution was Found: 0
+
+
+
+Solution3 Specifications:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 135
+Couplers Used: 164
+Tiles Used: 25
+Time (seconds): 1.314044
+Fails Before Solution was Found: 0
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 5
+Qubits Used: 129
+Couplers Used: 153
+Tiles Used: 25
+Time (seconds): 1.564398
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 5
+Qubits Used: 129
+Couplers Used: 153
+Tiles Used: 25
+Time (seconds): 1.56237
+
+
+
+Solution4 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 155
+Couplers Used: 183
+Tiles Used: 30
+Time (seconds): 1.553871
+Fails Before Solution was Found: 2
+
+
+
+Solution5 Specifications:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 7
+Qubits Used: 155
+Couplers Used: 183
+Tiles Used: 30
+Time (seconds): 1.549007
+Fails Before Solution was Found: 0
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 5
+Qubits Used: 143
+Couplers Used: 165
+Tiles Used: 24
+Time (seconds): 1.233344
+
+
+
+Solution6 Specifications:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 135
+Couplers Used: 164
+Tiles Used: 25
+Time (seconds): 1.310646
+Fails Before Solution was Found: 1
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 5
+Qubits Used: 129
+Couplers Used: 153
+Tiles Used: 25
+Time (seconds): 1.580464
+
+
+
+Solution7 Specifications:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 135
+Couplers Used: 164
+Tiles Used: 25
+Time (seconds): 1.300078
+Fails Before Solution was Found: 1
+
+
+
+Solution8 Specifications:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 135
+Couplers Used: 164
+Tiles Used: 25
+Time (seconds): 1.299881
+Fails Before Solution was Found: 0
+
+
+
+Fail:
+Starting Grid Size: 7
+Grid Size: 7
+Used Height: 7
+Used Width: 5
+Qubits Used: 129
+Couplers Used: 153
+Tiles Used: 25
+Time (seconds): 1.537535
+
+
+
+Solution9 Specifications:
+Starting Grid Size: 7
+Grid Size: 6
+Used Height: 6
+Used Width: 5
+Qubits Used: 135
+Couplers Used: 164
+Tiles Used: 25
+Time (seconds): 1.306829
+Fails Before Solution was Found: 1
+
+
+

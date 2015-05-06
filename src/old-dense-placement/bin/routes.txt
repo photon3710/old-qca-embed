@@ -1,0 +1,369 @@
+new:
+192 196
+shared:
+new:
+192 196
+shared:
+new:
+192 197 193 196
+shared:
+new:
+192 197
+shared:
+new:
+192 198 194 197
+shared:
+new:
+192 196
+shared:
+new:
+192 199 195 196
+shared:
+new:
+192 199
+shared:
+new:
+192 248 255 263 259 203 207 199
+shared:
+new:
+196 188
+shared:
+new:
+198 206 202 258 262 254 248
+shared:
+new:
+188 184
+shared:
+new:
+188 184
+shared:
+new:
+188 185 189 184
+shared:
+new:
+254 249
+shared:
+new:
+184 190
+shared:
+new:
+249 252
+shared:
+new:
+249 252
+shared:
+new:
+249 253 250 252
+shared:
+new:
+252 244
+shared:
+new:
+190 186
+shared:
+new:
+244 243
+shared:
+new:
+244 243
+shared:
+new:
+244 240 245 243
+shared:
+new:
+244 240
+shared:
+new:
+244 241 246 240
+shared:
+new:
+186 191
+shared:
+new:
+243 247 240
+shared:
+new:
+247 241
+shared:
+new:
+243 247 241
+shared:
+new:
+247 240
+shared:
+new:
+240 247 241
+shared:
+new:
+247 243
+shared:
+new:
+243 299
+shared:
+new:
+241 297
+shared:
+new:
+191 187
+shared:
+new:
+247 242
+shared:
+new:
+297 300
+shared:
+new:
+297 300
+shared:
+new:
+297 301 296 300
+shared:
+new:
+299 302
+shared:
+new:
+187 131
+shared:
+new:
+300 292
+shared:
+new:
+302 310
+shared:
+new:
+302 310
+shared:
+new:
+302 294 288 295 303 311 304 310
+shared:
+new:
+242 298 354
+shared:
+new:
+131 132
+shared:
+new:
+310 307
+shared:
+new:
+310 306 362 364 356 348 347 291 294
+shared:
+new:
+354 357
+shared:
+new:
+354 357
+shared:
+new:
+354 358 352 357
+shared:
+new:
+292 289
+shared:
+new:
+132 128
+shared:
+new:
+307 308 316
+shared:
+new:
+307 309 317 312 316
+shared:
+new:
+307 363 367 375 371 315 316
+shared:
+new:
+289 233
+shared:
+new:
+289 233
+shared:
+new:
+289 293 290 234 236 233
+shared:
+new:
+289 345 351 343 336 280 224 231 239 233
+shared:
+new:
+357 353 358
+shared:
+new:
+128 133
+shared:
+new:
+316 313 317
+shared:
+new:
+316 314 370 375
+shared:
+new:
+233 237 234
+shared:
+new:
+237 229 227 283 284 280
+shared:
+new:
+233 238 230 227 283 284 280
+shared:
+new:
+238 234
+shared:
+new:
+230 225 229 237 234
+shared:
+new:
+227 229 237 234
+shared:
+new:
+283 285 282 226 229 237 234
+shared:
+new:
+284 282 226 229 237 234
+shared:
+new:
+234 238 230 227 283 284 280
+shared:
+new:
+238 233
+shared:
+new:
+230 225 229 237 233
+shared:
+new:
+227 229 237 233
+shared:
+new:
+283 285 282 226 229 237 233
+shared:
+new:
+284 282 226 229 237 233
+shared:
+new:
+353 297
+shared:
+new:
+77 73
+shared:
+new:
+181 176
+shared:
+new:
+297 300
+shared:
+new:
+297 300
+shared:
+new:
+297 301 296 300
+shared:
+new:
+297 301
+shared:
+new:
+297 302 299 301
+shared:
+new:
+257 313 369 372 370
+shared:
+new:
+73 78
+shared:
+new:
+300 292 288 293 301
+shared:
+new:
+292 290 294 302
+shared:
+new:
+288 294 302
+shared:
+new:
+293 290 294 302
+shared:
+new:
+300 292 288 294 302
+shared:
+new:
+292 290 293 301
+shared:
+new:
+288 293 301
+shared:
+new:
+294 290 293 301
+shared:
+new:
+301 293 288 294 302
+shared:
+new:
+293 290 292 300
+shared:
+new:
+288 292 300
+shared:
+new:
+294 290 292 300
+shared:
+new:
+300 308
+shared:
+new:
+176 182 174 169 225 281 287 295 303 311 304 310 302
+shared:
+new:
+176 120 127 119 114 170 226 282 284 281
+shared:
+new:
+313 317
+shared:
+new:
+78 86
+shared:
+new:
+288 344
+shared:
+new:
+86 80
+shared:
+new:
+86 80
+shared:
+new:
+86 81 84 80
+shared:
+new:
+86 82 85 80
+shared:
+new:
+308 316 312 317
+shared:
+new:
+317 312
+shared:
+new:
+317 325 320 327 319 312
+shared:
+new:
+344 349
+shared:
+new:
+344 349
+shared:
+new:
+344 350 346 349
+shared:
+new:
+81 87
+shared:
+new:
+349 341
+shared:
+new:
+87 83
+shared:
+new:
+341 339 283 227 171 115 59 3 6 14 22 30 27 83
+shared:
+new:
+341 337 342 350 344 288 232 176 120 64 8 15 23 31 39 35 91
+shared:

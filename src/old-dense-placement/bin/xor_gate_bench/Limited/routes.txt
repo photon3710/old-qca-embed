@@ -1,0 +1,216 @@
+new:
+192 196
+shared:
+new:
+192 197
+shared:
+new:
+192 198
+shared:
+new:
+192 199
+shared:
+new:
+196 193
+shared:
+new:
+197 194
+shared:
+new:
+198 195
+shared:
+new:
+199 191
+shared:
+new:
+193 249
+shared:
+new:
+194 138
+shared:
+new:
+195 139
+shared:
+new:
+191 184
+shared:
+new:
+249 252
+shared:
+new:
+138 140
+shared:
+new:
+139 141
+shared:
+new:
+184 188
+shared:
+new:
+252 248
+shared:
+new:
+140 136
+shared:
+new:
+141 137
+shared:
+new:
+188 185
+shared:
+new:
+248 253
+shared:
+new:
+248 254
+shared:
+new:
+136 142
+shared:
+new:
+137 143
+shared:
+new:
+185 189
+shared:
+new:
+253 250
+shared:
+new:
+254 251
+shared:
+new:
+142 150
+shared:
+new:
+143 151
+shared:
+new:
+189 186
+shared:
+new:
+186 190
+shared:
+new:
+186 130
+shared:
+new:
+186 242
+shared:
+new:
+150 144
+shared:
+new:
+150 145
+shared:
+new:
+151 146
+shared:
+new:
+151 147
+shared:
+new:
+250 255 251
+shared:
+new:
+255 263
+shared:
+new:
+190 187
+shared:
+new:
+130 132
+shared:
+new:
+242 244
+shared:
+new:
+144 148
+shared:
+new:
+145 149
+shared:
+new:
+146 202
+shared:
+new:
+263 256
+shared:
+new:
+187 131
+shared:
+new:
+132 124 123 179 235 291 295 303 311 319 314 258 202
+shared:
+new:
+244 240
+shared:
+new:
+148 156 152 157 149
+shared:
+new:
+156 153
+shared:
+new:
+256 260
+shared:
+new:
+131 75 79 87 95 103 97 153
+shared:
+new:
+240 245
+shared:
+new:
+260 257
+shared:
+new:
+245 241
+shared:
+new:
+257 261
+shared:
+new:
+241 246
+shared:
+new:
+261 259
+shared:
+new:
+246 243
+shared:
+new:
+259 262
+shared:
+new:
+243 247
+shared:
+new:
+262 270
+shared:
+new:
+247 239
+shared:
+new:
+270 264
+shared:
+new:
+239 232
+shared:
+new:
+264 268
+shared:
+new:
+232 236
+shared:
+new:
+268 265
+shared:
+new:
+236 233
+shared:
+new:
+265 269
+shared:
+new:
+233 289 292 300 308 316 324 323 267 269
+shared:

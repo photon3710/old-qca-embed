@@ -68,10 +68,10 @@ OUT_TILE_COST = 1.9     # cost for a new qubit outside the same tile
 EDGE_REP_COST = 0.5     # linear cost for tiles closer to the processor edge
 
 # seam ranking weights
-SEAM_QBIT_COST = 3      # cost for an assigned qbit to a broken qbit
-SEAM_PATH_COST = 4      # cost for breaking a path
+SEAM_QBIT_COST = 30      # cost for an assigned qbit to a broken qbit
+SEAM_PATH_COST = 40      # cost for breaking a path
 SEAM_EXT_COST = 0       # cost for each extended connection
-SEAM_DIST_COST = 3      # cost for the distance between the seam and av. qbit
+SEAM_DIST_COST = 30      # cost for the distance between the seam and av. qbit
 
 MAX_SEARCH_COUNT = 3    # maximum number of additional times to run the
                         # multisource search algorithm before failure asserted
@@ -1287,7 +1287,7 @@ def availableSeams(qbits):
         # left/right seams
 
         if _vacancy[0] > 0 and qbit[1] > _vacancy[0]:     # open left
-            if qbit[1] > 1 and any:
+            if qbit[1] > 1:
                 seams.add(((1, qbit[1]), False))
             seams.add(((1, qbit[1]+1), False))
 

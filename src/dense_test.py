@@ -25,7 +25,7 @@ ndis = 0
 dis_coup = []
 dis_qbits = list(set(map(int, [random()*M*N*L*2 for _ in xrange(ndis)])))
 
-typ = 'maj'
+typ = 'inv'
 NEAREST = True
 
 setChimeraSize(M, N, L)

@@ -2,7 +2,7 @@
 # Name: dense_test.py
 # Purpose: Test code for the dense placement algorithm
 # Author:	Jacob Retallick
-# Created: 08.02.2014
+# Created: 02.08.2014
 # Last Modified: 06.05.2015
 #---------------------------------------------------------
 

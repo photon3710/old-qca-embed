@@ -1,4 +1,5 @@
-This file is a running list of things that should be done in the code.
+This file is a running list of things that should be done in the code. Also
+contains general thought/question.
 
 Embedding algorithm:
 	- Longest chains in limited adjacency embedding correspond to cases when a
@@ -18,23 +19,27 @@ Model conversion:
 	- Add in LP-relaxation with rounding (non-essential).
 
 Parsing:
-	- Current implementation does not separate circuit into clock regions:
+	- Current implementation does not separate the circuit into clock regions:
 		- group cells into clock regions (either list or dict)
 		- keep track of outputs/inputs form/to each clock region
 	- Not sure if the ambiguity of drivers without the polarization as the name
 	has been fixed yet.
 
 Formatting:
+	- 
 
-
-- Given a QCA Circuit the work flow should be as follows:
+Given a QCA Circuit the work flow should be as follows:
 	1. Generate a set of clock regions and inputs/ouputs between clock 
 	regions.
 	2. For each clock region, find the best possible embedding (smallest
 	vertex model size).
 	3. For each relevant set of inputs to the circuit, set up the first
 	clock zone and run the annealing process.
-	4. Based on the output(s) from the first clock zone,
+	4. Based on the output(s) from the first clock region, set up the next clock
+	region and repeat.
+	5. Extract ground state solution for coherence vector formalism and other
+	meaningful metrics to analyse the circuit from sampling spectra in each
+	clock region.
 	
 Question: Is it better to run each clock zone based on the outputs from the
 previous, or is it better to treat each clock zone as independent and correlate

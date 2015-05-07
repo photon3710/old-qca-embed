@@ -1,8 +1,10 @@
-"""
-Created on Fri Mar  6 13:48:16 2015
-
-@author: jake
-"""
+#---------------------------------------------------------
+# Name: gen_test.py
+# Purpose: Test code for circuit generator
+# Author:    Jacob Retallick
+# Created: 02.08.2014
+# Last Modified: 06.05.2015
+#---------------------------------------------------------
 
 from __future__ import division
 
@@ -22,7 +24,7 @@ from auxil import coefToConn
 RUN_DENSE = False
 
 FLAG_SOL = False
-ONCE_FLAG = True	# continue after a single found solution
+ONCE_FLAG = True    # continue after a single found solution
 
 SHOW = False
 
@@ -39,12 +41,12 @@ WRITE_DIR += 'dense/' if RUN_DENSE else 'heur/'
 
 
 def getFname(direc):
-    ''' '''
-    
+    '''Get unused filename for writing'''
+
     # check for directory existence
     if not os.path.exists(direc):
-    	os.makedirs(direc)
-    	
+        os.makedirs(direc)
+
     # check for free filename
     regex = re.compile('^out[0-9]+$')
     old_outs = filter(regex.match, os.listdir(direc))
@@ -55,7 +57,7 @@ def getFname(direc):
 
 
 def writeToFile(OUT):
-    ''' '''
+    '''write generated circuit results to file'''
 
     try:
         fname = getFname(WRITE_DIR)
@@ -80,7 +82,7 @@ def writeToFile(OUT):
 
 
 def procDenseEmbed(embed):
-    ''' '''
+    '''Process formatted dense placement solution'''
 
     cell_map, paths = embed
 
@@ -132,7 +134,7 @@ def formatCoef(h, J):
 
 
 def runDense(h, J, max_count):
-    ''' '''
+    '''Run the dense placement embedding algorithm'''
 
     source = coefToConn(h, J)
     count, num_success, num_trials = 0, 0, 0
@@ -147,9 +149,9 @@ def runDense(h, J, max_count):
             print 'Solution %d found...' % num_success
             good_embeds.append([cell_map, paths])
             if ONCE_FLAG:
-            	break
+                break
         except:
-            '*'
+            print '*'
             pass
         count = num_success if FLAG_SOL else num_trials
 
@@ -157,7 +159,7 @@ def runDense(h, J, max_count):
 
 
 def runHeuristic(S, S_size, max_count):
-    '''run the heuristic method'''
+    '''run the heuristic embedding algorithm'''
 
     global M, N, L, A_size
 
@@ -180,7 +182,7 @@ def runHeuristic(S, S_size, max_count):
             good_embeds.append(embeddings)
             print 'solution ' + str(success_num) + ' found...'
             if ONCE_FLAG:
-            	break
+                break
 
         count = success_num if FLAG_SOL else trial_num
 

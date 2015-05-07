@@ -1,5 +1,13 @@
 #!/usr/bin/python
 
+#---------------------------------------------------------
+# Name: show_sol.py
+# Purpose: Test code for the dense placement algorithm
+# Author:	Jacob Retallick
+# Created: 02.08.2014
+# Last Modified: 06.05.2015
+#---------------------------------------------------------
+
 #import pylab as plt
 import Tkinter as tk
 from parse_qca import parseQCAFile, correctNumbering

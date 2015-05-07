@@ -2,7 +2,7 @@
 
 #---------------------------------------------------------
 # Name: generator.py
-# Purpose: Generation of simple QCA circuits
+# Purpose: QCA circuit generator
 # Author:    Jacob Retallick
 # Created: 02.08.2014
 # Last Modified: 06.05.2015

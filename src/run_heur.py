@@ -1,5 +1,13 @@
 #!/usr/bin/python
 
+#---------------------------------------------------------
+# Name: run_heur.py
+# Purpose: Functions for running D-Wave's heuristic algorithm
+# Author:	Jacob Retallick
+# Created: 02.08.2014
+# Last Modified: 06.05.2015
+#---------------------------------------------------------
+
 from __future__ import division
 from dwave_sapi import find_embedding, get_chimera_adjacency
 
@@ -95,13 +103,13 @@ def runHeuristic(adjacency, max_count, flagSol=False):
 
         count = success_num if flagSol else trial_num
 
-    print '\n'*2+'Embedded ' + str(success_num) + ' of ' + str(trial_num) + ' attempts' + '\n'*2
+    print '\n\nEmbedded %d of %d attempts\n\n' % (success_num, trial_num)
 
     return good_embeds, times, [success_num, trial_num]
 
 
 def writeToFile(filename, embeddings, times, counts):
-    ''' '''
+    '''Write embedding to file'''
 
     print '*'*40
     print 'Writing to file...\n'
@@ -129,7 +137,7 @@ def writeToFile(filename, embeddings, times, counts):
 
     fname_log = solution_dir + 'log'
 
-    fp_log = open(fname_log,'w')
+    fp_log = open(fname_log, 'w')
 
     # write log header
 
@@ -145,7 +153,7 @@ def writeToFile(filename, embeddings, times, counts):
     for i in xrange(len(embeddings)):
         embedding = embeddings[i]
         fname_sol = solution_dir + 'solution' + str(i)
-        fp_log.write('\nSolution ' + str(i) +'\n')
+        fp_log.write('\nSolution ' + str(i) + '\n')
         fp_log.write('file: ' + fname_sol + '\n')
         fp_log.write('time (seconds): ' + str(times[i]) + '\n')
         fp_sol = open(fname_sol, 'w')
@@ -158,8 +166,8 @@ def writeToFile(filename, embeddings, times, counts):
     print '\nWriting complete...'
 
 
-
 def run_embed(filename, max_count, flagSol=False):
+    '''Run heuristic embedding on QCAD file'''
 
     print '*'*40
     # parse QCA file
@@ -167,7 +175,7 @@ def run_embed(filename, max_count, flagSol=False):
 
     # generate adjacency list
     adjacency, drivers = generateAdjDict(cells, spacing)
-    
+
     if not RUN_FULL:
         adjacency = convertToNearestNeighbour(adjacency, drivers)
 
@@ -188,8 +196,6 @@ def run_embed(filename, max_count, flagSol=False):
     embeddings, times, counts = runHeuristic(adjacency, max_count, flagSol)
 
     writeToFile(filename, embeddings, times, counts)
-
-
 
 
 if __name__ == '__main__':

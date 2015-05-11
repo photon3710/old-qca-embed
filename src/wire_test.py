@@ -18,9 +18,9 @@ from build import createWire
 from auxil import generateAdjDict, adjToCoef, EK0, GAMMA
 
 
-N = 7
+N = 9
 M = N
-C = -.3
+C = -1.
 
 FS = 16
 

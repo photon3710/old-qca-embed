@@ -202,10 +202,10 @@ def convertToNearestNeighbour(adjacency, driver_index=None):
         con = list(connect[i])
         h = con.pop(0)
         for ind, Ek in con:
-            if Ek < nearest_thresh:
-                if num_nearest[ind] > 1:
-                    ignore.append(i)
+            if abs(Ek) < nearest_thresh:
                 num_next[i] += 1
+            if num_nearest[ind] > 1:
+                ignore.append(i)
 
     # find inverter cells
     invs = []

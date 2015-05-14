@@ -19,12 +19,16 @@ TYPEMAP = {'QCAD_CELL_NORMAL': 0,
            'QCAD_CELL_INPUT': 3}
 
 # physical parameters
-EK0 = 300e-3        # kink energy in eV
+EK0 = 300e-3        # reference kink energy in eV
 EK_POW = 5          # fall-off power of the kink energy
 
 GAMMA = 0.1         # default tunneling energy, relative to EK
 
 NEAREST_FACT = .5   # portion of EK0 for 'nearest neighbour' coupling
+
+eps0 = 8.85412e-12  # permittivity of free space
+epsr = 12           # realtive permittivity
+q0 = 1.602e-19      # elementary charge
 
 
 ### GENERAL FUNCTIONS
@@ -64,6 +68,41 @@ def getEk(c1, c2, spacing):
         return False
     else:
         return EK0*np.cos(4*theta)/pow(r, EK_POW)
+
+
+def new_getEk(c1, c2, spacing=0):
+    ''' '''
+
+    qdots_1 = c1['qdots']
+    qdots_2 = c2['qdots']
+
+    # compute displacements
+
+    x1 = [qd['x'] for qd in qdots_1]
+    y1 = [qd['y'] for qd in qdots_1]
+
+    x2 = [qd['x'] for qd in qdots_2]
+    y2 = [qd['y'] for qd in qdots_2]
+
+    X1 = np.array([x1, y1]).T.reshape([4, 1, 2])
+    X2 = np.array([x2, y2]).T.reshape([1, 4, 2])
+
+    R = np.sqrt(np.sum(pow(X1-X2, 2), axis=2))
+
+    if np.min(R) == 0:
+        print 'qdot overlap detected'
+        sys.exit()
+
+    # QCADesigner orders qdots either CW or CCW so same and diff configurations
+    # are always alternating indices.
+
+    Q = np.array([1, -1, 1, -1])    # template for charge arrangement
+
+    Q = np.outer(Q, Q)
+
+    Ek = -q0*np.sum((Q/R))/(8*np.pi*eps0*epsr)
+
+    return Ek
 
 
 def generateAdjDict(cells, spacing, verbose=False):

@@ -129,6 +129,21 @@ def reorderCells(cells):
     return newcells
 
 
+def get_qdots(info):
+    ''' '''
+
+    dots = []
+
+    for child in info['children']:
+        if child['label'] == 'CELL_DOT':
+            dot = {}
+            dot['x'] = float(child['x'])
+            dot['y'] = float(child['y'])
+            dots.append(dot)
+
+    return dots
+
+
 def processCells(cells):
     '''Selects out the position, size and type of each cell and creates
     a list of cell dicts {'x':x, 'y':y, 'cx':width, 'cy':height,
@@ -147,6 +162,7 @@ def processCells(cells):
         dat['cx'] = float(cell['cell_options.cxCell'])
         dat['cy'] = float(cell['cell_options.cyCell'])
         dat['type'] = TYPEMAP[cell['cell_function'].rstrip()]
+        dat['qdots'] = get_qdots(cell)
 
         if dat['type'] == TYPEMAP['QCAD_CELL_INPUT']:
             dat['pol'] = 0

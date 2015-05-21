@@ -27,7 +27,7 @@ GAMMA = 0.1         # default tunneling energy, relative to EK
 NEAREST_FACT = .5   # portion of EK0 for 'nearest neighbour' coupling
 
 eps0 = 8.85412e-12  # permittivity of free space
-epsr = 12           # realtive permittivity
+epsr = 12.           # realtive permittivity
 q0 = 1.602e-19      # elementary charge
 
 
@@ -71,7 +71,7 @@ def getEk(c1, c2, spacing):
 
 
 def new_getEk(c1, c2, spacing=0):
-    ''' '''
+    '''Qdot positions in nm'''
 
     qdots_1 = c1['qdots']
     qdots_2 = c2['qdots']
@@ -87,7 +87,9 @@ def new_getEk(c1, c2, spacing=0):
     X1 = np.array([x1, y1]).T.reshape([4, 1, 2])
     X2 = np.array([x2, y2]).T.reshape([1, 4, 2])
 
-    R = np.sqrt(np.sum(pow(X1-X2, 2), axis=2))
+    R = 1e-9*np.sqrt(np.sum(pow(X1-X2, 2), axis=2))
+    if np.min(R) > 2e-9*(np.max(x1)-np.min(x1)):
+        return 0.
 
     if np.min(R) == 0:
         print 'qdot overlap detected'
@@ -143,7 +145,7 @@ def generateAdjDict(cells, spacing, verbose=False):
 
         # find driver contribution
         for driver in drivers:
-            Ek = getEk(cell, driver, spacing)
+            Ek = new_getEk(cell, driver, spacing)
             if Ek is False:
                 continue
             else:
@@ -158,7 +160,7 @@ def generateAdjDict(cells, spacing, verbose=False):
         adj = []
         for j in xrange(i+1, M):
             cell2 = cells[order[j]]
-            Ek = getEk(cell, cell2, spacing)
+            Ek = new_getEk(cell, cell2, spacing)
             if Ek is False:
                 continue
             else:

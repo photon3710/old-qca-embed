@@ -97,7 +97,7 @@ def solveSparse(Hs, run_lobpcg=False, minimal=False, verbose=False):
 
 
 def solve(h, J, gamma=None, verbose=False, output=True,
-          FULL_OUTPUT=False, minimal=False):
+          full_output=False, minimal=False):
     ''' takes as input the h and J coefficients (unique to scale) and
     returns the ground state, the first excited state, and a subset of
     the energy spectrum (number of energies determined by sparse.py)'''
@@ -121,7 +121,7 @@ def solve(h, J, gamma=None, verbose=False, output=True,
             print '%d: %.4f %.4f' % (i, ground_state[i], excited_state[i])
 
     if output:
-        if FULL_OUTPUT:
+        if full_output:
             return ground_state, excited_state, spectrum, sols
         else:
             return ground_state, excited_state, spectrum

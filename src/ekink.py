@@ -1,5 +1,13 @@
 #!/usr/bin/python
 
+#---------------------------------------------------------
+# Name: ekink.py
+# Purpose: Quadrupole-quadrupole kink energy computation plotting
+# Author:	Jacob Retallick
+# Created: 13.05.2015
+# Last Modified: 14.05.2015
+#---------------------------------------------------------
+
 from auxil import new_getEk
 import numpy as np
 import pylab as plt

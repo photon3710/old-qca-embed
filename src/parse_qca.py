@@ -163,6 +163,7 @@ def processCells(cells):
         dat['cy'] = float(cell['cell_options.cyCell'])
         dat['type'] = TYPEMAP[cell['cell_function'].rstrip()]
         dat['qdots'] = get_qdots(cell)
+        dat['clock'] = int(cell['cell_options.clock'])
 
         if dat['type'] == TYPEMAP['QCAD_CELL_INPUT']:
             dat['pol'] = 0
@@ -217,6 +218,16 @@ def parseQCAFile(filename):
 
     proc_cells = reorderCells(proc_cells)
 
+    # grouop into clock zones
+
+    clocks = [cell['clock'] for cell in proc_cells]
+    zones = set(clocks)
+
+    clock_cells = {}
+    for zone in zones:
+        cells = [x for x in proc_cells if x['clock'] == zone]
+        clock_cells[zone] = cells
+
     return proc_cells, spacing
 
 if __name__ == '__main__':
@@ -225,4 +236,4 @@ if __name__ == '__main__':
     except:
         print 'No file detected'
         sys.exit()
-    cells, spacing = parseQCAFile(fname)
+    clock_cells, spacing = parseQCAFile(fname)

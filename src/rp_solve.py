@@ -1,5 +1,16 @@
 #!/usr/bin/python
 
+#---------------------------------------------------------
+# Name: rp_solve.py
+# Purpose: Solver for larger circuit using a recursive partitioning approach
+# Author: Jacob Retallick
+# Created: 16.05.2015
+# Last Modified: 21.05.2015
+#---------------------------------------------------------
+
+# NOTE: Large variation of solution occurs when changing N_THRESH. Best results
+#       seem to occur when N_THRESH is large and N_PARTS = 2
+
 from parse_qca import parseQCAFile
 from auxil import generateAdjDict, adjToCoef, convertToNearestNeighbour,\
     stateToPol
@@ -13,14 +24,16 @@ import numpy as np
 import networkx as nx
 import sys
 
-from pprint import pprint
+#from pprint import pprint
 
 ## SOLVER PARAMETERS
 
 # threshold values
-N_THRESH = 8            # maximum partition size for exact solver
+N_THRESH = 22            # maximum partition size for exact solver
 MEM_THRESH = 1e6        # maximum mode count product
 STATE_THRESH = 0.05     # required amplitude for state contribution
+
+assert N_THRESH <= 21, 'Given N_THRESH will likely crash the sparse solver...'
 
 # flags and counts
 N_PARTS = 2             # maximum number of partitions at each iteration

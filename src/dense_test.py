@@ -74,7 +74,7 @@ while j < NUM_SUCCESS:
     print '\n\nRUNNING TRIAL %d :: %d\n\n' % (i, j)
     i += 1
     try:
-        cell_map, paths = denseEmbed(source)
+        cell_map, paths = denseEmbed(source, write=False)
         n_ex = sum(map(lambda x: len(x)-2, paths.values()))
         print 'Extra qubits needed: %d' % n_ex
         j += 1

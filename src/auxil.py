@@ -11,6 +11,7 @@
 import sys
 import numpy as np
 import scipy.sparse as sp
+from pprint import pprint
 
 ADJ_RADIUS = 1.5    # distance to separate full from limited adjacency
 TYPEMAP = {'QCAD_CELL_NORMAL': 0,
@@ -70,7 +71,7 @@ def getEk(c1, c2, spacing):
         return EK0*np.cos(4*theta)/pow(r, EK_POW)
 
 
-def new_getEk(c1, c2, spacing=0):
+def new_getEk(c1, c2):
     '''Qdot positions in nm'''
 
     qdots_1 = c1['qdots']
@@ -89,7 +90,7 @@ def new_getEk(c1, c2, spacing=0):
 
     R = 1e-9*np.sqrt(np.sum(pow(X1-X2, 2), axis=2))
     if np.min(R) > 2e-9*(np.max(x1)-np.min(x1)):
-        return 0.
+        return False
 
     if np.min(R) == 0:
         print 'qdot overlap detected'
@@ -145,7 +146,7 @@ def generateAdjDict(cells, spacing, verbose=False):
 
         # find driver contribution
         for driver in drivers:
-            Ek = new_getEk(cell, driver, spacing)
+            Ek = new_getEk(cell, driver)
             if Ek is False:
                 continue
             else:
@@ -160,7 +161,7 @@ def generateAdjDict(cells, spacing, verbose=False):
         adj = []
         for j in xrange(i+1, M):
             cell2 = cells[order[j]]
-            Ek = new_getEk(cell, cell2, spacing)
+            Ek = new_getEk(cell, cell2)
             if Ek is False:
                 continue
             else:
@@ -216,8 +217,11 @@ def convertToNearestNeighbour(adjacency, driver_index=None):
 
     num_nearest = [0]*N
     num_next = [0]*N
-    ignore = []
-    nearest_thresh = NEAREST_FACT*EK0
+    ignore = set()
+
+    h, J = adjToCoef(adjacency)
+    Ek0 = np.max(np.abs(J))
+    nearest_thresh = NEAREST_FACT*Ek0
 
     # generate full connectivity list
     connect = {i: [] for i in xrange(N)}
@@ -238,15 +242,15 @@ def convertToNearestNeighbour(adjacency, driver_index=None):
             if Ek > nearest_thresh:
                 num_nearest[i] += 1
 
-    # count the number of next nearest neighbouts
+    # count the number of next nearest neighbours
     for i in xrange(N):
         con = list(connect[i])
         h = con.pop(0)
         for ind, Ek in con:
             if abs(Ek) < nearest_thresh:
                 num_next[i] += 1
-            if num_nearest[ind] > 1:
-                ignore.append(i)
+                if num_nearest[ind] > 1:
+                    ignore.add(i)
 
     # find inverter cells
     invs = []
@@ -283,8 +287,8 @@ def adjToCoef(adjacency, verbose=False):
 
     for i in xrange(N):
         adj = adjacency[cell_map[i]]
-        h.append(adj.pop(0))
-        for cell_index, Ek in adj:
+        h.append(adj[0])
+        for cell_index, Ek in adj[1::]:
             J[i, cell_map.index(cell_index)] = -Ek
 
     if verbose:

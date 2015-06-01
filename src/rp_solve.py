@@ -29,9 +29,9 @@ import sys
 ## SOLVER PARAMETERS
 
 # threshold values
-N_THRESH = 22            # maximum partition size for exact solver
+N_THRESH = 12            # maximum partition size for exact solver
 MEM_THRESH = 1e6        # maximum mode count product
-STATE_THRESH = 0.05     # required amplitude for state contribution
+STATE_THRESH = 0.02     # required amplitude for state contribution
 
 assert N_THRESH <= 21, 'Given N_THRESH will likely crash the sparse solver...'
 
@@ -165,6 +165,9 @@ def get_prod_states(state, comp=False):
     # sort by contribution magnitude
     inds = sorted(inds, key=lambda x: np.abs(state)[x], reverse=True)
 
+    # redescribe state in terms of the contributing product states
+    amps = state[inds]
+
     if comp:
         prod_states = inds
     else:
@@ -174,7 +177,7 @@ def get_prod_states(state, comp=False):
             ps = tuple(np.array(map(int, bstr))*2-1)
             prod_states.append(ps)
 
-    return prod_states
+    return prod_states, amps
 
 
 def proc_solve(spec, sols, e_res):
@@ -188,13 +191,13 @@ def proc_solve(spec, sols, e_res):
     # associate energies with product states
 
     Egaps = list(spec-spec[0])
-    prod_states = [get_prod_states(state) for state in states]
+    prod_states, amps = zip(*[get_prod_states(state) for state in states])
+
+    states = [amps, prod_states]
 
     # bin energies and correct
     Ebin = []
     PSbin = []
-
-    # calculate energy resolution
     while Egaps:
         E = Egaps[0]
         try:
@@ -366,7 +369,7 @@ def general_decomp(n, c):
     return rep
 
 
-def correct_prod_state(pstates, modes, inds):
+def correct_prod_states(pstates, modes, inds):
     '''Correct product state to account for mode space representation'''
 
     t = time()
@@ -416,8 +419,12 @@ def proc_comp_solve(sols, modes, inds, e_res):
     states = [states[:, i] for i in xrange(n_states)]
 
     Egaps = list(spec-spec[0])
-    prod_states = [get_prod_states(state, comp=True)
-                   for state in states]
+    prod_states, amps = zip(*[get_prod_states(state, comp=True)
+                            for state in states])
+
+    # correct states to account for mode space
+    prod_states = correct_prod_states(prod_states, modes, inds)
+    states = [amps, prod_states]
 
     # bin energies and correct
     Ebin = []
@@ -441,9 +448,6 @@ def proc_comp_solve(sols, modes, inds, e_res):
     # redefine Egaps and prod_states
     Egaps = Ebin
     prod_states = PSbin
-
-    # correct states to account for mode space
-    prod_states = correct_prod_state(prod_states, modes, inds)
 
     print '\t...done'
     print 'Proc comp time: %.5f s' % (time()-t)
@@ -542,6 +546,15 @@ def rp_solve(h, J, gam):
     return Egaps, states, prod_states
 
 
+def comp_pol(amps, prod_states):
+    '''Compute the polarizations of a state with given amplitudes and product
+    states'''
+
+    A = amps*amps
+    pstates = np.array(prod_states)
+    return -np.sum(A.reshape([-1, 1])*pstates, axis=0)
+
+
 def echo_ps(ps):
     '''Nice output format for product states'''
     s = ''.join(['+' if p < 0 else '-' for p in ps])
@@ -573,3 +586,5 @@ if __name__ == '__main__':
     print '\n\n'
     #pprint(prod_states[1])
     print Egaps
+
+    print np.round(comp_pol(*zip(*states)[0]), 2)

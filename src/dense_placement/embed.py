@@ -27,7 +27,7 @@ import routing as Routing
 ### GLOBALS ###
 
 # default Chimera parameters
-M = 8       # number of tile rows
+M = 8   # number of tile rows
 N = 8	  # number of tile columns
 L = 4	  # number of qubits per half tile
 
@@ -77,7 +77,7 @@ MAX_SEARCH_COUNT = 3    # maximum number of additional times to run the
                         # multisource search algorithm before failure asserted
 
 VERBOSE = False
-WRITE = False
+WRITE = True
 
 WRITE_DIR = '../sols/temp/'
 WRITE_PATH = None

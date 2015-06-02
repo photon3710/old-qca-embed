@@ -44,7 +44,7 @@ def buildHierarchy(data):
     readflag = False
     cells = []
 
-    spacing = 20.
+    spacing = None
 
     for line in data:
 
@@ -88,6 +88,10 @@ def buildHierarchy(data):
                 stack[-1][var] = val
         except:
             continue
+        
+    if spacing is None:
+        print 'No spacing parameter detected, setting default 20nm'
+        spacing = 20.
 
     return hierarchy, cells, spacing
 

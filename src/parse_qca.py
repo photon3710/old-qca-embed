@@ -88,7 +88,7 @@ def buildHierarchy(data):
                 stack[-1][var] = val
         except:
             continue
-        
+
     if spacing is None:
         print 'No spacing parameter detected, setting default 20nm'
         spacing = 20.
@@ -203,6 +203,21 @@ def correctNumbering(cells):
     return cells
 
 
+def zone_cells(cells):
+    '''Split cells into clock-zones. This function distinguished clock-zones
+    which share a clock index but are disconected.'''
+
+    clocks = [cell['clock'] for cell in cells]
+    zones = set(clocks)
+
+    clock_cells = {}
+    for zone in zones:
+        cs = [x for x in cells if x['clock'] == zone]
+        clock_cells[zone] = cs
+
+    return clock_cells
+
+
 def parseQCAFile(filename, single_zone=True):
     '''Iterate through a QCAD file and construct the hierarchy of objects.
     Selects out and processes the cells for easy use. Returns list of
@@ -222,15 +237,8 @@ def parseQCAFile(filename, single_zone=True):
 
     proc_cells = reorderCells(proc_cells)
 
-    # grouop into clock zones
-
-    clocks = [cell['clock'] for cell in proc_cells]
-    zones = set(clocks)
-
-    clock_cells = {}
-    for zone in zones:
-        cells = [x for x in proc_cells if x['clock'] == zone]
-        clock_cells[zone] = cells
+    # group into clock zones
+    clock_cells = zone_cells(proc_cells)
 
     if single_zone:
         return proc_cells, spacing

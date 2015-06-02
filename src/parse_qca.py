@@ -199,7 +199,7 @@ def correctNumbering(cells):
     return cells
 
 
-def parseQCAFile(filename):
+def parseQCAFile(filename, single_zone=True):
     '''Iterate through a QCAD file and construct the hierarchy of objects.
     Selects out and processes the cells for easy use. Returns list of
     cells'''
@@ -228,7 +228,11 @@ def parseQCAFile(filename):
         cells = [x for x in proc_cells if x['clock'] == zone]
         clock_cells[zone] = cells
 
-    return proc_cells, spacing
+    if single_zone:
+        return proc_cells, spacing
+    else:
+        return clock_cells, spacing
+
 
 if __name__ == '__main__':
     try:

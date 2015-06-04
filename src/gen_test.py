@@ -15,16 +15,16 @@ import pylab as plt
 from random import random
 
 from dwave_sapi import find_embedding, get_chimera_adjacency
-from DensePlacement.embed import denseEmbed, setChimeraSize, \
+from dense_placement.embed import denseEmbed, setChimeraSize, \
     getCouplerFlags, setQbitAdj
 
 from generator import generateCircuit2, GtoCoef
 from auxil import coefToConn
 
-RUN_DENSE = False
+RUN_DENSE = True
 
 FLAG_SOL = False
-ONCE_FLAG = True    # continue after a single found solution
+ONCE_FLAG = False    # continue after a single found solution
 
 SHOW = False
 
@@ -32,11 +32,11 @@ NUM_RUNS = 100
 NUM_TRIALS = 10
 TIMEOUT = 5    # seconds
 
-M, N, L = 8, 8, 4
+M, N, L = 16, 16, 4
 A_size = M*N*L*2
-ndis = 5
+ndis = 0
 
-WRITE_DIR = '../sols/gen/%d/' % ndis
+WRITE_DIR = '../sols/2kgen/%d/' % ndis
 WRITE_DIR += 'dense/' if RUN_DENSE else 'heur/'
 
 

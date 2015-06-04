@@ -14,12 +14,12 @@ import pylab as plt
 import numpy as np
 from random import randint, random, shuffle
 
-WIRE_MAX = 10        # maximum length of random wire
+WIRE_MAX = 15        # maximum length of random wire
 INIT_SEED = [1, 3]    # range of number of components initially created
 NEW_SEED = [1, 2]    # range of number of components from a single output
 
-MAX_COUNT = 100
-MAX_COMP = 8
+MAX_COUNT = 200
+MAX_COMP = 14
 
 
 def GtoCoef(G):

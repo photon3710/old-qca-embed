@@ -207,6 +207,7 @@ def zone_cells(cells):
     '''Split cells into clock-zones. This function distinguished clock-zones
     which share a clock index but are disconected.'''
 
+    # naive approach
     clocks = [cell['clock'] for cell in cells]
     zones = set(clocks)
 
@@ -214,6 +215,8 @@ def zone_cells(cells):
     for zone in zones:
         cs = [x for x in cells if x['clock'] == zone]
         clock_cells[zone] = cs
+
+    # use/implement graph approach to handle general clock-zone arrangements
 
     return clock_cells
 

@@ -71,7 +71,7 @@ def getEk(c1, c2, spacing):
         return EK0*np.cos(4*theta)/pow(r, EK_POW)
 
 
-def new_getEk(c1, c2):
+def new_getEk(c1, c2, DR=2):
     '''Qdot positions in nm'''
 
     qdots_1 = c1['qdots']
@@ -88,8 +88,9 @@ def new_getEk(c1, c2):
     X1 = np.array([x1, y1]).T.reshape([4, 1, 2])
     X2 = np.array([x2, y2]).T.reshape([1, 4, 2])
 
-    R = 1e-9*np.sqrt(np.sum(pow(X1-X2, 2), axis=2))
-    if np.min(R) > 2e-9*(np.max(x1)-np.min(x1)):
+    R = np.sqrt(np.sum(pow(X1-X2, 2), axis=2))
+    if np.mean(R) > 2*DR*(np.max(x1)-np.min(x1)):
+        print np.mean(R), DR, np.max(x1)-np.min(x1)
         return False
 
     if np.min(R) == 0:
@@ -103,7 +104,7 @@ def new_getEk(c1, c2):
 
     Q = np.outer(Q, Q)
 
-    Ek = -q0*np.sum((Q/R))/(8*np.pi*eps0*epsr)
+    Ek = -1e9*q0*np.sum((Q/R))/(8*np.pi*eps0*epsr)
 
     return Ek
 

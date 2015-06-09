@@ -5,7 +5,7 @@
 # Purpose: New version of QCADesigner parsing
 # Author:	Jacob Retallick
 # Created: 04.06.2014
-# Last Modified: 04.06.2015
+# Last Modified: 09.06.2015
 #---------------------------------------------------------
 
 import sys
@@ -15,7 +15,7 @@ import networkx as nx
 import pylab as plt
 import numpy as np
 
-#from pprint import pprint
+from pprint import pprint
 from auxil import new_getEk
 
 ## mapping for all possible cell functions and modes
@@ -32,8 +32,9 @@ CELL_MODES = {'QCAD_CELL_MODE_NORMAL': 0,
 
 ## general global parameters
 
-R_MAX = 2.2     # max cell-cell interaction range (relative to grid spacing)
+R_MAX = 2.2         # max cell-cell interaction range (rel to grid spacing)
 EK_THRESH = 1e-4    # threshold for included Ek, relative to max(abs(Ek))
+X_ROUND = 4         # places to round to when deciding if cell is rotated
 
 
 def build_hierarchy(fn):
@@ -150,6 +151,16 @@ def proc_hierarchy(hier):
             qdots.append(dot)
 
         cell['qdots'] = qdots
+
+        # determine if cell is rotated, will have three x values
+        x = set([round(dt['x'], X_ROUND) for dt in qdots])
+        if len(x) == 3:
+            cell['rot'] = True
+        elif len(x) == 2:
+            cell['rot'] = False
+        else:
+            print('Could not decide cell rotation')
+            cell['rot'] = False
 
         # keep track of polarization if cell is fixed: don't rely on labels
         if cell['cf'] == CELL_FUNCTIONS['QCAD_CELL_FIXED']:
@@ -327,3 +338,5 @@ if __name__ == '__main__':
         sys.exit()
 
     cells, spacing, zones, J = parse_qca_file(fn)
+
+    pprint([cell['rot'] for cell in cells])

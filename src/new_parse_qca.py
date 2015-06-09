@@ -32,7 +32,8 @@ CELL_MODES = {'QCAD_CELL_MODE_NORMAL': 0,
 
 ## general global parameters
 
-R_MAX = 2.5     # max cell-cell interaction range (relative to grid spacing)
+R_MAX = 2.2     # max cell-cell interaction range (relative to grid spacing)
+EK_THRESH = 1e-4    # threshold for included Ek, relative to max(abs(Ek))
 
 
 def build_hierarchy(fn):
@@ -161,7 +162,7 @@ def proc_hierarchy(hier):
     return cells, spacing
 
 
-def zone_cells(cells, spacing, show=False):
+def zone_cells(cells, spacing, show=True):
     '''Split cells into clock zones. Distinguishes disjoint zones with the
     same zone index'''
 
@@ -180,6 +181,9 @@ def zone_cells(cells, spacing, show=False):
                 J[i, j] = Ek
                 J[j, i] = Ek
 
+    # remove very weak interactions
+    J = J * (np.abs(J) >= np.max(np.abs(J)*EK_THRESH))
+
     # make full cell connectivity Graph
     G = nx.Graph(J)
 
@@ -187,7 +191,7 @@ def zone_cells(cells, spacing, show=False):
         plt.figure(0)
         plt.clf()
         nx.draw_graphviz(G)
-        plt.show()
+        plt.show(block=False)
 
     # get indices for each clock index
     clk = [cell['clk'] for cell in cells]
@@ -322,4 +326,4 @@ if __name__ == '__main__':
         print 'No file input....'
         sys.exit()
 
-    parse_qca_file(fn)
+    cells, spacing, zones, J = parse_qca_file(fn)

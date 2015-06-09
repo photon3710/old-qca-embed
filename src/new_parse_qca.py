@@ -338,5 +338,3 @@ if __name__ == '__main__':
         sys.exit()
 
     cells, spacing, zones, J = parse_qca_file(fn)
-
-    pprint([cell['rot'] for cell in cells])

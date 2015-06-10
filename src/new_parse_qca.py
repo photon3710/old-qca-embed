@@ -15,8 +15,8 @@ import networkx as nx
 import matplotlib.pylab as plt
 import numpy as np
 
-#from pprint import pprint
-from new_auxil import getEk
+from pprint import pprint
+from new_auxil import getEk, prepare_convert_adj
 
 ## mapping for all possible cell functions and modes
 
@@ -173,7 +173,7 @@ def proc_hierarchy(hier):
     return cells, spacing
 
 
-def zone_cells(cells, spacing, show=True):
+def zone_cells(cells, spacing, show=False):
     '''Split cells into clock zones. Distinguishes disjoint zones with the
     same zone index'''
 

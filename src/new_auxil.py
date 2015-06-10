@@ -69,18 +69,60 @@ def getEk(c1, c2, DR=2):
     Ek = -1e9*q0*np.sum((Q/R))/(8*np.pi*eps0*epsr)
 
     return Ek
-    
 
-def convert_to_full_adjacency(cells, zones, J):
+
+def prepare_convert_adj(cells, spacing, J):
+    '''Prepares useful variables for converting from the parse_qca J matrix to
+    a reduced adjacency form.
+
+    outputs:    Js  : J scaled by the nearest neighbour interaction of two
+                     non-rotated cells.
+                T   : Array of cell-cell types for each element of J
+                        1  -> non-rotated - non-rotated
+                        0  -> non-rotated - rotated
+                        -1 -> rotated - rotated
+                DX  : X displacements in grid-spacings
+                DY  : Y displacements in grid-spacings
+    '''
+
+    # scale J by the kink energy of two non-rotated adjacent cells
+
+    A = 0.588672
+    E_nn = A/(spacing*epsr)
+
+    Js = np.round(J/E_nn, 4)
+
+    # determine interaction type of each element of J:
+    #   1  -> non-rotated - non-rotated
+    #   0  -> non-rotated - rotated
+    #   -1 -> rotated - rotated
+
+    rot = [cell['rot'] for cell in cells]   # array of rotated flags
+    rot = 1*np.array(rot).reshape([-1, 1])
+
+    T = 1-(rot+rot.T)
+    #T = T.astype(int)
+
+    # get displacements between each cell
+
+    X = np.array([cell['x'] for cell in cells]).reshape([-1, 1])
+    Y = np.array([cell['y'] for cell in cells]).reshape([-1, 1])
+
+    DX = (X.T - X)/spacing
+    DY = (Y - Y.T)/spacing
+
+    return Js, T, DX, DY
+
+
+def convert_to_full_adjacency(cells, spacing, J):
     '''Convert the J matrix from parse_qca to include only full adjacency
     interactions'''
-    
-    rot_flags = [cell['rot'] for cell in cells] # flags for rotated cells
-        
-    
+
+    Js, T, DX, DY = prepare_convert_adj(cells, spacing, J)
 
 
-def convert_to_lim_adjacency(cells, zones, J):
+def convert_to_lim_adjacency(cells, spacing, J):
     '''Convert the J matrix from parse_qca to include only limited adjacency
     interactions'''
-    pass
+
+    Js, T, DX, DY = prepare_convert_adj(cells, spacing, J)

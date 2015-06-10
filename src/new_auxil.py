@@ -69,15 +69,16 @@ def getEk(c1, c2, DR=2):
     Ek = -1e9*q0*np.sum((Q/R))/(8*np.pi*eps0*epsr)
 
     return Ek
-    
 
-def convert_to_full_adjacency(cells, zones, J):
+
+def convert_to_full_adjacency(cells, zones, spacing, J):
     '''Convert the J matrix from parse_qca to include only full adjacency
     interactions'''
-    
+
+    R_MAX = 2*spacing
     rot_flags = [cell['rot'] for cell in cells] # flags for rotated cells
-        
-    
+
+
 
 
 def convert_to_lim_adjacency(cells, zones, J):

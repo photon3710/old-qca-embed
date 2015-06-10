@@ -12,7 +12,7 @@ import sys
 import re
 
 import networkx as nx
-import pylab as plt
+import matplotlib.pylab as plt
 import numpy as np
 
 #from pprint import pprint
@@ -188,7 +188,7 @@ def zone_cells(cells, spacing, show=True):
             if Ek:
                 J[i, j] = Ek
                 J[j, i] = Ek
-    
+
     print J
     # remove very weak interactions
     J = J * (np.abs(J) >= np.max(np.abs(J)*EK_THRESH))
@@ -211,7 +211,7 @@ def zone_cells(cells, spacing, show=True):
     sub_G = {ind: G.subgraph(inds[ind]) for ind in clk_ind}
 
     # split disconnected components for each label graph
-    sub_ind = {ind: nx.connected_components(sub_G[ind]) for ind in clk_ind}
+    sub_ind = {ind: list(nx.connected_components(sub_G[ind])) for ind in clk_ind}
 
     ## find zone order
 
@@ -317,6 +317,8 @@ def parse_qca_file(fn, one_zone=False):
     # group into clock zones
     zones, J = zone_cells(cells, spacing)
 
+    print J
+
     # reorder cells by zone and position
     cells, zones, J = reorder_cells(cells, zones, J)
 
@@ -330,7 +332,7 @@ def parse_qca_file(fn, one_zone=False):
 if __name__ == '__main__':
 
     try:
-        fn = sys.argv[1]
+        fn = 'testing.txt'#sys.argv[1]
     except:
         print 'No file input....'
         sys.exit()

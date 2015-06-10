@@ -71,6 +71,15 @@ def getEk(c1, c2, DR=2):
     return Ek
 
 
+def comp_E_nn(spacing):
+    '''compute the kink energy for two nearest interacting non-rotated cells'''
+
+    A = 0.588672
+    E_nn = A/(spacing*epsr)
+
+    return E_nn
+
+
 def prepare_convert_adj(cells, spacing, J):
     '''Prepares useful variables for converting from the parse_qca J matrix to
     a reduced adjacency form.
@@ -86,10 +95,7 @@ def prepare_convert_adj(cells, spacing, J):
     '''
 
     # scale J by the kink energy of two non-rotated adjacent cells
-
-    A = 0.588672
-    E_nn = A/(spacing*epsr)
-
+    E_nn = comp_E_nn(spacing)
     Js = np.round(J/E_nn, 4)
 
     # determine interaction type of each element of J:

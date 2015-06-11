@@ -1,16 +1,5 @@
 #!/usr/bin/python
 
-#---------------------------------------------------------
-# Name: rp_solve.py
-# Purpose: Solver for larger circuit using a recursive partitioning approach
-# Author: Jacob Retallick
-# Created: 16.05.2015
-# Last Modified: 21.05.2015
-#---------------------------------------------------------
-
-# NOTE: Large variation of solution occurs when changing N_THRESH. Best results
-#       seem to occur when N_THRESH is large and N_PARTS = 2
-
 from parse_qca import parseQCAFile
 from auxil import generateAdjDict, adjToCoef, convertToNearestNeighbour,\
     stateToPol
@@ -24,14 +13,12 @@ import numpy as np
 import networkx as nx
 import sys
 
-#from pprint import pprint
-
 ## SOLVER PARAMETERS
 
 # threshold values
-N_THRESH = 12            # maximum partition size for exact solver
+N_THRESH = 8            # maximum partition size for exact solver
 MEM_THRESH = 1e6        # maximum mode count product
-STATE_THRESH = 0.02     # required amplitude for state contribution
+STATE_THRESH = 0.05     # required amplitude for state contribution
 
 assert N_THRESH <= 21, 'Given N_THRESH will likely crash the sparse solver...'
 
@@ -42,6 +29,8 @@ USE_NN = False          # Convert to nearest neighbour
 
 # resolution
 E_RES = 1e-1            # resolution for energy binning relative to max J
+
+VERBOSE = True
 
 
 def comp_on_comp(h, J, gam, modes):
@@ -71,49 +60,6 @@ def comp_off_comp(J, mds1, mds2):
     JJ = mds1*J*mds2.T
 
     return JJ
-
-
-def gen_comp_Ham(h, J, gam, ind, modes):
-    '''Formulate the system Hamiltonian for a given list of component indices
-    and modes.
-
-    inputs: h (list)    :   on-site cell parameters
-            J (mat)     :   cell-cell coupling parameters, not upper diag
-            gam (float) :   on-site cell tunneling parameter
-            ind (list)  :   list of lists of component indices. Lists must be
-                            non intersecting and have a union containing all
-                            cell indices.
-            modes (list):   list of mode matrices. Each row in the mode matrix
-                            has elements of +- 1 giving the mode spins.'''
-
-    # check validity of input arguments
-    N = len(h)
-    all_ind = reduce(lambda x, y: x+y, ind)
-    assert len(all_ind) == len(set(all_ind)), 'Repeated index...'
-    assert sorted(all_ind) == range(N), 'Incomplete index set...'
-
-    # sort component indices
-    ind = map(sorted, ind)
-
-    # create the h, J, gam parameters for each component
-    h = np.array(h)
-    gam = np.array(gam)
-    h_m = [h[ind_m] for ind_m in ind]
-    J_m = {}
-    for i in xrange(N):
-        for j in xrange(i, N):
-            J_m[(i, j)] = J[ind[i], :][:, ind[j]]
-
-    # on-comp parameters
-    on_comp = []
-    for i in xrange(N):
-        on_comp.append(comp_on_comp(h_m[i], J_m[(i, i)], gam, modes[i]))
-
-    # coupling parameters
-    off_comp = {}
-    for i in xrange(N):
-        for j in xrange(i+1, N):
-            off_comp[(i, j)] = comp_off_comp(J_m[(i, j)], modes[i], modes[j])
 
 
 def partition(h, J, nparts):
@@ -165,9 +111,6 @@ def get_prod_states(state, comp=False):
     # sort by contribution magnitude
     inds = sorted(inds, key=lambda x: np.abs(state)[x], reverse=True)
 
-    # redescribe state in terms of the contributing product states
-    amps = state[inds]
-
     if comp:
         prod_states = inds
     else:
@@ -177,7 +120,7 @@ def get_prod_states(state, comp=False):
             ps = tuple(np.array(map(int, bstr))*2-1)
             prod_states.append(ps)
 
-    return prod_states, amps
+    return prod_states
 
 
 def proc_solve(spec, sols, e_res):
@@ -190,35 +133,34 @@ def proc_solve(spec, sols, e_res):
 
     # associate energies with product states
 
-    Egaps = list(spec-spec[0])
-    prod_states, amps = zip(*[get_prod_states(state) for state in states])
-
-    states = [amps, prod_states]
+    Es = list(spec)
+    prod_states = [get_prod_states(state) for state in states]
 
     # bin energies and correct
     Ebin = []
     PSbin = []
-    while Egaps:
-        E = Egaps[0]
+
+    while Es:
+        E = Es[0]
         try:
-            i = next(i for i, x in enumerate(Egaps) if x > E+e_res)
+            i = next(i for i, x in enumerate(Es) if x > E+e_res)
         except:
             i = None
         Ebin.append(E)
         ps = set(reduce(lambda x, y: x+y, prod_states[:i]))
         PSbin.append(ps)
         if i is None:
-            Egaps = []
+            Es = []
             prod_states = []
         else:
-            Egaps = Egaps[i:]
+            Es = Es[i:]
             prod_states = prod_states[i:]
 
     # redefine Egaps and prod_states
-    Egaps = Ebin
+    Es = Ebin
     prod_states = PSbin
 
-    return Egaps, states, prod_states
+    return Es, states, prod_states
 
 
 def select_modes(Es, PS):
@@ -234,6 +176,10 @@ def select_modes(Es, PS):
     m_p = [0]*N     # number of included modes for each partition
 
     prod = 1.
+
+    # offset energies by ground state energies
+    for p in xrange(N):
+        Es[p] -= Es[p][0]
 
     # force inclusion of ground state modes
     for p in xrange(N):
@@ -285,8 +231,9 @@ def select_modes(Es, PS):
         mds = sorted(set(mds))
         modes.append(np.matrix(mds))
 
-    print '%d modes selected...' % prod
-    print 'mode dist: %s' % str(m_p)
+    if VERBOSE:
+        print '%d modes selected...' % prod
+        print 'mode dist: %s' % str(m_p)
 
     return modes
 
@@ -296,14 +243,16 @@ def gen_comp_diag(sz, sz2, J_m):
 
     N = len(sz)     # number of components
 
-    print 'Constructing diagonal component formalism parameters'
+    if VERBOSE:
+        print 'Constructing diagonal component formalism parameters'
     # generate size counters
     M = [sz[p].shape[1] for p in xrange(N)]  # number of modes per partition
     C = np.cumprod(M)   # cumulative product of mode sizes
     C = np.insert(C, 0, 1)  # useful for avoiding special case
 
     # on comp energy terms
-    print '\tComputing on-comp energy terms...'
+    if VERBOSE:
+        print '\tComputing on-comp energy terms...'
     on_site = np.zeros([1, C[-1]], dtype=float)
     for p in xrange(N):
         a = sz[p] + sz2[p]
@@ -311,7 +260,8 @@ def gen_comp_diag(sz, sz2, J_m):
         on_site += temp
 
     # external comp-comp mode coupling
-    print '\tComputing comp-comp mode coupling terms...'
+    if VERBOSE:
+        print '\tComputing comp-comp mode coupling terms...'
     ext_coup = np.zeros([1, C[-1]], dtype=float)
     for p1 in xrange(N):
         for p2 in xrange(p1+1, N):
@@ -324,7 +274,8 @@ def gen_comp_diag(sz, sz2, J_m):
             # handle p2 behaviour
             b = np.tile(a.flatten(), C[-1]/C[p2+1])
             ext_coup += b
-    print '\t...done'
+    if VERBOSE:
+        print '\t...done'
     return on_site + ext_coup
 
 
@@ -332,7 +283,8 @@ def gen_comp_tunn(G):
     '''Generate the off-diagonal tunneling terms in the component formalism
     Hamiltonian'''
 
-    print 'Constructing off-diagonal component formalism parameters'
+    if VERBOSE:
+        print 'Constructing off-diagonal component formalism parameters'
 
     N = len(G)  # number of partitions
     Nm = [x.shape[0] for x in G]    # number of modes per partition
@@ -354,7 +306,8 @@ def gen_comp_tunn(G):
             A.append(a)
         mat = sp.bmat(A)
 
-    print '\t...done'
+    if VERBOSE:
+        print '\t...done'
     return mat.T
 
 
@@ -369,11 +322,12 @@ def general_decomp(n, c):
     return rep
 
 
-def correct_prod_states(pstates, modes, inds):
+def correct_prod_state(pstates, modes, inds):
     '''Correct product state to account for mode space representation'''
 
     t = time()
-    print 'Correcting product states...',
+    if VERBOSE:
+        print 'Correcting product states...',
 
     # prep work
 
@@ -398,8 +352,9 @@ def correct_prod_states(pstates, modes, inds):
             ps_mds.append(tuple([x[1] for x in sorted(zip(inds, ps_m))]))
         ps_modes.append(ps_mds)
 
-    print 'done'
-    print 'correct prod time: %.5f s' % (time()-t)
+    if VERBOSE:
+        print 'done'
+        print 'correct prod time: %.5f s' % (time()-t)
     return ps_modes
 
 
@@ -408,62 +363,77 @@ def proc_comp_solve(sols, modes, inds, e_res):
     Hamiltonian'''
 
     t = time()
-    print '\nProcessing component solver...'
+    if VERBOSE:
+        print '\nProcessing component solver...'
 
     spec = sols['eigsh']['vals']
 
     states = sols['eigsh']['vecs']
     n_states = states.shape[1]
 
-    print '\n\n%d states solved...' % n_states
+    if VERBOSE:
+        print '\n\n%d states solved...' % n_states
     states = [states[:, i] for i in xrange(n_states)]
 
-    Egaps = list(spec-spec[0])
-    prod_states, amps = zip(*[get_prod_states(state, comp=True)
-                            for state in states])
-
-    # correct states to account for mode space
-    prod_states = correct_prod_states(prod_states, modes, inds)
-    states = [amps, prod_states]
+    Es = list(spec)
+    prod_states = [get_prod_states(state, comp=True)
+                   for state in states]
 
     # bin energies and correct
     Ebin = []
     PSbin = []
-    while Egaps:
-        E = Egaps[0]
+    while Es:
+        E = Es[0]
         try:
-            i = next(i for i, x in enumerate(Egaps) if x > E+e_res)
+            i = next(i for i, x in enumerate(Es) if x > E+e_res)
         except:
             i = None
         Ebin.append(E)
         ps = set(reduce(lambda x, y: x+y, prod_states[:i]))
         PSbin.append(ps)
         if i is None:
-            Egaps = []
+            Es = []
             prod_states = []
         else:
-            Egaps = Egaps[i:]
+            Es = Es[i:]
             prod_states = prod_states[i:]
 
     # redefine Egaps and prod_states
-    Egaps = Ebin
+    Es = Ebin
     prod_states = PSbin
 
-    print '\t...done'
-    print 'Proc comp time: %.5f s' % (time()-t)
+    # correct states to account for mode space
+    prod_states = correct_prod_state(prod_states, modes, inds)
 
-    return Egaps, states, prod_states
+    if VERBOSE:
+        print '\t...done'
+        print 'Proc comp time: %.5f s' % (time()-t)
+
+    return Es, states, prod_states
+
+
+def proc_states(states, modes, inds):
+    ''' '''
+
+    # for each state, find significant indices, map to product states
+    prod_states = [get_prod_states(state, comp=True) for state in states]
+    amps = []
+    for i in xrange(len(states)):
+        amps.append(states[i][prod_states[i]])
+    prod_states = correct_prod_state(prod_states, modes, inds)
+
+    # express each state as a list of amplitudes and
+    states = [[amps[i], prod_states[i]] for i in xrange(len(states))]
+
+    return states
 
 
 def solve_comp(h_p, J_p, C_p, gam, modes, inds, e_res):
     '''Solve component formalism'''
 
-    print '\nRunning component solver...'
+    if VERBOSE:
+        print '\nRunning component solver...'
     t = time()
-
-    Egaps = []
-    states = []
-    prod_states = []
 
     N = len(h_p)    # number of partitions
 
@@ -489,38 +459,44 @@ def solve_comp(h_p, J_p, C_p, gam, modes, inds, e_res):
         H = diag
 
     # run sparse matrix solver
-    print 'H matrix size: %s' % str(H.shape)
-    print 'Running sparse solver...',
+    if VERBOSE:
+        print 'H matrix size: %s' % str(H.shape)
+        print 'Running sparse solver...',
     t1 = time()
     sols = solveSparse(H)
-    print 'done'
-    print 'sparse solver time: %.5f s' % (time()-t1)
+    if VERBOSE:
+        print 'done'
+        print 'sparse solver time: %.5f s' % (time()-t1)
 
     # process output
     Egaps, states, prod_states = proc_comp_solve(sols, modes, inds, e_res)
 
     #pprint(prod_states[0:2])
     #print Egaps
-    print '...done'
-    print 'Component solver time: %.5f s' % (time()-t)
+    if VERBOSE:
+        print '...done'
+        print 'Component solver time: %.5f s' % (time()-t)
     return Egaps, states, prod_states
 
 
-def rp_solve(h, J, gam):
+def rp_solve(h, J, gam, rec=False):
     '''Solve ising spin-glass configuration using recursive partitioning
     with low-energy spectrum mode composition'''
 
-    print 'Detected problem size: %d...' % len(h)
+    if VERBOSE:
+        print 'Detected problem size: %d...' % len(h)
 
     e_res = np.max(np.abs(J))*E_RES
-    print e_res
 
     if len(h) <= N_THRESH:
-        print 'Running exact solver...'
+        if VERBOSE:
+            print 'Running exact solver...'
         gs, es, spectrum, sols = solve(h, J, gamma=gam, full_output=True)
-        Egaps, states, prod_states = proc_solve(spectrum, sols, e_res)
+        Es, states, prod_states = proc_solve(spectrum, sols, e_res)
+        states = zip(states, [None]*len(states))
     else:
-        print 'Running recursive partition...'
+        if VERBOSE:
+            print 'Running recursive partition...'
         # ensure J not triu
         J = np.triu(J)+np.triu(J, 1).T
 
@@ -529,36 +505,47 @@ def rp_solve(h, J, gam):
         parts, h_p, J_p, C_p = partition(h, J, nparts)
 
         # solve each partition
-        Es = []
+        ES = []
         PS = []
         for i in xrange(nparts):
-            Egaps, states, prod_states = rp_solve(h_p[i], J_p[i], gam)
-            Es.append(Egaps)
+            Es, prod_states = rp_solve(h_p[i], J_p[i], gam, rec=True)
+            ES.append(Es)
             PS.append(prod_states)
 
         # select modes to include
-        modes = select_modes(Es, PS)
+        modes = select_modes(ES, PS)
 
         # solve component system
-        Egaps, states, prod_states = solve_comp(h_p, J_p, C_p, gam,
-                                                modes, parts, e_res)
+        Es, states, prod_states = solve_comp(h_p, J_p, C_p, gam,
+                                             modes, parts, e_res)
 
-    return Egaps, states, prod_states
+        # if initial call (last after recursion), format state outputs
+        if not rec:
+            states = proc_states(states, modes, parts)
 
+    if not rec:
+        return Es, states, prod_states
 
-def comp_pol(amps, prod_states):
-    '''Compute the polarizations of a state with given amplitudes and product
-    states'''
-
-    A = amps*amps
-    pstates = np.array(prod_states)
-    return -np.sum(A.reshape([-1, 1])*pstates, axis=0)
+    return Es, prod_states
 
 
 def echo_ps(ps):
     '''Nice output format for product states'''
     s = ''.join(['+' if p < 0 else '-' for p in ps])
     return s
+
+
+def rp_stateToPol(amps, prod_states=None):
+    '''convert the amplitudes and product states of a state to a pol list'''
+
+    if prod_states is None:
+        return stateToPol(amps)
+
+    modes = np.array(prod_states)
+    amps = amps.reshape([-1, 1])
+
+    return -np.sum((amps*amps)*modes, 0)
+
 
 if __name__ == '__main__':
 
@@ -586,5 +573,3 @@ if __name__ == '__main__':
     print '\n\n'
     #pprint(prod_states[1])
     print Egaps
-
-    print np.round(comp_pol(*zip(*states)[0]), 2)

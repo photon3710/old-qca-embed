@@ -109,12 +109,6 @@ def proc_hierarchy(hier):
     layers = [child for child in hier['children']
               if child['label'] == 'TYPE:QCADLayer']
 
-    # get grid spacing
-    substrate = [layer for layer in layers if layer['vars']['type'] == '0'][0]
-    substrate = [child for child in substrate['children']
-                 if child['label'] == 'TYPE:QCADSubstrate'][0]
-    spacing = float(substrate['vars']['grid_spacing'])
-
     # isolate cell layers
     cell_layers = [layer for layer in layers if layer['vars']['type'] == '1']
 
@@ -122,6 +116,11 @@ def proc_hierarchy(hier):
     cell_dicts = [layer['children'] for layer in cell_layers]
     cell_dicts = reduce(lambda x, y: x+y, cell_dicts)
 
+    # get grid-spacing (average cell bounding box)
+    cx = float(cell_dicts[0]['vars']['cell_options.cxCell'])
+    cy = float(cell_dicts[0]['vars']['cell_options.cyCell'])
+
+    spacing = np.sqrt(cx*cy)
     # create cell objects
     cells = []
 
@@ -297,7 +296,7 @@ def reorder_cells(cells, zones, J, flipy=False):
     return cells, zones, J
 
 
-def parse_qca_file(fn, one_zone=True):
+def parse_qca_file(fn, one_zone=False, show=False):
     '''Parse a QCADesigner file to extract cell properties. Returns an ordered
     list of cells, the QCADesigner grid spacing in nm, a list structure of the
     indices of each clock zone (propogating from inputs), and a coupling matrix

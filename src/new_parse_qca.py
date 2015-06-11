@@ -297,7 +297,7 @@ def reorder_cells(cells, zones, J, flipy=False):
     return cells, zones, J
 
 
-def parse_qca_file(fn, one_zone=True, show=True):
+def parse_qca_file(fn, one_zone=False, show=True):
     '''Parse a QCADesigner file to extract cell properties. Returns an ordered
     list of cells, the QCADesigner grid spacing in nm, a list structure of the
     indices of each clock zone (propogating from inputs), and a coupling matrix

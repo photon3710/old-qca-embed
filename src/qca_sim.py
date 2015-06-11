@@ -8,10 +8,16 @@
 # Last Modified: 10.06.2015
 #---------------------------------------------------------
 
+from new_auxil import convert_to_full_adjacency, convert_to_lim_adjacency, \
+    construct_zone_graph
+
 from new_parse_qca import parse_qca_file
-from new_auxil import convert_to_full_adjacency, convert_to_lim_adjacency
+
+#from solution import Solution
+from zone import Zone
 
 import sys
+from pprint import pprint
 
 
 SOLVERS = {'rp': None,
@@ -19,45 +25,6 @@ SOLVERS = {'rp': None,
            'default': None}
 
 assert 'default' in SOLVERS, 'Default solver has not be set...'
-
-
-class Solution:
-
-    def __init__(self):
-        '''Initialise a Solution object'''
-        pass
-
-    def run_input(self, pols):
-        ''''''
-        pass
-
-    def run_input_seq(self, pols):
-        ''' '''
-        pass
-    
-    def get_input_list(self):
-        ''' '''
-        pass
-    
-    def get_ouput_list(self):
-        ''' '''
-        pass
-    
-class Zone:
-    
-    def __init__(self, J):
-        '''Initialise a Zone object'''        
-        
-        in_inds = []
-        out_inds = []
-        drivers = []
-        fixed = []
-        spectra = {}
-    
-    def solve(self):
-        ''' '''
-        pass
-    
 
 
 def qca_sim(fn, **kwargs):
@@ -82,13 +49,18 @@ def qca_sim(fn, **kwargs):
             solver = SOLVERS['default']
     else:
         solver = SOLVERS['default']
-    
+
     # set up zone formulation
+    Gz = construct_zone_graph(cells, zones, J, show=True)
+    Zones = {key: Zone(key, Gz, J, cells) for key in Gz.nodes()}
     
+    for z in sorted(Zones):
+        print(str(Zones[z]))
+
     # solve every zone for every possible set of inputs
-    
+
     # construct solution object
-    
+
 
 if __name__ == '__main__':
 
@@ -97,3 +69,5 @@ if __name__ == '__main__':
     except:
         print('No filename entered...')
         sys.exit()
+        
+    qca_sim(fn)

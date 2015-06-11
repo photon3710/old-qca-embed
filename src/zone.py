@@ -9,6 +9,7 @@
 #---------------------------------------------------------
 
 import numpy as np
+import itertools
 
 
 class Zone:
@@ -67,34 +68,102 @@ class Zone:
             self.outs.append(out_zone)
 
     def __str__(self):
-        '''Default string covnersion for debugging'''
+        '''Default string conversion for debugging'''
 
         outstring = '\n'*2+'*'*30 + '\n'
-        
+
         # key
         outstring += 'key: {0}\n'.format(self.key)
-        
+
         # indices
         outstring += 'inds: {0}\n'.format(self.inds)
         outstring += 'fixed: {0}\n'.format(self.fixed)
         outstring += 'drivers: {0}\n'.format(self.drivers)
         outstring += 'outputs: {0}\n'.format(self.outputs)
-        
+
         # internal coupling matrices: non-zero flags only
         outstring += '\nC_driver:\n{0}\n'.format(1*(self.C_driver != 0))
         outstring += '\nC_fixed:\n{0}\n'.format(1*(self.C_fixed != 0))
         outstring += '\nJ:\n{0}\n'.format(1*(self.J != 0))
-        
+
         # h coefficients
         outstring += '\nh_fixed:\n{0}\n'.format(np.round(self.h_fixed, 3))
         outstring += '\nh_driver:\n{0}\n'.format(np.round(self.h_driver, 3))
         outstring += '\nh:\n{0}\n'.format(np.round(self.h, 3))
-        
+
         # input zones
         for z in self.C_ins:
             outstring += '\n{0}:\n{1}\n'.format(z, np.round(self.C_ins[z], 3))
-            
+
         # output zones
         outstring += '\noutput-zones: {0}'.format(self.outs)
-        
+
         return outstring
+
+    def get_drivers(self):
+        '''Return the indices of the driver cells'''
+        return self.drivers
+
+    def get_outputs(self):
+        '''Return the indices of the output cells'''
+        return self.outputs
+
+    def get_indices(self):
+        '''Return the indices of simulated cells'''
+        return self.inds
+
+    def gen_pols(n):
+        '''Generate all possible polarizations for n cells'''
+        return [tuple(2*int(x)-1 for x in format(i, '#0{0}b'.format(n+2)))
+                for i in xrange(pow(2, n))]
+
+    def solve_all(self, solver=None, **kwargs):
+        '''Solve all possible input configurations for the zone using the
+        specified solver
+
+        inputs: solver  : A solver function which takes h and J values and
+                         returns some form of an output to be used externally
+                kwargs  : arguments to pass to solver
+
+        outputs: cases  : A list of all considered configurations of driver and
+                         zone input polarizations
+                 outs   : A dict of the corresponding output dicts from solver
+                 z-order: order of zones as they appear in outs keys
+        '''
+
+        # relative indices in each input-zone of cells which couple in.
+        c_inds = {}
+        for z in self.C_ins:
+            z_inds = list(set(np.nonzero(self.C_ins[z])[0].tolist()))
+            c_inds[z] = z_inds
+
+        # input zone order
+        z_order = sorted(c_inds)
+
+        # set of all driver inputs
+        driver_inds = self.gen_pols(len(self.drivers))
+        if len(driver_inds) == 0:
+            driver_inds = [()]
+
+        # set of all inputs for each input-zone
+        inzone_inds = [self.gen_pols(len(c_inds[z])) for z in c_inds]
+
+        # combine into list product for easy looping
+        cases = list(itertools.product(driver_inds, *inzone_inds))
+
+        # run each configuration, solve
+        outs = {}
+        for case in cases:
+            # compute driver contribution to h
+            self.h_driver = .5*np.matrix(case[0])*self.C_driver
+            # for each input zone, map pol key to state and get h contr.
+            self.h = self.h_fixed + self.h_driver
+            for i in xrange(1, len(case)):
+                key = z_order[i-1]
+                pol = np.zeros([1, len(self.C_ins[key])], dtype=float)
+                pol[1, c_inds[key]] = case[i]
+                self.h += .5*np.asmatrix(pol)*self.C_ins[key]
+
+                outs[case] = solver(self.h, self.J, **kwargs)
+
+        return cases, outs, z_order

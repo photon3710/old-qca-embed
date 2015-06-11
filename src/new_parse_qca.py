@@ -15,24 +15,12 @@ import networkx as nx
 import pylab as plt
 import numpy as np
 
-from pprint import pprint
-from new_auxil import getEk, prepare_convert_adj
-
-## mapping for all possible cell functions and modes
-
-CELL_FUNCTIONS = {'QCAD_CELL_NORMAL': 0,
-                  'QCAD_CELL_INPUT': 1,
-                  'QCAD_CELL_OUTPUT': 2,
-                  'QCAD_CELL_FIXED': 3}
-
-CELL_MODES = {'QCAD_CELL_MODE_NORMAL': 0,
-              'QCAD_CELL_MODE_CROSSOVER': 1,
-              'QCAD_CELL_MODE_VERTICAL': 2,
-              'QCAD_CELL_MODE_CLUSTER': 3}
+#from pprint import pprint
+from new_auxil import getEk, CELL_FUNCTIONS, CELL_MODES
 
 ## general global parameters
 
-R_MAX = 2.2         # max cell-cell interaction range (rel to grid spacing)
+R_MAX = 2.1         # max cell-cell interaction range (rel to grid spacing)
 EK_THRESH = 1e-3    # threshold for included Ek, relative to max(abs(Ek))
 X_ROUND = 4         # places to round to when deciding if cell is rotated
 
@@ -188,8 +176,7 @@ def zone_cells(cells, spacing, show=False):
             if Ek:
                 J[i, j] = Ek
                 J[j, i] = Ek
-    
-    print J
+
     # remove very weak interactions
     J = J * (np.abs(J) >= np.max(np.abs(J)*EK_THRESH))
 

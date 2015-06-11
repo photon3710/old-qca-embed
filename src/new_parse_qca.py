@@ -12,11 +12,23 @@ import sys
 import re
 
 import networkx as nx
-import pylab as plt
+import matplotlib.pylab as plt
 import numpy as np
 
 #from pprint import pprint
-from new_auxil import getEk, CELL_FUNCTIONS, CELL_MODES
+from new_auxil import getEk
+
+## mapping for all possible cell functions and modes
+
+CELL_FUNCTIONS = {'QCAD_CELL_NORMAL': 0,
+                  'QCAD_CELL_INPUT': 1,
+                  'QCAD_CELL_OUTPUT': 2,
+                  'QCAD_CELL_FIXED': 3}
+
+CELL_MODES = {'QCAD_CELL_MODE_NORMAL': 0,
+              'QCAD_CELL_MODE_CROSSOVER': 1,
+              'QCAD_CELL_MODE_VERTICAL': 2,
+              'QCAD_CELL_MODE_CLUSTER': 3}
 
 ## general global parameters
 
@@ -187,7 +199,7 @@ def zone_cells(cells, spacing, show=False):
         plt.figure(0)
         plt.clf()
         nx.draw_graphviz(G)
-        plt.show(block=False)
+        plt.show()
 
     # get indices for each clock index
     clk = [cell['clk'] for cell in cells]
@@ -198,7 +210,8 @@ def zone_cells(cells, spacing, show=False):
     sub_G = {ind: G.subgraph(inds[ind]) for ind in clk_ind}
 
     # split disconnected components for each label graph
-    sub_ind = {ind: nx.connected_components(sub_G[ind]) for ind in clk_ind}
+    sub_ind = {ind: list(nx.connected_components(sub_G[ind]))
+               for ind in clk_ind}
 
     ## find zone order
 
@@ -284,7 +297,7 @@ def reorder_cells(cells, zones, J, flipy=False):
     return cells, zones, J
 
 
-def parse_qca_file(fn, one_zone=False):
+def parse_qca_file(fn, one_zone=True, show=True):
     '''Parse a QCADesigner file to extract cell properties. Returns an ordered
     list of cells, the QCADesigner grid spacing in nm, a list structure of the
     indices of each clock zone (propogating from inputs), and a coupling matrix
@@ -302,7 +315,7 @@ def parse_qca_file(fn, one_zone=False):
             cell['clk'] = 0
 
     # group into clock zones
-    zones, J = zone_cells(cells, spacing)
+    zones, J = zone_cells(cells, spacing, show=show)
 
     # reorder cells by zone and position
     cells, zones, J = reorder_cells(cells, zones, J)

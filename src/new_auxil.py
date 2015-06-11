@@ -11,11 +11,25 @@
 import numpy as np
 import sys
 
+import networkx as nx
+import matplotlib.pyplot as plt
 
 ## PHYSICAL PARAMETERS
 eps0 = 8.85412e-12  # permittivity of free space
 epsr = 12.          # relative permittivity
 q0 = 1.602e-19      # elementary charge
+
+## QCADESIGNER PARSING PARAMETERS
+
+CELL_FUNCTIONS = {'QCAD_CELL_NORMAL': 0,
+                  'QCAD_CELL_INPUT': 1,
+                  'QCAD_CELL_OUTPUT': 2,
+                  'QCAD_CELL_FIXED': 3}
+
+CELL_MODES = {'QCAD_CELL_MODE_NORMAL': 0,
+              'QCAD_CELL_MODE_CROSSOVER': 1,
+              'QCAD_CELL_MODE_VERTICAL': 2,
+              'QCAD_CELL_MODE_CLUSTER': 3}
 
 ### GENERAL FUNCTIONS
 
@@ -132,3 +146,43 @@ def convert_to_lim_adjacency(cells, spacing, J):
     interactions'''
 
     Js, T, DX, DY = prepare_convert_adj(cells, spacing, J)
+
+
+def construct_zone_graph(cells, zones, J, show=False):
+    '''Construct a DiGraph for all the zones with keys given by (n, m) where
+    n is the shell index and m is the zone index within the shell'''
+
+    # create nodes
+    G = nx.DiGraph()
+    for i_shell in xrange(len(zones)):
+        for i_zones in xrange(len(zones[i_shell])):
+            key = (i_shell, i_zones)
+            kwargs = {'inds': [], 'fixed': [], 'drivers': [], 'outputs': []}
+
+            for ind in zones[i_shell][i_zones]:
+                if cells[ind]['cf'] == CELL_FUNCTIONS['QCAD_CELL_INPUT']:
+                    kwargs['drivers'].append(ind)
+                elif cells[ind]['cf'] == CELL_FUNCTIONS['QCAD_CELL_FIXED']:
+                    kwargs['fixed'].append(ind)
+                else:
+                    kwargs['inds'].append(ind)
+                    if cells[ind]['cf'] == CELL_FUNCTIONS['QCAD_CELL_OUTPUT']:
+                        kwargs['outputs'].append(ind)
+
+            G.add_node(key, **kwargs)
+
+    # edges
+    for shell in xrange(1, len(zones)):
+        for i in xrange(len(zones[shell-1])):
+            k1 = (shell-1, i)
+            for j in xrange(len(zones[shell])):
+                k2 = (shell, j)
+                C = J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]
+                if np.any(C):
+                    G.add_edge(k1, k2, C=C)
+
+    plt.figure('Zone-Graph')
+    nx.draw_graphviz(G)
+    plt.show()
+
+    return G

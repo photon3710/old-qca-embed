@@ -118,8 +118,46 @@ def convert_to_full_adjacency(cells, spacing, J):
     '''Convert the J matrix from parse_qca to include only full adjacency
     interactions'''
 
+    R_MAX = 2
     Js, T, DX, DY = prepare_convert_adj(cells, spacing, J)
 
+    for i in range(len(cells)):
+        for j in range(len(cells)):
+            # check to see if the cell is involved in a cross over
+            xover = is_xover(cells, DX, DY, Js, i, j)
+            # if it is not a cross over and futher than 2 away, strip J
+            if (not xover) and (DX[i][j]**2 + DY[i][j]**2 >= R_MAX**2):
+                    J[i][j] = 0
+                    J[j][i] = 0
+
+    return J
+
+def is_xover(cells, DX, DY, Js, i, j):
+    '''check to see if a cell is involved in a cross over'''
+
+    #find cells directly adjacent horizontally
+    hor = [j for j in range(len(DY[i])) if DY[i][j] == 0]
+    x_adj = [j for j in hor if abs(DX[i][j]) == 1]
+
+    #find cells directly adjacent vertically
+    ver = [j for j in range(len(DX[i])) if DX[i][j] == 0]
+    y_adj = [j for j in ver if abs(DY[i][j]) == 1]
+
+    #if the pairs of cells are different, than there is a cross over
+    if len(x_adj) == 2:
+        if cells[x_adj[0]]['rot'] != cells[x_adj[1]]['rot']:
+            return True
+
+    if len(y_adj) == 2:
+        if cells[y_adj[0]]['rot'] != cells[y_adj[1]]['rot']:
+            return True
+
+    # error message if somehow there is more than 2 adjacent cells in either dir
+    if len(x_adj) > 2 or len(y_adj) > 2:
+        print 'Error: there are %d cells horizontally adjacent' +\
+            ' and %d cells vertically adjacent' % (len(x_adj), len(y_adj))
+
+    return False
 
 def convert_to_lim_adjacency(cells, spacing, J):
     '''Convert the J matrix from parse_qca to include only limited adjacency

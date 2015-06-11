@@ -16,7 +16,7 @@ import matplotlib.pylab as plt
 import numpy as np
 
 from pprint import pprint
-from new_auxil import getEk, prepare_convert_adj
+from new_auxil import getEk, prepare_convert_adj, convert_to_full_adjacency
 
 ## mapping for all possible cell functions and modes
 
@@ -189,7 +189,6 @@ def zone_cells(cells, spacing, show=False):
                 J[i, j] = Ek
                 J[j, i] = Ek
 
-    print J
     # remove very weak interactions
     J = J * (np.abs(J) >= np.max(np.abs(J)*EK_THRESH))
 
@@ -200,7 +199,7 @@ def zone_cells(cells, spacing, show=False):
         plt.figure(0)
         plt.clf()
         nx.draw_graphviz(G)
-        plt.show(block=False)
+        plt.show()
 
     # get indices for each clock index
     clk = [cell['clk'] for cell in cells]
@@ -297,7 +296,7 @@ def reorder_cells(cells, zones, J, flipy=False):
     return cells, zones, J
 
 
-def parse_qca_file(fn, one_zone=False):
+def parse_qca_file(fn, one_zone=True, show=True):
     '''Parse a QCADesigner file to extract cell properties. Returns an ordered
     list of cells, the QCADesigner grid spacing in nm, a list structure of the
     indices of each clock zone (propogating from inputs), and a coupling matrix
@@ -315,9 +314,7 @@ def parse_qca_file(fn, one_zone=False):
             cell['clk'] = 0
 
     # group into clock zones
-    zones, J = zone_cells(cells, spacing)
-
-    print J
+    zones, J = zone_cells(cells, spacing, show = show)
 
     # reorder cells by zone and position
     cells, zones, J = reorder_cells(cells, zones, J)
@@ -326,13 +323,25 @@ def parse_qca_file(fn, one_zone=False):
     if one_zone:
         zones = zones[0]
 
+    prepare_convert_adj
+
+    J = convert_to_full_adjacency(cells, spacing, J)
+
+    G = nx.Graph(J)
+
+    if show:
+        plt.figure(2)
+        plt.clf()
+        nx.draw_graphviz(G)
+        plt.show()
+
     return cells, spacing, zones, J
 
 
 if __name__ == '__main__':
 
     try:
-        fn = 'testing.txt'#sys.argv[1]
+        fn = sys.argv[1]
     except:
         print 'No file input....'
         sys.exit()

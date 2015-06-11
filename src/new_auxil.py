@@ -85,10 +85,13 @@ def getEk(c1, c2, DR=2):
     return Ek
 
 
-def comp_E_nn(spacing):
+def comp_E_nn(spacing, OLD_QCAD = False):
     '''compute the kink energy for two nearest interacting non-rotated cells'''
 
     A = 0.588672
+    if OLD_QCAD:
+        A = 0.3827320944
+
     E_nn = A/(spacing*epsr)
 
     return E_nn
@@ -141,18 +144,51 @@ def convert_to_full_adjacency(cells, spacing, J):
     R_MAX = 2
     Js, T, DX, DY = prepare_convert_adj(cells, spacing, J)
 
+    xovers = [i for i in range(len(cells)) if is_xover(cells, DX, DY, i)]
     for i in range(len(cells)):
+        # check to see if the cell is involved in a cross over
         for j in range(len(cells)):
-            # check to see if the cell is involved in a cross over
-            xover = is_xover(cells, DX, DY, Js, i, j)
             # if it is not a cross over and futher than 2 away, strip J
-            if (not xover) and (DX[i][j]**2 + DY[i][j]**2 >= R_MAX**2):
-                    J[i][j] = 0
-                    J[j][i] = 0
+            if not (i in xovers and j in xovers):
+                if (DX[i][j]**2 + DY[i][j]**2 >= R_MAX**2):
+                        J[i][j] = 0
+                        J[j][i] = 0
 
     return J
 
-def is_xover(cells, DX, DY, Js, i, j):
+def convert_to_lim_adjacency(cells, spacing, J):
+    '''Convert the J matrix from parse_qca to include only limited adjacency
+    interactions'''
+
+    c_index = range(len(cells))
+    R_MAX = 2
+    Js, T, DX, DY = prepare_convert_adj(cells, spacing, J)
+
+    xovers = [i for i in c_index if is_xover(cells, DX, DY, i)]
+    invs = [i for i in c_index if is_inv(Js, DX, DY, i)]
+
+    for i in c_index:
+        # number of strong interactions of current cell
+        si = len([j for j in c_index if Js[i][j] == 1 or Js[i][j] == -1.472])
+        for j in c_index:
+
+            dx = DX[i][j]
+            dy = DY[i][j]
+
+            if not (i in xovers and j in xovers):
+                if (i in invs or j in invs) and si < 2:
+                    if dx**2 + dy**2 >= R_MAX**2:
+                        J[i][j] = 0
+                        J[j][i] = 0
+
+                elif dx**2 + dy**2 >= R_MAX:
+                        J[i][j] = 0
+                        J[j][i] = 0
+
+    return J
+
+
+def is_xover(cells, DX, DY, i):
     '''check to see if a cell is involved in a cross over'''
 
     #find cells directly adjacent horizontally
@@ -179,12 +215,34 @@ def is_xover(cells, DX, DY, Js, i, j):
 
     return False
 
-def convert_to_lim_adjacency(cells, spacing, J):
-    '''Convert the J matrix from parse_qca to include only limited adjacency
-    interactions'''
+def is_inv(Js, DX, DY, i):
+    '''check to see if a cell is an inverter cell
+    and inverter cell is the cell that has two diagonal interactions, and one
+    directly adjacent interaction (labelled IC below)
+        c - c
+        |    \
+    c - c     IC - c
+        |    /
+        c - c
+    '''
 
-    Js, T, DX, DY = prepare_convert_adj(cells, spacing, J)
+    index = range(len(Js[i]))
+    # find number of strong and medium bonds
+    m = [j for j in index if Js[i][j] == -0.2174 or Js[i][j] == 0.172]
+    s = [j for j in index if Js[i][j] == 1 or Js[i][j] == -1.472]
 
+    if len(m) >= 2 and len(s) == 1:
+        # in case of weird cases - checks to see that strong interactions
+        # are on the opposite side of the medium interactions
+        opp = 0
+        for j in m:
+            if DX[i][j] == (-1) * DX[i][s[0]]:
+                opp += 1
+            if DY[i][j] == (-1) * DY[i][s[0]]:
+                opp += 1
+        return opp == 2
+
+    return False
 
 def construct_zone_graph(cells, zones, J, show=False):
     '''Construct a DiGraph for all the zones with keys given by (n, m) where

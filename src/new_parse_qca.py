@@ -16,7 +16,7 @@ import matplotlib.pylab as plt
 import numpy as np
 
 #from pprint import pprint
-from new_auxil import getEk
+from new_auxil import getEk, convert_to_full_adjacency, convert_to_lim_adjacency
 
 ## mapping for all possible cell functions and modes
 
@@ -173,7 +173,7 @@ def proc_hierarchy(hier):
     return cells, spacing
 
 
-def zone_cells(cells, spacing, show=False):
+def zone_cells(cells, spacing, show=True):
     '''Split cells into clock zones. Distinguishes disjoint zones with the
     same zone index'''
 
@@ -297,7 +297,7 @@ def reorder_cells(cells, zones, J, flipy=False):
     return cells, zones, J
 
 
-def parse_qca_file(fn, one_zone=True, show=True):
+def parse_qca_file(fn, one_zone=True):
     '''Parse a QCADesigner file to extract cell properties. Returns an ordered
     list of cells, the QCADesigner grid spacing in nm, a list structure of the
     indices of each clock zone (propogating from inputs), and a coupling matrix
@@ -315,7 +315,7 @@ def parse_qca_file(fn, one_zone=True, show=True):
             cell['clk'] = 0
 
     # group into clock zones
-    zones, J = zone_cells(cells, spacing, show=show)
+    zones, J = zone_cells(cells, spacing)
 
     # reorder cells by zone and position
     cells, zones, J = reorder_cells(cells, zones, J)

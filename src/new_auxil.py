@@ -177,9 +177,8 @@ def construct_zone_graph(cells, zones, J, show=False):
             k1 = (shell-1, i)
             for j in xrange(len(zones[shell])):
                 k2 = (shell, j)
-                C = J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]
-                if np.any(C):
-                    G.add_edge(k1, k2, C=C)
+                if np.any(J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]):
+                    G.add_edge(k1, k2)
 
     plt.figure('Zone-Graph')
     nx.draw_graphviz(G)

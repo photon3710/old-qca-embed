@@ -1,11 +1,11 @@
-#!usr/bin/python
+#!/usr/bin/python
 
 #---------------------------------------------------------
 # Name: solve.py
 # Purpose: Sparse matrix formulation of the QCA solver
 # Author:	Jacob Retallick
 # Created: 02.08.2014
-# Last Modified: 06.05.2015
+# Last Modified: 12.06.2015
 #---------------------------------------------------------
 
 import numpy as np
@@ -23,7 +23,8 @@ TOL_LOBPCG = 1e-4
 H_OFFSET = 100
 
 
-def solveSparse(Hs, run_lobpcg=False, minimal=False, verbose=False):
+def solveSparse(Hs, run_lobpcg=False, minimal=False, verbose=False,
+                more=False):
     '''Finds a subset of the eigenstates/eigenvalues for a sparse
     formatted Hamiltonian'''
 
@@ -38,7 +39,9 @@ def solveSparse(Hs, run_lobpcg=False, minimal=False, verbose=False):
 
     if minimal:    # only the lowest two states
         K_EIGSH = 2
-    else:        # can only find ground state for 2x2 system using eigsh
+    elif more:        # can only find ground state for 2x2 system using eigsh
+        K_EIGSH = 1 if N == 1 else min(pow(2, N)-1, 4*N)
+    else:
         K_EIGSH = 1 if N == 1 else 2*N
 
     t1 = clock()
@@ -97,13 +100,13 @@ def solveSparse(Hs, run_lobpcg=False, minimal=False, verbose=False):
 
 
 def solve(h, J, gamma=None, verbose=False, output=True,
-          full_output=False, minimal=False):
+          full_output=False, minimal=False, more=False):
     ''' takes as input the h and J coefficients (unique to scale) and
     returns the ground state, the first excited state, and a subset of
     the energy spectrum (number of energies determined by sparse.py)'''
 
     Hs = generateHam(h, J, gamma)
-    sols = solveSparse(Hs, verbose=False, minimal=minimal)
+    sols = solveSparse(Hs, verbose=False, minimal=minimal, more=more)
 
     ground_state = stateToPol(sols['eigsh']['vecs'][:, 0])
     excited_state = stateToPol(sols['eigsh']['vecs'][:, 1])

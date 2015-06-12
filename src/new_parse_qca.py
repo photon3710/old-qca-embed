@@ -172,7 +172,7 @@ def proc_hierarchy(hier):
     return cells, spacing
 
 
-def zone_cells(cells, spacing, show=True):
+def zone_cells(cells, spacing, show=False):
     '''Split cells into clock zones. Distinguishes disjoint zones with the
     same zone index'''
 
@@ -314,7 +314,7 @@ def parse_qca_file(fn, one_zone=False, show=False):
             cell['clk'] = 0
 
     # group into clock zones
-    zones, J = zone_cells(cells, spacing)
+    zones, J = zone_cells(cells, spacing, show=show)
 
     # reorder cells by zone and position
     cells, zones, J = reorder_cells(cells, zones, J)

@@ -10,7 +10,7 @@
 
 import numpy as np
 import itertools
-
+import xml.etree.ElementTree as ET  # xml input and output
 
 class Zone:
     '''A Zone object contains all the relevant information needed about a
@@ -168,3 +168,11 @@ class Zone:
             outs[case] = solver(self.h, -.5*self.J, **kwargs)
 
         return cases, outs, z_order
+
+    def write_to_file(self, parent):
+        '''Add zone information to given xml parent node'''
+        pass
+
+    def read_from_file(self, node):
+        '''Construct a Zone object from its xml node'''
+        pass

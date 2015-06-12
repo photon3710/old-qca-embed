@@ -156,6 +156,7 @@ def convert_to_full_adjacency(cells, spacing, J):
 
     return J
 
+
 def convert_to_lim_adjacency(cells, spacing, J):
     '''Convert the J matrix from parse_qca to include only limited adjacency
     interactions'''
@@ -215,6 +216,7 @@ def is_xover(cells, DX, DY, i):
 
     return False
 
+
 def is_inv(Js, DX, DY, i):
     '''check to see if a cell is an inverter cell
     and inverter cell is the cell that has two diagonal interactions, and one
@@ -243,6 +245,7 @@ def is_inv(Js, DX, DY, i):
         return opp == 2
 
     return False
+
 
 def construct_zone_graph(cells, zones, J, show=False):
     '''Construct a DiGraph for all the zones with keys given by (n, m) where
@@ -275,9 +278,9 @@ def construct_zone_graph(cells, zones, J, show=False):
                 k2 = (shell, j)
                 if np.any(J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]):
                     G.add_edge(k1, k2)
-
-    plt.figure('Zone-Graph')
-    nx.draw_graphviz(G)
-    plt.show()
+    if show:
+        plt.figure('Zone-Graph')
+        nx.draw_graphviz(G)
+        plt.show()
 
     return G

@@ -14,18 +14,21 @@ from new_auxil import convert_to_full_adjacency, convert_to_lim_adjacency, \
 from new_parse_qca import parse_qca_file
 from rp_solve import rp_solve
 
-#from solution import Solution
+from solution import Solution
 from zone import Zone
 
 import sys
+import numpy as np
 #from pprint import pprint
 
 
-def rp_solver(h, J):
+def rp_solver(h, J, gam=0.):
     '''Solve the low-energy spectra of a zone using rp_solve'''
 
     h = h.tolist()[0]
-    E, states, Eps, pstates, state_pols = rp_solve(h, J, 0.0)
+    gam = np.max(np.abs(J))*gam
+
+    E, states, Eps, pstates, state_pols = rp_solve(h, J, gam=gam)
 
     out = {'Es': E,
            'states': states,
@@ -71,12 +74,15 @@ def qca_sim(fn, **kwargs):
     Zones = {key: Zone(key, Gz, J, cells) for key in Gz.nodes()}
 
     # solve every zone for every possible set of inputs
+    solution = Solution(Gz)
     for i in xrange(len(zones)):
         for j in xrange(len(zones[i])):
             key = (i, j)
             cases, outs, z_order = Zones[key].solve_all(solver)
-
-    # construct solution object
+            solution.add_zone(Zones[key], outs, z_order)
+            
+    # write solution to file
+    solution.write_to_file(fn_sol)
 
 
 if __name__ == '__main__':

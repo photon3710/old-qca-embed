@@ -11,7 +11,7 @@
 import sys
 import numpy as np
 import scipy.sparse as sp
-from pprint import pprint
+#from pprint import pprint
 
 ADJ_RADIUS = 1.5    # distance to separate full from limited adjacency
 TYPEMAP = {'QCAD_CELL_NORMAL': 0,
@@ -90,7 +90,7 @@ def new_getEk(c1, c2, DR=2):
 
     R = np.sqrt(np.sum(pow(X1-X2, 2), axis=2))
     if np.mean(R) > 2*DR*(np.max(x1)-np.min(x1)):
-        print np.mean(R), DR, np.max(x1)-np.min(x1)
+#        print np.mean(R), DR, np.max(x1)-np.min(x1)
         return False
 
     if np.min(R) == 0:

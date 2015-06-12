@@ -16,12 +16,13 @@ class Solution:
     contains methods to analyse these results in order to determine propoerties
     of the whole circuit.'''
 
-    def __init__(self):
+    def __init__(self, Gz):
         '''Initialise a Solution object'''
 
-        self.zones = []
-        self.z_orders = []
-        self.sols = []
+        self.Gz = Gz        # directed zone graph
+        self.zones = []     # list of zone object
+        self.z_orders = []  # order of input zones for sols indexing
+        self.sols = []      # list of sol dictionaries for each zone
 
     def add_zone(self, zone, fmt_out, z_order):
         '''Add a solved zone to the Solution object. Variable fmt_out
@@ -53,3 +54,21 @@ class Solution:
         self.zones.append(zone)
         self.z_orders.append(z_order)
         self.sols.append(fmt_out)
+
+    def write_to_file(self, fn):
+        '''Create xml tree for the Solution object and write to file'''
+        pass
+
+    def load_from_file(self, fn):
+        ''' '''
+        pass
+
+    def run_input_single(self, pols):
+        '''Use the solution information to deterime the ouput polarizations
+        for a single set of input polarizations'''
+        pass
+
+    def run_input_sequence(self, pol_seq):
+        '''Use the solution information to deterime the output sequence for a
+        sequence of input sets (relevant for circuits with feedback'''
+        pass

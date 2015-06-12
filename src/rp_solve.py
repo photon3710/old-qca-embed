@@ -20,7 +20,7 @@ from pprint import pprint
 # threshold values
 N_THRESH = 8            # maximum partition size for exact solver
 MEM_THRESH = 5e6        # maximum mode count product
-STATE_THRESH = 0.02     # required amplitude for state contribution
+STATE_THRESH = 0.01     # required amplitude for state contribution
 
 assert N_THRESH <= 21, 'Given N_THRESH will likely crash the sparse solver...'
 
@@ -549,7 +549,8 @@ def rp_solve(h, J, gam, rec=False):
     if len(h) <= N_THRESH:
         if VERBOSE:
             print 'Running exact solver...'
-        gs, es, spectrum, sols = solve(h, J, gamma=gam, full_output=True)
+        gs, es, spectrum, sols = solve(h, J, gamma=gam, full_output=True,
+                                       more=True)
         Es, states, prod_states = proc_solve(spectrum, sols, e_res)
         states = zip(states, [None]*len(states))
     else:

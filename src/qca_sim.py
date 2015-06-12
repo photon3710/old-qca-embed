@@ -12,17 +12,33 @@ from new_auxil import convert_to_full_adjacency, convert_to_lim_adjacency, \
     construct_zone_graph
 
 from new_parse_qca import parse_qca_file
+from rp_solve import rp_solve
 
 #from solution import Solution
 from zone import Zone
 
 import sys
-from pprint import pprint
+#from pprint import pprint
 
 
-SOLVERS = {'rp': None,
+def rp_solver(h, J):
+    '''Solve the low-energy spectra of a zone using rp_solve'''
+
+    h = h.tolist()[0]
+    E, states, Eps, pstates, state_pols = rp_solve(h, J, 0.0)
+
+    out = {'Es': E,
+           'states': states,
+           'Eps': Eps,
+           'pstates': pstates,
+           'state_pols': state_pols}
+
+    return out
+
+
+SOLVERS = {'rp': rp_solver,
            'dwave': None,
-           'default': None}
+           'default': rp_solver}
 
 assert 'default' in SOLVERS, 'Default solver has not be set...'
 
@@ -53,11 +69,12 @@ def qca_sim(fn, **kwargs):
     # set up zone formulation
     Gz = construct_zone_graph(cells, zones, J, show=True)
     Zones = {key: Zone(key, Gz, J, cells) for key in Gz.nodes()}
-    
-    for z in sorted(Zones):
-        print(str(Zones[z]))
 
     # solve every zone for every possible set of inputs
+    for i in xrange(len(zones)):
+        for j in xrange(len(zones[i])):
+            key = (i, j)
+            cases, outs, z_order = Zones[key].solve_all(solver)
 
     # construct solution object
 
@@ -69,5 +86,5 @@ if __name__ == '__main__':
     except:
         print('No filename entered...')
         sys.exit()
-        
+
     qca_sim(fn)

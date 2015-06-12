@@ -5,7 +5,7 @@
 # Purpose: Container file for Zone class and associated functions
 # Author:	Jacob Retallick
 # Created: 10.06.2014
-# Last Modified: 10.06.2015
+# Last Modified: 11.06.2015
 #---------------------------------------------------------
 
 import numpy as np
@@ -112,9 +112,9 @@ class Zone:
         '''Return the indices of simulated cells'''
         return self.inds
 
-    def gen_pols(n):
+    def gen_pols(self, n):
         '''Generate all possible polarizations for n cells'''
-        return [tuple(2*int(x)-1 for x in format(i, '#0{0}b'.format(n+2)))
+        return [tuple(2*int(x)-1 for x in format(i, '#0{0}b'.format(n+2))[2:])
                 for i in xrange(pow(2, n))]
 
     def solve_all(self, solver=None, **kwargs):
@@ -154,6 +154,7 @@ class Zone:
         # run each configuration, solve
         outs = {}
         for case in cases:
+            print case
             # compute driver contribution to h
             self.h_driver = .5*np.matrix(case[0])*self.C_driver
             # for each input zone, map pol key to state and get h contr.
@@ -164,6 +165,6 @@ class Zone:
                 pol[1, c_inds[key]] = case[i]
                 self.h += .5*np.asmatrix(pol)*self.C_ins[key]
 
-                outs[case] = solver(self.h, self.J, **kwargs)
+            outs[case] = solver(self.h, -.5*self.J, **kwargs)
 
         return cases, outs, z_order

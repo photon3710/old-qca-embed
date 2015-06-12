@@ -9,7 +9,7 @@
 #---------------------------------------------------------
 
 from new_auxil import convert_to_full_adjacency, convert_to_lim_adjacency, \
-    construct_zone_graph
+    construct_zone_graph, gen_pols
 
 from new_parse_qca import parse_qca_file
 from rp_solve import rp_solve
@@ -19,7 +19,7 @@ from zone import Zone
 
 import sys
 import numpy as np
-#from pprint import pprint
+from pprint import pprint
 
 
 def rp_solver(h, J, gam=0.):
@@ -80,9 +80,20 @@ def qca_sim(fn, **kwargs):
             key = (i, j)
             cases, outs, z_order = Zones[key].solve_all(solver)
             solution.add_zone(Zones[key], outs, z_order)
-            
+
     # write solution to file
-    solution.write_to_file(fn_sol)
+    solution.write_to_file('./qca_sim_test')
+
+    # run solution inputs (single sets)
+    input_inds = solution.get_inputs()
+
+    input_pols = gen_pols(len(input_inds))  # set of all possible input pols
+
+    out = {}    # dict of outputs lists for each input polarization list
+    for pols in input_pols:
+        out[pols] = solution.run_input_single(pols)
+
+    pprint(out)
 
 
 if __name__ == '__main__':

@@ -40,6 +40,11 @@ def pinch(string, pre, post):
     return string.partition(pre)[2].rpartition(post)[0]
 
 
+def gen_pols(n):
+        '''Generate all possible polarizations for n cells'''
+        return [tuple(2*int(x)-1 for x in format(i, '#0{0}b'.format(n+2))[2:])
+                for i in xrange(pow(2, n))]
+
 ### QCA CELL PROCESSING
 
 

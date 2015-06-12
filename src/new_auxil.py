@@ -281,3 +281,101 @@ def construct_zone_graph(cells, zones, J, show=False):
     plt.show()
 
     return G
+
+### HAMILTONIAN GENERATION
+
+PAULI = {}
+PAULI['x'] = sp.dia_matrix([[0, 1], [1, 0]])
+#PAULI['y'] = sp.dia_matrix([[0, 1j], [-1j, 0]])
+PAULI['z'] = sp.dia_matrix([[-1, 0], [0, 1]])
+
+
+def stateToPol(state):
+    '''converts a 2^N size state vector to an N size polarization vector'''
+
+    state = np.asmatrix(state)
+
+    ## correct state alignment
+
+    a, b = state.shape
+    if a < b:
+        state = state.transpose()
+
+    amp = np.abs(np.multiply(state.conjugate(), state))
+
+    N = int(np.log2(np.size(state)))
+    SZ = [np.asmatrix(pauli(i+1, N, 'z')) for i in xrange(N)]
+
+    POL = [-float(SZ[i]*amp) for i in xrange(N)]
+    return POL
+
+
+def pauli(index, N, typ):
+    '''computes the tensor product sigma_typ(i) '''
+
+    if index < 1 or index > N:
+        print 'Invalid tensor product index...must be in range (1...N)'
+        sys.exit()
+
+    if not typ in PAULI.keys():
+        print "Invalid pauli matrix type... must be in ['x', 'y', 'z']"
+        sys.exit()
+
+    p_mat = PAULI[typ]
+
+    if index == 1:
+        product = sp.kron(p_mat, sp.eye(pow(2, N-index)))
+    else:
+        temp = sp.kron(sp.eye(pow(2, index-1)), p_mat)
+        product = sp.kron(temp, sp.eye(pow(2, N-index)))
+
+    if typ == 'z':
+        return product.diagonal()
+    else:
+        return sp.tril(product)
+
+
+def generateHam(h, J, gamma=None):
+    ''' computes the Hamiltonian as a sparse matrix.
+
+    inputs:    h - iterable of size N containing on site energies
+            J - matrix (type J[i,j]) containing coupling strengths. Needs
+                to contain at least the upper triangular values
+    '''
+
+    N = len(h)
+    N2 = pow(2, N)
+
+    # initialise pauli and data matrices
+
+    #J=sp.triu(J)
+
+    offdiag_flag = False
+    if type(gamma) in [int, float]:
+        offdiag_flag = True
+        gamma = [gamma]*N
+        SX = [pauli(i+1, N, 'x') for i in xrange(N)]  # tril sp mat format
+        OFFDIAG = sp.dia_matrix((N2, N2), dtype=float)
+
+    SZ = [pauli(i+1, N, 'z') for i in xrange(N)]  # diag np.array
+
+    DIAG = np.zeros([1, N2], dtype=float)
+
+    for i in xrange(N):
+
+        DIAG += SZ[i]*h[i]
+
+        for j in xrange(i+1, N):
+            DIAG += J[i, j]*np.multiply(SZ[i], SZ[j])
+
+        if offdiag_flag:
+            OFFDIAG = OFFDIAG - gamma[i]*SX[i]
+
+    H = sp.diags(DIAG[0], 0)
+    if offdiag_flag:
+        H = H+OFFDIAG
+
+    upper = sp.tril(H, -1).getH()
+
+    return H+upper
+

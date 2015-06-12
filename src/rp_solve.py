@@ -13,12 +13,14 @@ import numpy as np
 import networkx as nx
 import sys
 
+from pprint import pprint
+
 ## SOLVER PARAMETERS
 
 # threshold values
 N_THRESH = 8            # maximum partition size for exact solver
-MEM_THRESH = 1e6        # maximum mode count product
-STATE_THRESH = 0.05     # required amplitude for state contribution
+MEM_THRESH = 5e6        # maximum mode count product
+STATE_THRESH = 0.02     # required amplitude for state contribution
 
 assert N_THRESH <= 21, 'Given N_THRESH will likely crash the sparse solver...'
 
@@ -28,7 +30,7 @@ N_PARTS = 2             # maximum number of partitions at each iteration
 USE_NN = False          # Convert to nearest neighbour
 
 # resolution
-E_RES = 1e-1            # resolution for energy binning relative to max J
+E_RES = 5e-2            # resolution for energy binning relative to max J
 
 VERBOSE = True
 
@@ -428,12 +430,8 @@ def proc_states(states, modes, inds):
     return states
 
 
-def solve_comp(h_p, J_p, C_p, gam, modes, inds, e_res):
-    '''Solve component formalism'''
-
-    if VERBOSE:
-        print '\nRunning component solver...'
-    t = time()
+def build_comp_H(h_p, J_p, C_p, gam, modes):
+    '''Build a sparse representation of the component space Hamiltonian'''
 
     N = len(h_p)    # number of partitions
 
@@ -458,6 +456,18 @@ def solve_comp(h_p, J_p, C_p, gam, modes, inds, e_res):
     else:
         H = diag
 
+    return H
+
+
+def solve_comp(h_p, J_p, C_p, gam, modes, inds, e_res):
+    '''Solve component formalism'''
+
+    if VERBOSE:
+        print '\nRunning component solver...'
+    t = time()
+
+    H = build_comp_H(h_p, J_p, C_p, gam, modes)
+
     # run sparse matrix solver
     if VERBOSE:
         print 'H matrix size: %s' % str(H.shape)
@@ -477,6 +487,54 @@ def solve_comp(h_p, J_p, C_p, gam, modes, inds, e_res):
         print '...done'
         print 'Component solver time: %.5f s' % (time()-t)
     return Egaps, states, prod_states
+
+
+def echo_ps(ps):
+    '''Nice output format for product states'''
+    s = ''.join(['+' if p < 0 else '-' for p in ps])
+    return s
+
+
+def rp_state_to_pol(amps, prod_states=None):
+    '''convert the amplitudes and product states of a state to a pol list'''
+
+    if prod_states is None:
+        return stateToPol(amps)
+
+    modes = np.array(prod_states)
+    amps = amps.reshape([-1, 1])
+
+    return -np.sum((amps*amps)*modes, 0)
+
+
+def out_handler(h, J, gam, prod_states):
+    '''Make an estimation of low energy spectrum using the determined
+    applicable subset of product states and the problem parameters'''
+
+    # create a single list of the product states
+    prod_states = [list(ps) for ps in prod_states]
+    pstates = sorted(set(reduce(lambda x, y: x+y, prod_states)))
+
+    # find the energy associated with each product state
+    modes = np.matrix(pstates)
+    H = build_comp_H([h], [J], [], gam, [modes])
+    Eps = H.diagonal()
+
+    # sort product states by energy
+    ps_order = sorted(list(enumerate(Eps)), key=lambda x: x[1])
+    ps_order, Eps = zip(*ps_order)
+
+    # find the eigenstates in the reduced mode space
+    sols = solveSparse(H)
+
+    E = sols['eigsh']['vals']
+    states = sols['eigsh']['vecs']
+    states = [sols['eigsh']['vecs'][ps_order, i] for i in xrange(len(E))]
+
+    # get cell polarizations for each eigenstate
+    state_pols = [rp_state_to_pol(state, pstates) for state in states]
+
+    return E, states, Eps, pstates, state_pols
 
 
 def rp_solve(h, J, gam, rec=False):
@@ -524,27 +582,9 @@ def rp_solve(h, J, gam, rec=False):
             states = proc_states(states, modes, parts)
 
     if not rec:
-        return Es, states, prod_states
+        return out_handler(h, J, gam, prod_states)
 
     return Es, prod_states
-
-
-def echo_ps(ps):
-    '''Nice output format for product states'''
-    s = ''.join(['+' if p < 0 else '-' for p in ps])
-    return s
-
-
-def rp_stateToPol(amps, prod_states=None):
-    '''convert the amplitudes and product states of a state to a pol list'''
-
-    if prod_states is None:
-        return stateToPol(amps)
-
-    modes = np.array(prod_states)
-    amps = amps.reshape([-1, 1])
-
-    return -np.sum((amps*amps)*modes, 0)
 
 
 if __name__ == '__main__':
@@ -563,13 +603,7 @@ if __name__ == '__main__':
 
     gam = np.max(np.abs(J))*.1
     #gam = 0
-    Egaps, states, prod_states = rp_solve(h, J, gam)
+    E, states, Eps, pstates, state_pols = rp_solve(h, J, gam)
 
-    #print np.round(stateToPol(states[0]),1)
-    #print np.round(stateToPol(states[1]),1)
-    print '\n'.join(map(echo_ps, prod_states[0]))
-    print '\n\n'
-    print '\n'.join(map(echo_ps, prod_states[1]))
-    print '\n\n'
-    #pprint(prod_states[1])
-    print Egaps
+    pprint(np.round(E[:5], 4))
+    pprint(np.round(state_pols[:5], 2))

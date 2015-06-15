@@ -1,36 +1,36 @@
-#!usr/bin/python
+#!/usr/bin/python
 
 #---------------------------------------------------------
 # Name: auxil.py
 # Purpose: Auxiliary commonly used functions
 # Author:	Jacob Retallick
-# Created: 02.08.2014
-# Last Modified: 07.05.2015
+# Created: 09.06.2014
+# Last Modified: 09.06.2015
 #---------------------------------------------------------
 
-import sys
 import numpy as np
 import scipy.sparse as sp
-#from pprint import pprint
+import sys
 
-ADJ_RADIUS = 1.5    # distance to separate full from limited adjacency
-TYPEMAP = {'QCAD_CELL_NORMAL': 0,
-           'QCAD_CELL_OUTPUT': 1,
-           'QCAD_CELL_FIXED': 2,
-           'QCAD_CELL_INPUT': 3}
+import networkx as nx
+import matplotlib.pyplot as plt
 
-# physical parameters
-EK0 = 300e-3        # reference kink energy in eV
-EK_POW = 5          # fall-off power of the kink energy
-
-GAMMA = 0.1         # default tunneling energy, relative to EK
-
-NEAREST_FACT = .5   # portion of EK0 for 'nearest neighbour' coupling
-
+## PHYSICAL PARAMETERS
 eps0 = 8.85412e-12  # permittivity of free space
-epsr = 12.           # realtive permittivity
+epsr = 12.          # relative permittivity
 q0 = 1.602e-19      # elementary charge
 
+## QCADESIGNER PARSING PARAMETERS
+
+CELL_FUNCTIONS = {'QCAD_CELL_NORMAL': 0,
+                  'QCAD_CELL_INPUT': 1,
+                  'QCAD_CELL_OUTPUT': 2,
+                  'QCAD_CELL_FIXED': 3}
+
+CELL_MODES = {'QCAD_CELL_MODE_NORMAL': 0,
+              'QCAD_CELL_MODE_CROSSOVER': 1,
+              'QCAD_CELL_MODE_VERTICAL': 2,
+              'QCAD_CELL_MODE_CLUSTER': 3}
 
 ### GENERAL FUNCTIONS
 
@@ -44,35 +44,15 @@ def pinch(string, pre, post):
 ### QCA CELL PROCESSING
 
 
-def getEk(c1, c2, spacing):
-    ''' returns the theoretical value of Ek for two cells'''
+def getEk(c1, c2, DR=2):
+    '''Compute the kink energy using the qdot positions (in nm) of two cells.
+    If the cell displacement is greater than DR return False'''
 
-    dx = abs(c1['x']-c2['x'])
-    dy = abs(c1['y']-c2['y'])
-
-    #print 'DX: ' + str(dx) + '\t DY: ' + str(dy)
-
-    if dx+dy < .5*spacing:
-        n1 = str(c1['number'])
-        n2 = str(c2['number'])
-        print 'Detected cell overlap... cells: ' + n1 + ' and ' + n2
-        sys.exit()
-
-    r = np.sqrt(dx*dx+dy*dy)/spacing
-
-    if abs(dx/spacing) < 0.01:    # vertical alignment (divide by zero)
-        theta = np.pi/2
-    else:
-        theta = np.arctan(dy/dx)
-
-    if r > ADJ_RADIUS:
+    # check cell-cell range
+    dx = c1['x']-c2['x']
+    dy = c1['y']-c2['y']
+    if dx*dx+dy*dy > DR*DR:
         return False
-    else:
-        return EK0*np.cos(4*theta)/pow(r, EK_POW)
-
-
-def new_getEk(c1, c2, DR=2):
-    '''Qdot positions in nm'''
 
     qdots_1 = c1['qdots']
     qdots_2 = c2['qdots']
@@ -89,9 +69,6 @@ def new_getEk(c1, c2, DR=2):
     X2 = np.array([x2, y2]).T.reshape([1, 4, 2])
 
     R = np.sqrt(np.sum(pow(X1-X2, 2), axis=2))
-    if np.mean(R) > 2*DR*(np.max(x1)-np.min(x1)):
-#        print np.mean(R), DR, np.max(x1)-np.min(x1)
-        return False
 
     if np.min(R) == 0:
         print 'qdot overlap detected'
@@ -109,194 +86,202 @@ def new_getEk(c1, c2, DR=2):
     return Ek
 
 
-def generateAdjDict(cells, spacing, verbose=False):
-    '''generates a dict which has list elements containing tuples of type
-    (cell_index, Ek). For each cell in [cells], finds the indexes of all
-    cells satisfying 'adjacency' and appends these indices with the
-    corresponding Ek values. First element of adjacency[i] is h_i '''
+def comp_E_nn(spacing, OLD_QCAD = False):
+    '''compute the kink energy for two nearest interacting non-rotated cells'''
 
-    N = len(cells)
-    adjacency = {}
+    A = 0.588672
+    if OLD_QCAD:
+        A = 0.3827320944
 
-    drivers = []
+    E_nn = A/(spacing*epsr)
 
-    # separate drivers from other cells
-    driver_index = []
-    for i in xrange(N):
-        cell = cells[i]
-        if cell['type'] == TYPEMAP['QCAD_CELL_FIXED']:
-            drivers.append(cell)
-            driver_index.append(i)
-        else:
-            adjacency[i] = [0.]    # initial h value
-
-    if verbose:
-        print 'Driver cell indentified: ' + str(driver_index)
-
-    # assert adjacency key order
-    if verbose:
-        print 'Cell order: ' + str(adjacency.keys())
-        order = sorted(adjacency.keys())
-        print 'Sorted order: ' + str(order)
-    else:
-        order = adjacency.keys()
-
-    M = len(order)
-    for i in xrange(M):
-        cell = cells[order[i]]
-
-        # find driver contribution
-        for driver in drivers:
-            Ek = new_getEk(cell, driver)
-            if Ek is False:
-                continue
-            else:
-                try:
-                    pol = driver['pol']
-                except KeyError:
-                    print 'Driver does not have a polarization... setting as 0'
-                    pol = 0.
-                adjacency[order[i]][0] += Ek*pol
-
-        # find adjacencies
-        adj = []
-        for j in xrange(i+1, M):
-            cell2 = cells[order[j]]
-            Ek = new_getEk(cell, cell2)
-            if Ek is False:
-                continue
-            else:
-                adj.append((cell2['number'], Ek))
-        adjacency[order[i]] += adj
-
-    return adjacency, driver_index
+    return E_nn
 
 
-def detectComponents(adj_dict):
-    '''Determine the number of majority gates and inverters. Driver cells not
-    counted.'''
+def prepare_convert_adj(cells, spacing, J):
+    '''Prepares useful variables for converting from the parse_qca J matrix to
+    a reduced adjacency form.
 
-    cells = adj_dict.keys()
+    outputs:    Js  : J scaled by the nearest neighbour interaction of two
+                     non-rotated cells.
+                T   : Array of cell-cell types for each element of J
+                        1  -> non-rotated - non-rotated
+                        0  -> non-rotated - rotated
+                        -1 -> rotated - rotated
+                DX  : X displacements in grid-spacings
+                DY  : Y displacements in grid-spacings
+    '''
 
-    majs = []
-    invs = []
+    # scale J by the kink energy of two non-rotated adjacent cells
+    E_nn = comp_E_nn(spacing)
+    Js = np.round(J/E_nn, 4)
 
-    num_nearest = {cell: 0 for cell in cells}
-    num_next = {cell: 0 for cell in cells}
+    # determine interaction type of each element of J:
+    #   1  -> non-rotated - non-rotated
+    #   0  -> non-rotated - rotated
+    #   -1 -> rotated - rotated
 
-    # count number of nearest and next nearest nieghbours
-    for cell in cells:
-        adj = adj_dict[cell][1:]
-        for c2, Ek in adj:
-            if Ek > 0.8 * EK0:
-                num_nearest[cell] += 1
-                num_nearest[c2] += 1
-            elif Ek < 0 and Ek > -0.4:
-                num_next[cell] += 1
-                num_next[c2] += 1
+    rot = [cell['rot'] for cell in cells]   # array of rotated flags
+    rot = 1*np.array(rot).reshape([-1, 1])
 
-    for cell in cells:
-        if num_nearest[cell] == 4:
-            majs.append(cell)
-        elif num_nearest[cell] == 1 and num_next[cell] == 2:
-            invs.append(cell)
+    T = 1-(rot+rot.T)
+    #T = T.astype(int)
 
-    return majs, invs
+    # get displacements between each cell
 
+    X = np.array([cell['x'] for cell in cells]).reshape([-1, 1])
+    Y = np.array([cell['y'] for cell in cells]).reshape([-1, 1])
 
-def convertToNearestNeighbour(adjacency, driver_index=None):
-    '''Converts the output from generateAdjDict to that for restricted
-    nearest neighbour coupling'''
+    DX = (X.T - X)/spacing
+    DY = (Y - Y.T)/spacing
 
-    ## count 'nearest neighbour' cells: directly adjacent
-
-    cell_map = adjacency.keys()
-    N = len(cell_map)
-
-    # recall adjacency[cell] is a list of tuple pairs (cell_index, Ek) with
-    # adj[cell][0] = h_{cell_index}
-
-    num_nearest = [0]*N
-    num_next = [0]*N
-    ignore = set()
-
-    h, J = adjToCoef(adjacency)
-    Ek0 = np.max(np.abs(J))
-    nearest_thresh = NEAREST_FACT*Ek0
-
-    # generate full connectivity list
-    connect = {i: [] for i in xrange(N)}
-    for i in xrange(N):
-        adj = list(adjacency[cell_map[i]])
-        h = adj.pop(0)
-        connect[i].insert(0, h)
-        for cell_index, Ek in adj:
-            ind = cell_map.index(cell_index)
-            connect[i].append([ind, Ek])
-            connect[ind].append([i, Ek])
-
-    # count the number of nearest neighbour cells for each cell unless
-    for i in xrange(N):
-        con = list(connect[i])
-        h = con.pop(0)
-        for ind, Ek in con:
-            if Ek > nearest_thresh:
-                num_nearest[i] += 1
-
-    # count the number of next nearest neighbours
-    for i in xrange(N):
-        con = list(connect[i])
-        h = con.pop(0)
-        for ind, Ek in con:
-            if abs(Ek) < nearest_thresh:
-                num_next[i] += 1
-                if num_nearest[ind] > 1:
-                    ignore.add(i)
-
-    # find inverter cells
-    invs = []
-    for i in xrange(N):
-        if num_nearest[i] == 1 and num_next[i] == 2 and not i in ignore:
-            invs.append(cell_map[i])
-
-    ##     if only one nearest neighbour, include next nearest coupling
-    ##    else use only nearest neighbours
-
-    new_adjacency = {}
-
-    for i in xrange(N):
-        key = cell_map[i]
-        if key in invs:
-            new_adjacency[key] = adjacency[key]
-        else:
-            new_adjacency[key] = [adjacency[key].pop(0)]
-            for cell_index, Ek in adjacency[key]:
-                if Ek > nearest_thresh or cell_index in invs:
-                    new_adjacency[key].append([cell_index, Ek])
-
-    return new_adjacency
+    return Js, T, DX, DY
 
 
-def adjToCoef(adjacency, verbose=False):
-    ''' convert adjacency matrix to h and J coefficients'''
+def convert_to_full_adjacency(cells, spacing, J):
+    '''Convert the J matrix from parse_qca to include only full adjacency
+    interactions'''
 
-    cell_map = adjacency.keys()
-    N = len(cell_map)
+    R_MAX = 2
+    Js, T, DX, DY = prepare_convert_adj(cells, spacing, J)
 
-    h = []
-    J = np.zeros([N, N], dtype=float)
+    xovers = [i for i in range(len(cells)) if is_xover(cells, DX, DY, i)]
+    for i in range(len(cells)):
+        # check to see if the cell is involved in a cross over
+        for j in range(len(cells)):
+            # if it is not a cross over and futher than 2 away, strip J
+            if not (i in xovers and j in xovers):
+                if (DX[i][j]**2 + DY[i][j]**2 >= R_MAX**2):
+                        J[i][j] = 0
+                        J[j][i] = 0
 
-    for i in xrange(N):
-        adj = adjacency[cell_map[i]]
-        h.append(adj[0])
-        for cell_index, Ek in adj[1::]:
-            J[i, cell_map.index(cell_index)] = -Ek
+    return J
 
-    if verbose:
-        print '%d non driver cells detected' % len(h)
+def convert_to_lim_adjacency(cells, spacing, J):
+    '''Convert the J matrix from parse_qca to include only limited adjacency
+    interactions'''
 
-    return h, J
+    c_index = range(len(cells))
+    R_MAX = 2
+    Js, T, DX, DY = prepare_convert_adj(cells, spacing, J)
 
+    xovers = [i for i in c_index if is_xover(cells, DX, DY, i)]
+    invs = [i for i in c_index if is_inv(Js, DX, DY, i)]
+
+    for i in c_index:
+        # number of strong interactions of current cell
+        si = len([j for j in c_index if Js[i][j] == 1 or Js[i][j] == -1.472])
+        for j in c_index:
+
+            dx = DX[i][j]
+            dy = DY[i][j]
+
+            if not (i in xovers and j in xovers):
+                if (i in invs or j in invs) and si < 2:
+                    if dx**2 + dy**2 >= R_MAX**2:
+                        J[i][j] = 0
+                        J[j][i] = 0
+
+                elif dx**2 + dy**2 >= R_MAX:
+                        J[i][j] = 0
+                        J[j][i] = 0
+
+    return J
+
+
+def is_xover(cells, DX, DY, i):
+    '''check to see if a cell is involved in a cross over'''
+
+    #find cells directly adjacent horizontally
+    hor = [j for j in range(len(DY[i])) if DY[i][j] == 0]
+    x_adj = [j for j in hor if abs(DX[i][j]) == 1]
+
+    #find cells directly adjacent vertically
+    ver = [j for j in range(len(DX[i])) if DX[i][j] == 0]
+    y_adj = [j for j in ver if abs(DY[i][j]) == 1]
+
+    #if the pairs of cells are different, than there is a cross over
+    if len(x_adj) == 2:
+        if cells[x_adj[0]]['rot'] != cells[x_adj[1]]['rot']:
+            return True
+
+    if len(y_adj) == 2:
+        if cells[y_adj[0]]['rot'] != cells[y_adj[1]]['rot']:
+            return True
+
+    # error message if somehow there is more than 2 adjacent cells in either dir
+    if len(x_adj) > 2 or len(y_adj) > 2:
+        print 'Error: there are %d cells horizontally adjacent' +\
+            ' and %d cells vertically adjacent' % (len(x_adj), len(y_adj))
+
+    return False
+
+def is_inv(Js, DX, DY, i):
+    '''check to see if a cell is an inverter cell
+    and inverter cell is the cell that has two diagonal interactions, and one
+    directly adjacent interaction (labelled IC below)
+        c - c
+        |    \
+    c - c     IC - c
+        |    /
+        c - c
+    '''
+
+    index = range(len(Js[i]))
+    # find number of strong and medium bonds
+    m = [j for j in index if Js[i][j] == -0.2174 or Js[i][j] == 0.172]
+    s = [j for j in index if Js[i][j] == 1 or Js[i][j] == -1.472]
+
+    if len(m) >= 2 and len(s) == 1:
+        # in case of weird cases - checks to see that strong interactions
+        # are on the opposite side of the medium interactions
+        opp = 0
+        for j in m:
+            if DX[i][j] == (-1) * DX[i][s[0]]:
+                opp += 1
+            if DY[i][j] == (-1) * DY[i][s[0]]:
+                opp += 1
+        return opp == 2
+
+    return False
+
+def construct_zone_graph(cells, zones, J, show=False):
+    '''Construct a DiGraph for all the zones with keys given by (n, m) where
+    n is the shell index and m is the zone index within the shell'''
+
+    # create nodes
+    G = nx.DiGraph()
+    for i_shell in xrange(len(zones)):
+        for i_zones in xrange(len(zones[i_shell])):
+            key = (i_shell, i_zones)
+            kwargs = {'inds': [], 'fixed': [], 'drivers': [], 'outputs': []}
+
+            for ind in zones[i_shell][i_zones]:
+                if cells[ind]['cf'] == CELL_FUNCTIONS['QCAD_CELL_INPUT']:
+                    kwargs['drivers'].append(ind)
+                elif cells[ind]['cf'] == CELL_FUNCTIONS['QCAD_CELL_FIXED']:
+                    kwargs['fixed'].append(ind)
+                else:
+                    kwargs['inds'].append(ind)
+                    if cells[ind]['cf'] == CELL_FUNCTIONS['QCAD_CELL_OUTPUT']:
+                        kwargs['outputs'].append(ind)
+
+            G.add_node(key, **kwargs)
+
+    # edges
+    for shell in xrange(1, len(zones)):
+        for i in xrange(len(zones[shell-1])):
+            k1 = (shell-1, i)
+            for j in xrange(len(zones[shell])):
+                k2 = (shell, j)
+                if np.any(J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]):
+                    G.add_edge(k1, k2)
+
+    plt.figure('Zone-Graph')
+    nx.draw_graphviz(G)
+    plt.show()
+
+    return G
 
 ### HAMILTONIAN GENERATION
 
@@ -353,7 +338,6 @@ def pauli(index, N, typ):
 
 def generateHam(h, J, gamma=None):
     ''' computes the Hamiltonian as a sparse matrix.
-
     inputs:    h - iterable of size N containing on site energies
             J - matrix (type J[i,j]) containing coupling strengths. Needs
                 to contain at least the upper triangular values
@@ -394,24 +378,3 @@ def generateHam(h, J, gamma=None):
     upper = sp.tril(H, -1).getH()
 
     return H+upper
-
-
-#############################################################333
-## FORMATTING FUNCTIONS
-
-
-def coefToConn(h, J):
-    '''convert the h and J coefficients into a full adjacency list
-    for embedding, 0->N indexing '''
-
-    N = len(h)
-
-    D = {i: [] for i in xrange(N)}
-
-    for i in xrange(N):
-        d = list(J[i].nonzero()[0])
-        for j in d:
-            D[i].append(j)
-            D[j].append(i)
-
-    return D

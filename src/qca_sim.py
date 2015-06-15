@@ -8,10 +8,10 @@
 # Last Modified: 10.06.2015
 #---------------------------------------------------------
 
-from new_auxil import convert_to_full_adjacency, convert_to_lim_adjacency, \
+from auxil import convert_to_full_adjacency, convert_to_lim_adjacency, \
     construct_zone_graph, gen_pols
 
-from new_parse_qca import parse_qca_file
+from parse_qca import parse_qca_file
 from rp_solve import rp_solve
 
 from solution import Solution
@@ -72,7 +72,7 @@ def qca_sim(fn, **kwargs):
     # set up zone formulation
     Gz = construct_zone_graph(cells, zones, J, show=True)
     Zones = {key: Zone(key, Gz, J, cells) for key in Gz.nodes()}
-
+    print 'done'
     # solve every zone for every possible set of inputs
     solution = Solution(Gz)
     for i in xrange(len(zones)):
@@ -99,7 +99,7 @@ def qca_sim(fn, **kwargs):
 if __name__ == '__main__':
 
     try:
-        fn = sys.argv[1]
+        fn = 'test_circuits/4clock'#sys.argv[1]
     except:
         print('No filename entered...')
         sys.exit()

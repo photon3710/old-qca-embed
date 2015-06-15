@@ -13,6 +13,8 @@ import itertools
 import xml.etree.ElementTree as ET  # xml input and output
 from new_auxil import gen_pols
 
+from pprint import pprint
+
 class Zone:
     '''A Zone object contains all the relevant information needed about a
     single clock zone of a circuit. This includes the current h and J
@@ -149,6 +151,7 @@ class Zone:
 
         # run each configuration, solve
         outs = {}
+        pprint(cases)
         for case in cases:
             print case
             # compute driver contribution to h
@@ -167,8 +170,26 @@ class Zone:
 
     def write_to_file(self, parent):
         '''Add zone information to given xml parent node'''
-        pass
+        this_zone = ET.SubElement(parent, 'zone', attrib = {'key' : self.key})
+        ET.SubElement(this_zone, 'J', attrib = {'J' : self.J})
+        ET.SubElement(this_zone, 'h', attrib = {'h' : self.h})
+        cell_indices = {
+        'inds' : self.inds,
+        'fixed' : self.fixed,
+        'drivers' : self.drivers,
+        'outputs' : self.outputs
+        }
+        ET.SubElement(this_zone, 'cells indices', attrib = cell_indices)
 
     def read_from_file(self, node):
         '''Construct a Zone object from its xml node'''
-        pass
+        cell_indices = node.find('cell indices')
+        self.inds = cell_indices.get('inds')
+        self.fixed = cell_indices.get('fixed')
+        self.drivers = cell_indices.get('drivers')
+        self.outputs = cell_indices.get('outputs')
+        self.J = node.find('J').get('J')
+        self.h = node.find('h').get('h')
+        self.key = node.get('key')
+
+

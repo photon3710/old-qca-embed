@@ -1,258 +1,343 @@
-#!usr/bin/python
+#!/usr/bin/python
 
 #---------------------------------------------------------
-# Name: dense_test.py
-# Purpose: Test code for the dense placement algorithm
-# Author:    Jacob Retallick
-# Created: 02.08.2014
-# Last Modified: 06.05.2015
+# Name: parse_qca.py
+# Purpose: New version of QCADesigner parsing
+# Author:	Jacob Retallick
+# Created: 04.06.2014
+# Last Modified: 09.06.2015
 #---------------------------------------------------------
 
 import sys
-#from time import time
-from auxil import pinch
+import re
 
-ADJ_RADIUS = 1.5
+import networkx as nx
+import matplotlib.pylab as plt
+import numpy as np
 
-flagchars = ['[', ']']
+#from pprint import pprint
+from auxil import getEk, convert_to_full_adjacency, convert_to_lim_adjacency
 
-keywords = {'cell': 'QCADCell',
-            'init': 'TYPE',
-            'term': '#TYPE',
-            'delim': ':'}
+## mapping for all possible cell functions and modes
 
-header_term = '#VERSION'
+CELL_FUNCTIONS = {'QCAD_CELL_NORMAL': 0,
+                  'QCAD_CELL_INPUT': 1,
+                  'QCAD_CELL_OUTPUT': 2,
+                  'QCAD_CELL_FIXED': 3}
 
-TYPEMAP = {'QCAD_CELL_NORMAL': 0,
-           'QCAD_CELL_OUTPUT': 1,
-           'QCAD_CELL_FIXED': 2,
-           'QCAD_CELL_INPUT': 3}
+CELL_MODES = {'QCAD_CELL_MODE_NORMAL': 0,
+              'QCAD_CELL_MODE_CROSSOVER': 1,
+              'QCAD_CELL_MODE_VERTICAL': 2,
+              'QCAD_CELL_MODE_CLUSTER': 3}
 
-SPACING = 'grid_spacing'
-KILL_ON_NO_POL = False
+## general global parameters
+
+R_MAX = 2.1         # max cell-cell interaction range (rel to grid spacing)
+EK_THRESH = 1e-3    # threshold for included Ek, relative to max(abs(Ek))
+X_ROUND = 4         # places to round to when deciding if cell is rotated
 
 
-def buildHierarchy(data):
-    '''Constructs a hierarchy of dicts describing the objects in a QCAD
-    file. Objects contained within others (for example a QCADDesignObject
-    within a QCACell) are appended to the children of their container objects.
-    Parameters are included within objects with keys given by their names as
-    they appear in the file'''
+def build_hierarchy(fn):
+    '''Build a dict hierarchy containing all objects, their parameters, and
+    childen.'''
 
-    hierarchy = []
-    stack = []
-    readflag = False
-    cells = []
+    fp = open(fn, 'r')
 
-    spacing = None
+    # general re expression. may need to change if future format changes
+    re_start = re.compile('^\[.+\]$')
+    re_term = re.compile('^\[#.+\]$')
 
-    for line in data:
+    hier = {'label': 'Hierarchy', 'children': [], 'vars': {}}
 
-        try:
-            if SPACING in line:
-                spacing = float(line.rpartition('=')[2].strip())
-                continue
+    key_stack = ['Hierarchy']  # stack of active keys, pop of top of stack
+    dict_stack = [hier]   # stack of corresponding dict objects.
 
-            if False:
-                print '>>' + line
+    line_cnt = 0
+    for line in fp:
+        line_cnt += 1
+        line = line.strip()  # remove endline and possible whitespace
 
-            # ignore header
-            if not readflag:
-                if header_term in line:
-                    readflag = True
-                continue
-
-            # object control
-            if flagchars[0] in line:  # start or complete object
-                line = pinch(line, *flagchars)
-
-                flag, label = line.split(keywords['delim'])
-
-                if flag == keywords['init']:    # start a new object
-                    stack.append({})
-                    stack[-1]['label'] = label
-                    stack[-1]['children'] = []
-                    if label == keywords['cell']:
-                        cells.append(stack[-1])
-
-                else:    # complete the most recent object
-                    obj = stack.pop()
-                    if len(stack) == 0:
-                        hierarchy.append(obj)
-                    else:
-                        stack[-1]['children'].append(obj)
-
-            # add object parameters
+        # must check object termination first
+        if re_term.match(line):
+            key = line[2:-1]
+            if key_stack[-1] == key:
+                d = dict_stack.pop()
+                key_stack.pop()
+                try:
+                    dict_stack[-1]['children'].append(d)
+                except:
+                    print('Somehow over-popped dict_stack...')
+                    return None
             else:
-                var, val = line.split('=')
-                stack[-1][var] = val
-        except:
-            continue
+                print('Start-end mismatch in line {0}'.format(line_cnt))
+                return None
 
-    if spacing is None:
-        print 'No spacing parameter detected, setting default 20nm'
-        spacing = 20.
+        # for a new object, create a new dict template
+        elif re_start.match(line):
+            key = line[1:-1]
+            key_stack.append(key)
+            d = {'label': key, 'children': [], 'vars': {}}
+            dict_stack.append(d)
 
-    return hierarchy, cells, spacing
-
-
-def reorderCells(cells):
-    ''' reorder cells from the bottom left corner '''
-
-    ## bin possible values
-
-    ys = []
-    xs = []
-
-    for cell in cells:
-        x, y = cell['x'], cell['y']
-        if not y in ys:
-            ys.append(y)
-        if not x in xs:
-            xs.append(x)
-
-    # we will use key k = a*y+x with a greater than (max(delta x)/min(delta y))
-
-    xs.sort()
-    ys.sort()
-
-    dx_max = xs[-1]-xs[0]
-
-    if len(ys) > 1:
-        dy_min = min([ys[i]-ys[i-1] for i in xrange(1, len(ys))])
-    else:
-        dy_min = 1
-
-    alpha = 1+dx_max/dy_min
-
-    newcells = sorted(cells, key=lambda cell: alpha*cell['y']+cell['x'])
-
-    for i in xrange(len(newcells)):
-        newcells[i]['number'] = i
-
-    return newcells
-
-
-def get_qdots(info):
-    ''' '''
-
-    dots = []
-
-    for child in info['children']:
-        if child['label'] == 'CELL_DOT':
-            dot = {}
-            dot['x'] = float(child['x'])
-            dot['y'] = float(child['y'])
-            dots.append(dot)
-
-    return dots
-
-
-def processCells(cells):
-    '''Selects out the position, size and type of each cell and creates
-    a list of cell dicts {'x':x, 'y':y, 'cx':width, 'cy':height,
-    'type':(NORMAL->0, OUTPUT->1 or FIXED->2)}'''
-
-    output = []
-
-    for i in xrange(len(cells)):
-        cell = cells[i]
-        obj = cell['children'][0]
-        dat = {}
-        dat['number'] = i
-        dat['x'] = float(obj['x'])
-        dat['y'] = float(obj['y'])
-        #dat['dot_diam'] = float(cell['cell_options.dot_diameter'])
-        dat['cx'] = float(cell['cell_options.cxCell'])
-        dat['cy'] = float(cell['cell_options.cyCell'])
-        dat['type'] = TYPEMAP[cell['cell_function'].rstrip()]
-        dat['qdots'] = get_qdots(cell)
-        dat['clock'] = int(cell['cell_options.clock'])
-
-        if dat['type'] == TYPEMAP['QCAD_CELL_INPUT']:
-            dat['pol'] = 0
-
-        if dat['type'] == TYPEMAP['QCAD_CELL_FIXED']:  # read cell polarization
-            try:
-                dat['pol'] = float(cell['children'][-1]['psz'])
-            except KeyError:
-                print 'FIXED cell missing polarization label...'
-                if KILL_ON_NO_POL:
-                    sys.exit()
-                else:
-                    dat['pol'] = 0
-            #print 'Detected FIXED type cell... pol: ' + str(dat['pol'])
-
-        output.append(dat)
-
-    return output
-
-
-def correctNumbering(cells):
-
-    cn, dn = 0, 0
-
-    for cell in cells:
-        if cell['type'] in [0, 1]:
-            cell['number'] = cn
-            cn += 1
+        # otherwise check for new variable to add to most recent dict
         else:
-            cell['number'] = 'D%d' % dn
-            dn += 1
-
-    return cells
-
-
-def zone_cells(cells):
-    '''Split cells into clock-zones. This function distinguished clock-zones
-    which share a clock index but are disconected.'''
-
-    # naive approach
-    clocks = [cell['clock'] for cell in cells]
-    zones = set(clocks)
-
-    clock_cells = {}
-    for zone in zones:
-        cs = [x for x in cells if x['clock'] == zone]
-        clock_cells[zone] = cs
-
-    # use/implement graph approach to handle general clock-zone arrangements
-
-    return clock_cells
-
-
-def parseQCAFile(filename, single_zone=True):
-    '''Iterate through a QCAD file and construct the hierarchy of objects.
-    Selects out and processes the cells for easy use. Returns list of
-    cells'''
-
-    fp = open(filename, 'r')
-    data = fp.readlines()
+            if '=' in line:
+                var, val = line.split('=')
+                dict_stack[-1]['vars'][var] = val
     fp.close()
 
-    hierarchy, cells, spacing = buildHierarchy(data)
+    return hier
 
-    print 'counted ' + str(len(cells)) + ' cells'
 
-    proc_cells = processCells(cells)
+def proc_hierarchy(hier):
+    '''Process the extracted data hierarchy to extract useful information. In
+    the current information, we are interested in the overall cell grid spacing
+    (for deciding on the range of included cell) and the properties of each
+    cell in the circuit'''
 
-    # reorder cells
+    cells = []
+    spacing = None
 
-    proc_cells = reorderCells(proc_cells)
+    # hierarchy should onlt have two children: VERSION and TYPE:DESIGN. The
+    # former might be useful in later implentations for selecting formatting
+    # options but for now all be care about is the DESIGN objects
+
+    hier = [child for child in hier['children']
+            if child['label'] == 'TYPE:DESIGN'][0]
+
+    # for now assert that there can be only one cell layer, no vertical x-over
+    layers = [child for child in hier['children']
+              if child['label'] == 'TYPE:QCADLayer']
+
+    # isolate cell layers
+    cell_layers = [layer for layer in layers if layer['vars']['type'] == '1']
+
+    # merge cell layers, will lead to qdot conflict if vertical x-over
+    cell_dicts = [layer['children'] for layer in cell_layers]
+    cell_dicts = reduce(lambda x, y: x+y, cell_dicts)
+
+    # get grid-spacing (average cell bounding box)
+    cx = float(cell_dicts[0]['vars']['cell_options.cxCell'])
+    cy = float(cell_dicts[0]['vars']['cell_options.cyCell'])
+
+    spacing = np.sqrt(cx*cy)
+    # create cell objects
+    cells = []
+
+    for cd in cell_dicts:
+        cell = {}
+
+        # cell type
+        cell['cf'] = CELL_FUNCTIONS[cd['vars']['cell_function']]
+        cell['cm'] = CELL_MODES[cd['vars']['cell_options.mode']]
+        cell['clk'] = int(cd['vars']['cell_options.clock'])
+
+        # position, first child will be the QCADesignObject
+        design_object = cd['children'][0]
+        cell['x'] = float(design_object['vars']['x'])
+        cell['y'] = float(design_object['vars']['y'])
+
+        # quantum dots
+        qdot_dicts = [child for child in cd['children']
+                      if child['label'] == 'TYPE:CELL_DOT']
+
+        qdots = []
+        for d in qdot_dicts:
+            dot = {}
+            dot['x'] = float(d['vars']['x'])
+            dot['y'] = float(d['vars']['y'])
+            dot['c'] = float(d['vars']['charge'])
+            qdots.append(dot)
+
+        cell['qdots'] = qdots
+
+        # determine if cell is rotated, will have three x values
+        x = set([round(dt['x'], X_ROUND) for dt in qdots])
+        if len(x) == 3:
+            cell['rot'] = True
+        elif len(x) == 2:
+            cell['rot'] = False
+        else:
+            print('Could not decide cell rotation')
+            cell['rot'] = False
+
+        # keep track of polarization if cell is fixed: don't rely on labels
+        if cell['cf'] == CELL_FUNCTIONS['QCAD_CELL_FIXED']:
+            pol = qdots[0]['c']+qdots[2]['c']-qdots[1]['c']-qdots[3]['c']
+            pol /= qdots[0]['c']+qdots[2]['c']+qdots[1]['c']+qdots[3]['c']
+            cell['pol'] = pol
+
+        cells.append(cell)
+
+    return cells, spacing
+
+
+def zone_cells(cells, spacing, show=True):
+    '''Split cells into clock zones. Distinguishes disjoint zones with the
+    same zone index'''
+
+    N = len(cells)  # number of cells
+
+    # construct connectivity matrix
+    J = np.zeros([N, N], dtype=float)
+    DR = R_MAX*spacing
+    for i in xrange(N-1):
+        for j in xrange(i+1, N):
+            Ek = getEk(cells[i], cells[j], DR=DR)
+            if Ek:
+                J[i, j] = Ek
+                J[j, i] = Ek
+
+    # remove very weak interactions
+    J = J * (np.abs(J) >= np.max(np.abs(J)*EK_THRESH))
+
+    J = np.round(J*1000, 1)
+    print J
+    print '----'
+    print J[[1,2,3],:]
+##    print J[1,:][:,2]
+
+    # make full cell connectivity Graph
+    G = nx.Graph(J)
+
+    if show:
+        plt.figure(0)
+        plt.clf()
+        nx.draw_graphviz(G)
+        plt.show()
+
+    # get indices for each clock index
+    clk = [cell['clk'] for cell in cells]
+    clk_ind = list(set(clk))    # will sort by default
+    inds = [[i for i, x in enumerate(clk) if x == ind] for ind in clk_ind]
+
+    # split graph into sub-graphs with the same clock indices
+    sub_G = {ind: G.subgraph(inds[ind]) for ind in clk_ind}
+
+    # split disconnected components for each label graph
+    sub_ind = {ind: list(nx.connected_components(sub_G[ind]))
+               for ind in clk_ind}
+
+    ## find zone order
+
+    # create abstract zone connectivity graph
+    G = nx.DiGraph()
+    # nodes
+    for clk in clk_ind:
+        for i in xrange(len(sub_ind[clk])):
+            key = (clk, i)
+            G.add_node(key, inds=sub_ind[clk][i])
+    # edges
+    for clk in clk_ind:
+        adj_clk = 3 if clk == 0 else clk-1
+        if not adj_clk in sub_ind:
+            continue
+        for i in xrange(len(sub_ind[clk])):
+            k1 = (clk, i)
+            for j in xrange(len(sub_ind[adj_clk])):
+                k2 = (adj_clk, j)
+                if np.any(J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]):
+                    G.add_edge(k2, k1)
+
+    if show:
+        plt.figure(1)
+        plt.clf()
+        nx.draw_graphviz(G)
+        plt.show()
+
+    # find input nodes, no predecessors
+    predecs = {n: len(G.predecessors(n)) for n in G.nodes_iter()}
+    inputs = [ky for ky, val in predecs.iteritems() if val == 0]
+
+    # expand from inputs
+    visited = {key: False for key in G.nodes()}
+
+    nodes = inputs
+    order = [nodes]
+    while nodes:
+        new_nodes = set()
+        for node in nodes:
+            new_nodes.update(G.successors(node))
+            visited[node] = True
+        # remove already visited nodes from new nodes
+        new_nodes = [node for node in new_nodes if not visited[node]]
+        nodes = new_nodes
+        if nodes:
+            order.append(nodes)
+
+    # reformat order list to contain zone indices
+
+    form_func = lambda n: sub_ind[n[0]][n[1]]
+    order = [[form_func(zone) for zone in shell] for shell in order]
+
+    return order, J
+
+
+def reorder_cells(cells, zones, J, flipy=False):
+    '''Renumber cells by position rather than the default QCADesigner placement
+    order. Cells ordered by the tuple (zone, y, x)'''
+
+    keys = {}
+
+    # assign sortable tuples for each cell
+    for iz in xrange(len(zones)):
+        zone = zones[iz]
+        for iz_sub in xrange(len(zone)):
+            for ind in zone[iz_sub]:
+                cell = cells[ind]
+                y_sign = -1 if flipy else 1
+                keys[ind] = (iz, iz_sub, y_sign*cell['y'], cell['x'])
+
+    order = zip(*sorted([(keys[i], i) for i in keys]))[1]
+
+    # relabel cells and reorder the J matrix
+    cells = [cells[i] for i in order]
+    J = J[order, :][:, order]
+
+    # relabel each of the zones index lists
+    inv_map = {order[i]: i for i in order}
+    label_func = lambda lst: sorted([inv_map[c] for c in lst])
+    zones = [[label_func(zn) for zn in shell] for shell in zones]
+
+    return cells, zones, J
+
+
+def parse_qca_file(fn, one_zone=False, show=False):
+    '''Parse a QCADesigner file to extract cell properties. Returns an ordered
+    list of cells, the QCADesigner grid spacing in nm, a list structure of the
+    indices of each clock zone (propogating from inputs), and a coupling matrix
+    J which contains the Ek values for cells within a radius of R_MAX times the
+    grid spacing'''
+
+    # build data hierarchy
+    hier = build_hierarchy(fn)
+
+    # extract useful information from data hierarchy
+    cells, spacing = proc_hierarchy(hier)
+
+    if one_zone:
+        for cell in cells:
+            cell['clk'] = 0
 
     # group into clock zones
-    clock_cells = zone_cells(proc_cells)
+    zones, J = zone_cells(cells, spacing)
 
-    if single_zone:
-        return proc_cells, spacing
-    else:
-        return clock_cells, spacing
+    # reorder cells by zone and position
+    cells, zones, J = reorder_cells(cells, zones, J)
+
+    # if only one zone is requested, don't need the zone order structure
+    if one_zone:
+        zones = zones[0]
+
+    return cells, spacing, zones, J
 
 
 if __name__ == '__main__':
+
     try:
-        fname = sys.argv[1]
+        fn = 'test_circuits/zone_test'#sys.argv[1]
     except:
-        print 'No file detected'
+        print 'No file input....'
         sys.exit()
-    clock_cells, spacing = parseQCAFile(fname)
+
+    cells, spacing, zones, J = parse_qca_file(fn)

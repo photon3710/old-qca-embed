@@ -99,7 +99,10 @@ def qca_sim(fn, **kwargs):
 if __name__ == '__main__':
 
     try:
-        fn = 'test_circuits/4clock'#sys.argv[1]
+        if True:
+            fn = sys.argv[1]
+        else:
+            fn = 'test_circuist/4clock'
     except:
         print('No filename entered...')
         sys.exit()

@@ -11,7 +11,7 @@
 import numpy as np
 import itertools
 import xml.etree.ElementTree as ET  # xml input and output
-from new_auxil import gen_pols
+from auxil import gen_pols
 
 from pprint import pprint
 

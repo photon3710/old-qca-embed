@@ -11,6 +11,7 @@
 import numpy as np
 import itertools
 import xml.etree.ElementTree as ET  # xml input and output
+from new_auxil import gen_pols
 
 from pprint import pprint
 
@@ -114,11 +115,6 @@ class Zone:
         '''Return the indices of simulated cells'''
         return self.inds
 
-    def gen_pols(self, n):
-        '''Generate all possible polarizations for n cells'''
-        return [tuple(2*int(x)-1 for x in format(i, '#0{0}b'.format(n+2))[2:])
-                for i in xrange(pow(2, n))]
-
     def solve_all(self, solver=None, **kwargs):
         '''Solve all possible input configurations for the zone using the
         specified solver
@@ -143,12 +139,12 @@ class Zone:
         z_order = sorted(c_inds)
 
         # set of all driver inputs
-        driver_inds = self.gen_pols(len(self.drivers))
+        driver_inds = gen_pols(len(self.drivers))
         if len(driver_inds) == 0:
             driver_inds = [()]
 
         # set of all inputs for each input-zone
-        inzone_inds = [self.gen_pols(len(c_inds[z])) for z in c_inds]
+        inzone_inds = [gen_pols(len(c_inds[z])) for z in c_inds]
 
         # combine into list product for easy looping
         cases = list(itertools.product(driver_inds, *inzone_inds))

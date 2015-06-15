@@ -16,7 +16,7 @@ import matplotlib.pylab as plt
 import numpy as np
 
 #from pprint import pprint
-from new_auxil import getEk, convert_to_full_adjacency, convert_to_lim_adjacency
+from auxil import getEk, convert_to_full_adjacency, convert_to_lim_adjacency
 
 ## mapping for all possible cell functions and modes
 
@@ -191,6 +191,12 @@ def zone_cells(cells, spacing, show=True):
     # remove very weak interactions
     J = J * (np.abs(J) >= np.max(np.abs(J)*EK_THRESH))
 
+    J = np.round(J*1000, 1)
+    print J
+    print '----'
+    print J[[1,2,3],:]
+##    print J[1,:][:,2]
+
     # make full cell connectivity Graph
     G = nx.Graph(J)
 
@@ -329,7 +335,7 @@ def parse_qca_file(fn, one_zone=False, show=False):
 if __name__ == '__main__':
 
     try:
-        fn = sys.argv[1]
+        fn = 'test_circuits/zone_test'#sys.argv[1]
     except:
         print 'No file input....'
         sys.exit()

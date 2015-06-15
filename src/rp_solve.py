@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-from parse_qca import parseQCAFile
-from auxil import generateAdjDict, adjToCoef, convertToNearestNeighbour,\
-    stateToPol
+from parse_qca import parse_qca_file
+from auxil import convert_to_full_adjacency, convert_to_lim_adjacency,\
+    stateToPol, construct_zone_graph
 from solve import solve, solveSparse
 from pymetis import part_graph
 from math import ceil
@@ -596,15 +596,27 @@ if __name__ == '__main__':
         print('No input file...')
         sys.exit()
 
-    cells, spacing = parseQCAFile(fn)
-    adj, drivers = generateAdjDict(cells, spacing)
-    if USE_NN:
-        adj = convertToNearestNeighbour(adj)
-    h, J = adjToCoef(adj)
+     # parse QCADesigner file
+    cells, spacing, zones, J = parse_qca_file(fn)
 
-    gam = np.max(np.abs(J))*.1
-    #gam = 0
-    E, states, Eps, pstates, state_pols = rp_solve(h, J, gam)
+    # check for specification of adjacency type
+    if 'adj' in kwargs:
+        if kwargs['adj'].lower() == 'full':
+            J = convert_to_full_adjacency(cells, spacing, J)
+        elif kwargs['adj'].lower() == 'lim':
+            J = convert_to_lim_adjacency(cells, spacing, J)
 
-    pprint(np.round(E[:5], 4))
-    pprint(np.round(state_pols[:5], 2))
+    # set up zone formulation
+    Gz = construct_zone_graph(cells, zones, J, show=True)
+    Zones = {key: Zone(key, Gz, J, cells) for key in Gz.nodes()}
+    print 'done'
+    # solve every zone for every possible set of inputs
+    solution = Solution(Gz)
+    for i in xrange(len(zones)):
+        for j in xrange(len(zones[i])):
+            key = (i, j)
+            cases, outs, z_order = Zones[key].solve_all(rp_solve)
+            solution.add_zone(Zones[key], outs, z_order)
+
+    # write solution to file
+    solution.write_to_file(fn_sol)

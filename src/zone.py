@@ -151,7 +151,7 @@ class Zone:
 
         # run each configuration, solve
         outs = {}
-        #pprint(cases)
+        
         for case in cases:
             print case
             # compute driver contribution to h

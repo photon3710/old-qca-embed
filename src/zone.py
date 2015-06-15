@@ -151,7 +151,7 @@ class Zone:
 
         # run each configuration, solve
         outs = {}
-        pprint(cases)
+        #pprint(cases)
         for case in cases:
             print case
             # compute driver contribution to h
@@ -161,7 +161,7 @@ class Zone:
             for i in xrange(1, len(case)):
                 key = z_order[i-1]
                 pol = np.zeros([1, len(self.C_ins[key])], dtype=float)
-                pol[1, c_inds[key]] = case[i]
+                pol[0, c_inds[key]] = case[i]
                 self.h += .5*np.asmatrix(pol)*self.C_ins[key]
 
             outs[case] = solver(self.h, -.5*self.J, **kwargs)

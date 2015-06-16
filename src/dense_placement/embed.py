@@ -756,9 +756,8 @@ def assignPaths(paths):
     # check for reservations
     try:
         reserveQubits(list(reserve_check))
-    except Exception as e:
-        print(e.message)
-        raise Exception('Qubit reservation failed during path assignment')
+    except KeyError as e:
+        raise KeyError('Qubit reservation failed during path assignment')
 
 
 # unchecked
@@ -781,8 +780,8 @@ def reserveQubits(qbits):
             if cell is None:
                 raise KeyError
         except KeyError:
-            raise Exception('Qbit %s is not assigned to a cell...'
-                            % str(qbit))
+            raise KeyError('Qbit %s is not assigned to a cell...'
+                           % str(qbit))
         num_adj = _numAdj[cell]
 
         #log('Required adjacency: %d\n' % num_adj)
@@ -825,7 +824,7 @@ def reserveQubits(qbits):
 
         # check for insufficient qubits
         elif num_adj > len(qbs):
-            raise Exception('Insufficent free qubits for cell %s' % str(cell))
+            raise KeyError('Insufficent free qubits for cell %s' % str(cell))
 
     setVacancy()
 
@@ -843,7 +842,7 @@ def forgetQubit(qbit, check=True):
         cell = _cells[qbit]
     except KeyError:
         log('Qbit has not been assigned to any cell')
-        raise Exception('Qbit has not been assigned to any cell')
+        raise KeyError('Qbit has not been assigned to any cell')
 
     qbs = set([qbit])    # set of qbits to decrement from _tile_occ
 
@@ -1015,7 +1014,7 @@ def multiSourceSearch(srcs, adj, forb=set(), typ='Dijkstra'):
             # extend
             try:
                 node = next(extend[src])
-            except:     # break if no more nodes to visit
+            except StopIteration:     # break if no more nodes to visit
                 return None
 
             # increment visited node count
@@ -1054,7 +1053,7 @@ def checkSol():
     check = False
 
     if not all(map(lambda x: not x is None, _qubits.values())):
-        raise Exception('Not all cell were assigned a qubit')
+        raise KeyError('Not all cell were assigned a qubit')
 
     for c1 in _source:
         for c2 in _source[c1]:
@@ -1062,7 +1061,7 @@ def checkSol():
                 print('No path between %s and %s' % (str(c1), str(c2)))
                 check = True
     if check:
-        raise Exception('Not all paths were placed')
+        raise KeyError('Not all paths were placed')
 
     # check all path connections are available and count uses of non cell qbits
     uses = {q: 0 for q in _qbitAdj}
@@ -1076,14 +1075,14 @@ def checkSol():
                 uses[q1] += 1
 
     if check:
-        raise Exception('Not all couplers available')
+        raise KeyError('Not all couplers available')
 
     for q in uses:
         if uses[q] > 1:
             print('Qubit %s used in %d paths' % (str(q), uses[q]))
 
     if any(map(lambda x: x > 1, uses.values())):
-        raise Exception('Qubit shared among multiple paths')
+        raise KeyError('Qubit shared among multiple paths')
 
 
 # always changing... tentatively done
@@ -1169,7 +1168,7 @@ def placeCell(cell):
             # check for vacancies
             if not any(_vacancy):
                 log('No vacant columns/rows to open\n\n')
-                raise Exception('Out of room')
+                raise KeyError('Out of room')
 
             # find available seams
             seams = availableSeams(adj_qbits)
@@ -1393,7 +1392,7 @@ def genSeamDict(seam, adj_qbits):
         # throw exception unless target qbit exists and is suitable
         try:
             assert len(_qbitAdj[tg]) >= len(_source[_cells[qb]])
-        except:
+        except KeyError:
             qbit_confs.append(qb)
 
     ## check for path conflicts
@@ -1490,7 +1489,7 @@ def newPath(key, path, tg_fn):
             new_path.append(conn[1])
         else:
             log('Invalid coupler type in movePath\n')
-            raise Exception('Invalid coupler')
+            raise ValueError('Invalid coupler')
 
     return new_path
 
@@ -1529,7 +1528,7 @@ def movePath(key, path, tg_fn):
             new_path.append(conn[1])
         else:
             log('Invalid coupler type in movePath\n')
-            raise Exception('Invalid coupler')
+            raise ValueError('Invalid coupler')
     # print new_path
     assignPaths([new_path])
 
@@ -1611,7 +1610,7 @@ def openSeam(sm, dr, cost, qbits, paths, qb_conf, pt_conf, tg_fn, par):
     # check successful routing
     if cost >= Routing.COST_BREAK:
         log('routing failed...\n')
-        raise Exception('Routing failed for paths between moved qbits in \
+        raise KeyError('Routing failed for paths between moved qbits in \
         seam opening... fix code later')
 
     # get paths
@@ -1640,7 +1639,7 @@ def openSeam(sm, dr, cost, qbits, paths, qb_conf, pt_conf, tg_fn, par):
         # abort on failed placement
         if new_qb is None:
             return False
-            raise Exception('Failed cell %s placement in seam \
+            raise KeyError('Failed cell %s placement in seam \
             opening' % str(cell))
 
         # assign qubit and paths
@@ -1778,14 +1777,14 @@ def denseEmbed(source, write=False):
                 fname = WRITE_DIR + 'sol%d' % (old_max+1)
             else:
                 fname = None
-                raise Exception('No valid file destination')
+                raise IOError('No valid file destination')
 
             if not fname is None:
                 fp = open(fname, 'w')
                 writeSol(fp)
                 fp.close()
-        except Exception as e:
-            print e.message
+        except IOError as e:
+            #print e.message
             print 'Invalid filename: %s' % fname
 
     return cell_map, paths

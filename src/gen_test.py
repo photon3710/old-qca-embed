@@ -21,7 +21,7 @@ from dense_placement.embed import denseEmbed, setChimeraSize, \
 from generator import generateCircuit2, GtoCoef
 from auxil import coefToConn
 
-RUN_DENSE = True
+RUN_DENSE = False
 
 FLAG_SOL = False
 ONCE_FLAG = False    # continue after a single found solution
@@ -56,18 +56,19 @@ def getFname(direc):
     return fname
 
 
-def writeToFile(OUT):
+def writeToFile(OUT, append=False):
     '''write generated circuit results to file'''
 
+    write_op = 'a' if append else 'w'
     try:
         fname = getFname(WRITE_DIR)
-        fp = open(fname, 'w')
+        fp = open(fname, write_op)
     except:
         print 'Failed to open file: %s' % fname
         try:
             fname = getFname('.')
             print 'Saving to default: %s' % fname
-            fp = open(fname, 'w')
+            fp = open(fname, write_op)
         except:
             print 'Failed...'
             return None
@@ -150,7 +151,9 @@ def runDense(h, J, max_count):
             good_embeds.append([cell_map, paths])
             if ONCE_FLAG:
                 break
-        except:
+        except Exception as e:
+            if type(e).__name__ == 'KeyboardInterrupt':
+                raise KeyboardInterrupt
             print '*'
             pass
         count = num_success if FLAG_SOL else num_trials
@@ -205,72 +208,77 @@ def main():
 
     OUT = {}
 
-    for full_adj in [True, False]:
+    try:
+        for full_adj in [True, False]:
 
-        if full_adj:
-            OUT['full'] = []
-            out = OUT['full']
-        else:
-            OUT['lim'] = []
-            out = OUT['lim']
-
-        print ('\n'+'*'*50)*2 + '\n** ',
-        print 'FULL ADJACENCY' if full_adj else 'LIM ADJACENCY'
-
-        for run in xrange(NUM_RUNS):
-
-            print '\n' + '*'*40 + '\nRun %d\n\n' % (run+1)
-            G = generateCircuit2(full_adj=full_adj)
-            h, J = GtoCoef(G)
-            if RUN_DENSE:
-                good_embeds = runDense(h, J, max_count=NUM_TRIALS)
+            if full_adj:
+                OUT['full'] = []
+                out = OUT['full']
             else:
-                S, S_Size = formatCoef(h, J)
-                good_embeds = runHeuristic(S, S_Size, max_count=NUM_TRIALS)
+                OUT['lim'] = []
+                out = OUT['lim']
 
-            QUBITS = []
+            print ('\n'+'*'*50)*2 + '\n** ',
+            print 'FULL ADJACENCY' if full_adj else 'LIM ADJACENCY'
 
-            if good_embeds:
-                for embed in good_embeds:
-                    if RUN_DENSE:
-                        qubits, chain_lengths = procDenseEmbed(embed)
-                    else:
-                        qubits, chain_lengths = procHeurEmbed(embed)
-                    QUBITS.append(qubits)
-            else:
+            for run in xrange(NUM_RUNS):
+
+                print '\n' + '*'*40 + '\nRun %d\n\n' % (run+1)
+                G = generateCircuit2(full_adj=full_adj)
+                h, J = GtoCoef(G)
+                if RUN_DENSE:
+                    good_embeds = runDense(h, J, max_count=NUM_TRIALS)
+                else:
+                    S, S_Size = formatCoef(h, J)
+                    good_embeds = runHeuristic(S, S_Size, max_count=NUM_TRIALS)
+
                 QUBITS = []
 
-            if QUBITS:
-                mean_qubits = np.mean(QUBITS)
-                min_qubits = max(0, np.min(QUBITS))
+                if good_embeds:
+                    for embed in good_embeds:
+                        if RUN_DENSE:
+                            qubits, chain_lengths = procDenseEmbed(embed)
+                        else:
+                            qubits, chain_lengths = procHeurEmbed(embed)
+                        QUBITS.append(qubits)
+                else:
+                    QUBITS = []
 
-                out.append([len(h), mean_qubits, min_qubits])
-            else:
-                out.append([len(h), -1, -1])
+                if QUBITS:
+                    mean_qubits = np.mean(QUBITS)
+                    min_qubits = max(0, np.min(QUBITS))
+
+                    out.append([len(h), mean_qubits, min_qubits])
+                else:
+                    out.append([len(h), -1, -1])
+
+            if SHOW:
+                # show mean qubits
+                c = ['g', 'r'] if full_adj else ['b', 'm']
+                X, Y = [], []
+                for d in out:
+                    if d[2] == -1:
+                        continue
+                        plt.plot(d[0], 0, c[1]+'x',
+                                 markersize=5, markeredgewidth=2)
+                    else:
+                        X.append(d[0])
+                        Y.append(d[2])
+                plt.plot(X, Y, c[0]+'x', markersize=5, markeredgewidth=2)
 
         if SHOW:
-            # show mean qubits
-            c = ['g', 'r'] if full_adj else ['b', 'm']
-            X, Y = [], []
-            for d in out:
-                if d[2] == -1:
-                    continue
-                    plt.plot(d[0], 0, c[1]+'x',
-                             markersize=5, markeredgewidth=2)
-                else:
-                    X.append(d[0])
-                    Y.append(d[2])
-            plt.plot(X, Y, c[0]+'x', markersize=5, markeredgewidth=2)
+            plt.legend(['Full Adjacency', 'Limited Adjacency'],
+                       numpoints=1, loc='upper left')
+            plt.xlabel('Number of Cells')
+            plt.ylabel('Average Qubit Usage')
+            #plt.title('Average Qubit Usage vs. Number of Cells')
+            plt.show()
 
-    if SHOW:
-        plt.legend(['Full Adjacency', 'Limited Adjacency'],
-                   numpoints=1, loc='upper left')
-        plt.xlabel('Number of Cells')
-        plt.ylabel('Average Qubit Usage')
-        #plt.title('Average Qubit Usage vs. Number of Cells')
-        plt.show()
+        writeToFile(OUT)
 
-    writeToFile(OUT)
+    except KeyboardInterrupt:
+        print 'Keyboard interrupt...'
+        writeToFile(OUT)
 
 if __name__ == '__main__':
     main()

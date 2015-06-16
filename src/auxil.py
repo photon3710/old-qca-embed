@@ -94,7 +94,7 @@ def getEk(c1, c2, DR=2):
     return Ek
 
 
-def comp_E_nn(spacing, OLD_QCAD = False):
+def comp_E_nn(spacing, OLD_QCAD=False):
     '''compute the kink energy for two nearest interacting non-rotated cells'''
 
     A = 0.588672
@@ -165,6 +165,7 @@ def convert_to_full_adjacency(cells, spacing, J):
 
     return J
 
+
 def convert_to_lim_adjacency(cells, spacing, J):
     '''Convert the J matrix from parse_qca to include only limited adjacency
     interactions'''
@@ -217,12 +218,13 @@ def is_xover(cells, DX, DY, i):
         if cells[y_adj[0]]['rot'] != cells[y_adj[1]]['rot']:
             return True
 
-    # error message if somehow there is more than 2 adjacent cells in either dir
+    # error message if there is more than 2 adjacent cells in either dir
     if len(x_adj) > 2 or len(y_adj) > 2:
         print 'Error: there are %d cells horizontally adjacent' +\
             ' and %d cells vertically adjacent' % (len(x_adj), len(y_adj))
 
     return False
+
 
 def is_inv(Js, DX, DY, i):
     '''check to see if a cell is an inverter cell
@@ -252,6 +254,7 @@ def is_inv(Js, DX, DY, i):
         return opp == 2
 
     return False
+
 
 def construct_zone_graph(cells, zones, J, show=False):
     '''Construct a DiGraph for all the zones with keys given by (n, m) where
@@ -387,3 +390,24 @@ def generateHam(h, J, gamma=None):
     upper = sp.tril(H, -1).getH()
 
     return H+upper
+
+
+#############################################################333
+## FORMATTING FUNCTIONS
+
+
+def coefToConn(h, J):
+    '''convert the h and J coefficients into a full adjacency list
+    for embedding, 0->N indexing '''
+
+    N = len(h)
+
+    D = {i: [] for i in xrange(N)}
+
+    for i in xrange(N):
+        d = list(J[i].nonzero()[0])
+        for j in d:
+            D[i].append(j)
+            D[j].append(i)
+
+    return D

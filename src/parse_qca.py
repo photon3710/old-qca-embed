@@ -314,7 +314,7 @@ def parse_qca_file(fn, one_zone=False, show=False):
             cell['clk'] = 0
 
     # group into clock zones
-    zones, J = zone_cells(cells, spacing)
+    zones, J = zone_cells(cells, spacing, show = show)
 
     # reorder cells by zone and position
     cells, zones, J = reorder_cells(cells, zones, J)
@@ -329,7 +329,10 @@ def parse_qca_file(fn, one_zone=False, show=False):
 if __name__ == '__main__':
 
     try:
-        fn = 'test_circuits/zone_test'#sys.argv[1]
+        if True:
+            sys.argv[1]
+        else:
+            fn = 'test_circuits/zone_test'
     except:
         print 'No file input....'
         sys.exit()

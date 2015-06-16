@@ -32,7 +32,7 @@ USE_NN = False          # Convert to nearest neighbour
 # resolution
 E_RES = 5e-2            # resolution for energy binning relative to max J
 
-VERBOSE = True
+VERBOSE = False
 
 
 def comp_on_comp(h, J, gam, modes):

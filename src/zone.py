@@ -32,8 +32,10 @@ class Zone:
                          the circuit (including input and fixed cells)
                 cells   : list of cell dicts for all cells in the circuit
         '''
-        if type(args[1]) is DiGraph:
+        if args[0] == 'from_file':
+            self.read_from_file(args[1])
 
+        elif type(args[1]) is DiGraph:
             zone = args[0]
             Gz = args[1]
             J = args[2]
@@ -77,7 +79,8 @@ class Zone:
             for out_zone in Gz.successors(zone):
                 self.outs.append(out_zone)
         else:
-            print 'fuck'
+            print 'Invalid arguments for Zone constructor'
+            raise TypeError
 
 
     def __str__(self):
@@ -161,7 +164,7 @@ class Zone:
 
         # run each configuration, solve
         outs = {}
-        pprint(cases)
+
         for case in cases:
             print case
             # compute driver contribution to h
@@ -171,7 +174,7 @@ class Zone:
             for i in xrange(1, len(case)):
                 key = z_order[i-1]
                 pol = np.zeros([1, len(self.C_ins[key])], dtype=float)
-                pol[1, c_inds[key]] = case[i]
+                pol[0, c_inds[key]] = case[i]
                 self.h += .5*np.asmatrix(pol)*self.C_ins[key]
 
             outs[case] = solver(self.h, -.5*self.J, **kwargs)
@@ -183,49 +186,74 @@ class Zone:
         this_zone = ET.SubElement(parent, 'zone', attrib = \
             {'clk' : str(self.key[0]), 'i' : str(self.key[1])})
 
-        el_J = ET.SubElement(this_zone, 'J', attrib = \
-            {'size_x' : str(len(self.J)), 'size_y' : str(len(self.J[0]))})
+        ET.SubElement(this_zone, 'J', attrib = \
+            {'J' : str(np.array(self.J).tolist())})
 
-        J_dict = {}
-        for x in range(len(self.J)):
-            for y in range(len(self.J[x])):
-                J_dict[str(x) + ',' + str(y)] = str(self.J[x][y])
-        for key in J_dict:
-##            print key + ' : ' + J_dict[key]
-            ET.SubElement(el_J, 'inter', attrib = {key : J_dict[key]})
+        ET.SubElement(this_zone, 'h', attrib = \
+            {'h' : str(np.array(self.h).tolist())})
 
-        ET.SubElement(this_zone, 'h', attrib = {'h' : str(self.h)})
         cell_indices = {
-        'inds' : str(self.inds),
-        'fixed' : str(self.fixed),
-        'drivers' : str(self.drivers),
-        'outputs' : str(self.outputs)
+            'inds' : str(self.inds),
+            'fixed' : str(self.fixed),
+            'drivers' : str(self.drivers),
+            'outputs' : str(self.outputs)
         }
-        ET.SubElement(this_zone, 'cells_indices', attrib = cell_indices)
+        ET.SubElement(this_zone, 'cell_indices', attrib = cell_indices)
 
-    @classmethod
-    def read_from_file(cls, node):
+    def read_from_file(self, node):
         '''Construct a Zone object from its xml node'''
+        self.zone = int(node.get('clk')), int(node.get('i'))
+
         cell_indices = node.find('cell_indices')
-        self.inds = int(cell_indices.get('inds'))
-        self.fixed = int(cell_indices.get('fixed'))
-        self.drivers = int(cell_indices.get('drivers'))
-        self.outputs = int(cell_indices.get('outputs'))
+        self.inds = string_to_list(cell_indices.get('inds'))
+        self.fixed = string_to_list(cell_indices.get('fixed'))
+        self.drivers = string_to_list(cell_indices.get('drivers'))
+        self.outputs = string_to_list(cell_indices.get('outputs'))
 
-##        size_x = node.find('J')
-##        for i in node.findall('inter'):
-##
-##        self.J = node.find('J').get('J')
-##        self.h = node.find('h').get('h')
-##        self.key = node.get('key')
+        self.J = string_to_2d_np_arr(node.find('J').get('J'))
+        self.h = strings_to_2d_np_arr(node.find('h').get('h'))
+
+        self.N = len(self.inds)
 
 
-### WRITING TO XML FILES
+### HELPER FUNCTIONS
 
-def write_zones_to_xml(Zones):
+def string_to_list(string):
+    '''inverse of str(list[])'''
+    l = []
+    for i in string.strip('[]').split(','):
+        if i != '':
+            l.append(int(i.strip(' ')))
+    return l
+
+def string_to_2d_np_arr(string):
+    '''inverse function of str(np.array)'''
+    arr = []
+    for i in string.split('['):
+        l = []
+        if i.strip(' ') != '':
+            for j in i.strip(',[ ]').split(','):
+                l.append(float(j.strip('[ ]')))
+            arr.append(l)
+    return np.asarray(arr)
+
+### WRITING/READING TO XML FILES
+
+def write_zones_to_xml(Zones, file_name):
+    '''writes all nodes in Zones to an xml specified by file_name'''
     root = ET.Element('all_zones')
     for key in Zones:
         zone = Zones[key]
         zone.write_to_file(root)
     tree = ET.ElementTree(root)
-    tree.write('Zones1.xml')
+    tree.write(file_name)
+
+def read_zones_from_xml(file_name):
+    '''returns a list of all zone elements stored in an xml'''
+    tree = ET.parse(file_name)
+    root = tree.getroot()
+    zones = []
+    for zone in root.findall('zone'):
+        zones.append(Zone('from_file', zone))
+
+    return zones

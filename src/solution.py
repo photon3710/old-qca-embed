@@ -65,7 +65,7 @@ class Solution:
 
     def get_inputs(self):
         '''Get list of all input cell indices'''
-        pass
+        return []
 
     def run_input_single(self, pols):
         '''Use the solution information to deterime the ouput polarizations

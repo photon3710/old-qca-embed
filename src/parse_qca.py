@@ -172,7 +172,7 @@ def proc_hierarchy(hier):
     return cells, spacing
 
 
-def zone_cells(cells, spacing, show=True):
+def zone_cells(cells, spacing, show=False):
     '''Split cells into clock zones. Distinguishes disjoint zones with the
     same zone index'''
 
@@ -190,12 +190,6 @@ def zone_cells(cells, spacing, show=True):
 
     # remove very weak interactions
     J = J * (np.abs(J) >= np.max(np.abs(J)*EK_THRESH))
-
-    J = np.round(J*1000, 1)
-    print J
-    print '----'
-    print J[[1,2,3],:]
-##    print J[1,:][:,2]
 
     # make full cell connectivity Graph
     G = nx.Graph(J)

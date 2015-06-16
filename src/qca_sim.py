@@ -15,7 +15,7 @@ from parse_qca import parse_qca_file
 from rp_solve import rp_solve
 
 from solution import Solution
-from zone import Zone
+from zone import Zone, write_zones_to_xml
 
 import sys
 import numpy as np
@@ -50,7 +50,7 @@ def qca_sim(fn, **kwargs):
     '''Simulate all possible outcomes for each zone of a given qca circuit'''
 
     # parse QCADesigner file
-    cells, spacing, zones, J = parse_qca_file(fn)
+    cells, spacing, zones, J = parse_qca_file(fn, show=False)
 
     # check for specification of adjacency type
     if 'adj' in kwargs:
@@ -70,8 +70,9 @@ def qca_sim(fn, **kwargs):
         solver = SOLVERS['default']
 
     # set up zone formulation
-    Gz = construct_zone_graph(cells, zones, J, show=True)
+    Gz = construct_zone_graph(cells, zones, J, show=False)
     Zones = {key: Zone(key, Gz, J, cells) for key in Gz.nodes()}
+    write_zones_to_xml(Zones)
     print 'done'
     # solve every zone for every possible set of inputs
     solution = Solution(Gz)
@@ -99,7 +100,7 @@ def qca_sim(fn, **kwargs):
 if __name__ == '__main__':
 
     try:
-        fn = 'test_circuits/4clock'#sys.argv[1]
+        fn = 'test_circuits/inverter'#sys.argv[1]
     except:
         print('No filename entered...')
         sys.exit()

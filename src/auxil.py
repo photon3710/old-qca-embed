@@ -283,9 +283,10 @@ def construct_zone_graph(cells, zones, J, show=False):
                 if np.any(J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]):
                     G.add_edge(k1, k2)
 
-    plt.figure('Zone-Graph')
-    nx.draw_graphviz(G)
-    plt.show()
+    if show:
+        plt.figure('Zone-Graph')
+        nx.draw_graphviz(G)
+        plt.show()
 
     return G
 

@@ -11,7 +11,8 @@
 import numpy as np
 import itertools
 import xml.etree.ElementTree as ET  # xml input and output
-from new_auxil import gen_pols
+from auxil import gen_pols
+from networkx import DiGraph
 
 from pprint import pprint
 
@@ -22,7 +23,7 @@ class Zone:
     or ouput to/from the zone, and the set of all spectra for each possible
     input configuration'''
 
-    def __init__(self, zone, Gz, J, cells):
+    def __init__(self, *args):
         '''Initialise a Zone object.
 
         inputs: zone    : key for the zone (for Gz)
@@ -31,44 +32,53 @@ class Zone:
                          the circuit (including input and fixed cells)
                 cells   : list of cell dicts for all cells in the circuit
         '''
+        if type(args[1]) is DiGraph:
 
-        self.key = zone     # for record keeping
+            zone = args[0]
+            Gz = args[1]
+            J = args[2]
+            cells = args[3]
 
-        self.inds = Gz.node[zone]['inds']    # indices of all simulated cells
-        self.fixed = Gz.node[zone]['fixed']  # indices of all fixed cells
-        self.drivers = Gz.node[zone]['drivers']  # indices of all input cells
-        self.outputs = Gz.node[zone]['outputs']  # indices of all output cells
+            self.key = zone     # for record keeping
 
-        self.N = len(self.inds)     # number of active cells in the zone
+            self.inds = Gz.node[zone]['inds']    # indices of all simulated cells
+            self.fixed = Gz.node[zone]['fixed']  # indices of all fixed cells
+            self.drivers = Gz.node[zone]['drivers']  # indices of all input cells
+            self.outputs = Gz.node[zone]['outputs']  # indices of all output cells
 
-        # set up h and J containers
-        self.h_fixed = np.zeros([1, self.N], dtype=float)
-        self.h_driver = np.zeros([1, self.N], dtype=float)
-        self.h = np.zeros([1, self.N], dtype=float)
-        self.J = J[self.inds, :][:, self.inds]
+            self.N = len(self.inds)     # number of active cells in the zone
 
-        # get coupling to driver cells
-        self.C_driver = J[self.drivers, :][:, self.inds]
+            # set up h and J containers
+            self.h_fixed = np.zeros([1, self.N], dtype=float)
+            self.h_driver = np.zeros([1, self.N], dtype=float)
+            self.h = np.zeros([1, self.N], dtype=float)
+            self.J = J[self.inds, :][:, self.inds]
 
-        # get coupling to fixed cells
-        self.C_fixed = J[self.fixed, :][:, self.inds]
+            # get coupling to driver cells
+            self.C_driver = J[self.drivers, :][:, self.inds]
 
-        # compute h contribution from fixed cells
-        pol_fixed = np.matrix([cells[ind]['pol'] for ind in self.fixed])
-        self.h_fixed = .5*pol_fixed*self.C_fixed
+            # get coupling to fixed cells
+            self.C_fixed = J[self.fixed, :][:, self.inds]
 
-        # set up interactions with input zones
-        self.C_ins = {}     # dict of input zone coupling matrices
-        self.outs = []      # list of ouput zones (only for searching)
+            # compute h contribution from fixed cells
+            pol_fixed = np.matrix([cells[ind]['pol'] for ind in self.fixed])
+            self.h_fixed = .5*pol_fixed*self.C_fixed
 
-        for in_zone in Gz.predecessors(zone):
-            in_inds = Gz.node[in_zone]['inds']
-            C = J[in_inds, :][:, self.inds]
-            self.C_ins[in_zone] = C
+            # set up interactions with input zones
+            self.C_ins = {}     # dict of input zone coupling matrices
+            self.outs = []      # list of ouput zones (only for searching)
 
-        # store output zone keys
-        for out_zone in Gz.successors(zone):
-            self.outs.append(out_zone)
+            for in_zone in Gz.predecessors(zone):
+                in_inds = Gz.node[in_zone]['inds']
+                C = J[in_inds, :][:, self.inds]
+                self.C_ins[in_zone] = C
+
+            # store output zone keys
+            for out_zone in Gz.successors(zone):
+                self.outs.append(out_zone)
+        else:
+            print 'fuck'
+
 
     def __str__(self):
         '''Default string conversion for debugging'''
@@ -170,26 +180,52 @@ class Zone:
 
     def write_to_file(self, parent):
         '''Add zone information to given xml parent node'''
-        this_zone = ET.SubElement(parent, 'zone', attrib = {'key' : self.key})
-        ET.SubElement(this_zone, 'J', attrib = {'J' : self.J})
-        ET.SubElement(this_zone, 'h', attrib = {'h' : self.h})
+        this_zone = ET.SubElement(parent, 'zone', attrib = \
+            {'clk' : str(self.key[0]), 'i' : str(self.key[1])})
+
+        el_J = ET.SubElement(this_zone, 'J', attrib = \
+            {'size_x' : str(len(self.J)), 'size_y' : str(len(self.J[0]))})
+
+        J_dict = {}
+        for x in range(len(self.J)):
+            for y in range(len(self.J[x])):
+                J_dict[str(x) + ',' + str(y)] = str(self.J[x][y])
+        for key in J_dict:
+##            print key + ' : ' + J_dict[key]
+            ET.SubElement(el_J, 'inter', attrib = {key : J_dict[key]})
+
+        ET.SubElement(this_zone, 'h', attrib = {'h' : str(self.h)})
         cell_indices = {
-        'inds' : self.inds,
-        'fixed' : self.fixed,
-        'drivers' : self.drivers,
-        'outputs' : self.outputs
+        'inds' : str(self.inds),
+        'fixed' : str(self.fixed),
+        'drivers' : str(self.drivers),
+        'outputs' : str(self.outputs)
         }
-        ET.SubElement(this_zone, 'cells indices', attrib = cell_indices)
+        ET.SubElement(this_zone, 'cells_indices', attrib = cell_indices)
 
-    def read_from_file(self, node):
+    @classmethod
+    def read_from_file(cls, node):
         '''Construct a Zone object from its xml node'''
-        cell_indices = node.find('cell indices')
-        self.inds = cell_indices.get('inds')
-        self.fixed = cell_indices.get('fixed')
-        self.drivers = cell_indices.get('drivers')
-        self.outputs = cell_indices.get('outputs')
-        self.J = node.find('J').get('J')
-        self.h = node.find('h').get('h')
-        self.key = node.get('key')
+        cell_indices = node.find('cell_indices')
+        self.inds = int(cell_indices.get('inds'))
+        self.fixed = int(cell_indices.get('fixed'))
+        self.drivers = int(cell_indices.get('drivers'))
+        self.outputs = int(cell_indices.get('outputs'))
+
+##        size_x = node.find('J')
+##        for i in node.findall('inter'):
+##
+##        self.J = node.find('J').get('J')
+##        self.h = node.find('h').get('h')
+##        self.key = node.get('key')
 
 
+### WRITING TO XML FILES
+
+def write_zones_to_xml(Zones):
+    root = ET.Element('all_zones')
+    for key in Zones:
+        zone = Zones[key]
+        zone.write_to_file(root)
+    tree = ET.ElementTree(root)
+    tree.write('Zones1.xml')

@@ -13,14 +13,12 @@ import numpy as np
 import networkx as nx
 import sys
 
-from pprint import pprint
-
 ## SOLVER PARAMETERS
 
 # threshold values
-N_THRESH = 8            # maximum partition size for exact solver
-MEM_THRESH = 5e6        # maximum mode count product
-STATE_THRESH = 0.01     # required amplitude for state contribution
+N_THRESH = 8           # maximum partition size for exact solver
+MEM_THRESH = 1e6        # maximum mode count product
+STATE_THRESH = 0.02     # required amplitude for state contribution
 
 assert N_THRESH <= 21, 'Given N_THRESH will likely crash the sparse solver...'
 
@@ -303,7 +301,7 @@ def gen_comp_tunn(G):
                 if G[p][n, m] == 0:
                     a.append(None)
                 else:
-                    dat = np.repeat(G[p][n, m], Cm[p])
+                    dat = np.repeat(-G[p][n, m], Cm[p])
                     a.append(sp.diags([dat], [0]))
             A.append(a)
         mat = sp.bmat(A)
@@ -545,6 +543,9 @@ def rp_solve(h, J, gam, rec=False):
         print 'Detected problem size: %d...' % len(h)
 
     e_res = np.max(np.abs(J))*E_RES
+
+    # format h
+    h = np.asarray(np.reshape(h, [1, -1])).tolist()[0]
 
     if len(h) <= N_THRESH:
         if VERBOSE:

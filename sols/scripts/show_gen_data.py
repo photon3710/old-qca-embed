@@ -5,9 +5,9 @@ import pylab as plt
 import os
 from math import ceil
 
-SHOW_DENSE = False
+SHOW_DENSE = True
 
-ROOT_DIR = '../gen/0/'
+ROOT_DIR = '../2kgen/0/'
 ROOT_DIR += 'dense/' if SHOW_DENSE else 'heur/'
 
 SHOW_MIN = False
@@ -17,9 +17,10 @@ FS = 18
 IMG_ROOT = '../../img/'
 IMG_ROOT += 'dense' if SHOW_DENSE else 'heur'
 
-SAVE = True
+SAVE = False
 
 BW = 15
+MAX_RANGE = 600
 
 
 def load_outfile(fname):
@@ -70,6 +71,8 @@ def main():
 
     # plotting
 
+    plt.figure(0)
+    plt.clf()
     ind = 2 if SHOW_MIN else 1
     for key in ['full', 'lim']:
         c = ['g', 'r'] if key == 'full' else ['w', 'm']
@@ -93,7 +96,7 @@ def main():
     plt.xlim(X[0], X[-1])
 
     plt.legend(['Full Adjacency', 'Limited Adjacency'],
-               numpoints=1, loc='upper left', fontsize=FS)
+               numpoints=1, loc='best', fontsize=FS)
     plt.xlabel('Number of Cells', fontsize=FS)
     ylab = ('Minimum' if SHOW_MIN else 'Average') + 'Qubit Usage'
     plt.ylabel(ylab, fontsize=FS)
@@ -101,10 +104,11 @@ def main():
     #plt.title('Average Qubit Usage vs. Number of Cells')
     if SAVE:
         plt.savefig(IMG_ROOT+'-gen-qbits.eps', bbox_inches='tight')
-    plt.show()
+    plt.show(block=False)
 
     # success probability
-
+    plt.figure(1)
+    plt.clf()
     bw = BW  # bin width
 
     for key in ['full', 'lim']:
@@ -139,7 +143,7 @@ def main():
                numpoints=1, loc=loc, fontsize=FS)
     plt.xlabel('Number of Cells', fontsize=FS)
     plt.ylabel('Success probability', fontsize=FS)
-    plt.xlim([0, 400])
+    plt.xlim([0, MAX_RANGE])
     plt.tick_params(axis='both', labelsize=FS)
     if SAVE:
         plt.savefig(IMG_ROOT+'-gen-prob.eps', bbox_inches='tight')

@@ -15,6 +15,8 @@ import sys
 import networkx as nx
 import matplotlib.pyplot as plt
 
+from parse_qca import parse_qca_file
+
 ## PHYSICAL PARAMETERS
 eps0 = 8.85412e-12  # permittivity of free space
 epsr = 12.          # relative permittivity
@@ -295,6 +297,53 @@ def construct_zone_graph(cells, zones, J, show=False):
 
     return G
 
+
+def qca_to_coefs(fn, adj_typ='none'):
+    '''convert a QCADesigner file to h and J coefficient for a single zone
+
+    inputs: fn      : filename of QCADesigner file
+            adj_typ : string describing the adjacency type in ['lim', 'full']
+
+    outputs: h          : on-site contribution from fixed cells
+             J          : interaction terms for cells in inds
+             C          : matrices that couple drivers to inds
+             inds       : indices of cells to simulate, in order
+             outputs    : indices of ouput cells, subset of inds
+    '''
+
+    cells, spacing, z, J = parse_qca_file(fn, one_zone=True)
+
+    # handle adjacency type
+    if not type(adj_typ) is str:
+        adj_typ = 'none'
+
+    if adj_typ.lower() == 'lim':
+        J = convert_to_lim_adjacency(cells, spacing, J)
+    elif adj_typ.lower() == 'full':
+        J = convert_to_full_adjacency(cells, spacing, J)
+    else:
+        pass    # leave adjacency as is (assume dealt with previously)
+
+    # find indices of inputs, inds, and fixed
+    Gz = construct_zone_graph(cells, [z], J)
+    node = Gz.node[(0, 0)]
+
+    drivers = node['drivers']
+    inds = node['inds']
+    fixed = node['fixed']
+    outputs = node['outputs']
+
+    C_fixed = np.matrix(J[fixed, :][:, inds])
+    C = np.matrix(J[drivers, :][:, inds])
+
+    # get h fixed cell contribution to h
+
+    pol_fixed = np.array([cells[i]['pol'] for i in fixed])
+    h = pol_fixed*C_fixed
+    J = -J[inds, :][:, inds]
+
+    return h, J, C, inds, outputs
+
 ### HAMILTONIAN GENERATION
 
 PAULI = {}
@@ -355,7 +404,10 @@ def generateHam(h, J, gamma=None):
                 to contain at least the upper triangular values
     '''
 
-    N = len(h)
+    # handle h format
+    h = np.asarray(np.reshape(h, [1, -1])).tolist()[0]
+
+    N = np.size(h)
     N2 = pow(2, N)
 
     # initialise pauli and data matrices

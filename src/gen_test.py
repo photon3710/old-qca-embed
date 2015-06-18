@@ -21,7 +21,7 @@ from dense_placement.embed import denseEmbed, setChimeraSize, \
 from generator import generateCircuit2, GtoCoef
 from auxil import coefToConn
 
-RUN_DENSE = False
+RUN_DENSE = True
 
 FLAG_SOL = False
 ONCE_FLAG = False    # continue after a single found solution
@@ -30,7 +30,9 @@ SHOW = False
 
 NUM_RUNS = 100
 NUM_TRIALS = 10
-TIMEOUT = 5    # seconds
+TIMEOUT = 20    # seconds
+SIZE_RANGE = {'full': [230, 430],
+              'lim': [360, 550]}
 
 M, N, L = 16, 16, 4
 A_size = M*N*L*2
@@ -214,9 +216,11 @@ def main():
             if full_adj:
                 OUT['full'] = []
                 out = OUT['full']
+                size_range = SIZE_RANGE['full']
             else:
                 OUT['lim'] = []
                 out = OUT['lim']
+                size_range = SIZE_RANGE['lim']
 
             print ('\n'+'*'*50)*2 + '\n** ',
             print 'FULL ADJACENCY' if full_adj else 'LIM ADJACENCY'
@@ -224,7 +228,10 @@ def main():
             for run in xrange(NUM_RUNS):
 
                 print '\n' + '*'*40 + '\nRun %d\n\n' % (run+1)
-                G = generateCircuit2(full_adj=full_adj)
+                while True:
+                    G = generateCircuit2(full_adj=full_adj)
+                    if len(G) >= size_range[0] and len(G) <= size_range[1]:
+                        break
                 h, J = GtoCoef(G)
                 if RUN_DENSE:
                     good_embeds = runDense(h, J, max_count=NUM_TRIALS)

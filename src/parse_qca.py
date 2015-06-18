@@ -15,8 +15,7 @@ import networkx as nx
 import matplotlib.pylab as plt
 import numpy as np
 
-#from pprint import pprint
-from auxil import getEk, convert_to_full_adjacency, convert_to_lim_adjacency
+from auxil import getEk
 
 ## mapping for all possible cell functions and modes
 
@@ -314,7 +313,7 @@ def parse_qca_file(fn, one_zone=False, show=False):
             cell['clk'] = 0
 
     # group into clock zones
-    zones, J = zone_cells(cells, spacing, show = show)
+    zones, J = zone_cells(cells, spacing, show=show)
 
     # reorder cells by zone and position
     cells, zones, J = reorder_cells(cells, zones, J)

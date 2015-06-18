@@ -15,7 +15,8 @@ import networkx as nx
 import matplotlib.pylab as plt
 import numpy as np
 
-from auxil import getEk
+from auxil import getEk, convert_to_lim_adjacency, convert_to_full_adjacency,\
+    construct_zone_graph
 
 ## mapping for all possible cell functions and modes
 
@@ -34,6 +35,53 @@ CELL_MODES = {'QCAD_CELL_MODE_NORMAL': 0,
 R_MAX = 2.1         # max cell-cell interaction range (rel to grid spacing)
 EK_THRESH = 1e-3    # threshold for included Ek, relative to max(abs(Ek))
 X_ROUND = 4         # places to round to when deciding if cell is rotated
+
+
+def qca_to_coefs(fn, adj_typ='none'):
+    '''convert a QCADesigner file to h and J coefficient for a single zone
+
+    inputs: fn      : filename of QCADesigner file
+            adj_typ : string describing the adjacency type in ['lim', 'full']
+
+    outputs: h          : on-site contribution from fixed cells
+             J          : interaction terms for cells in inds
+             C          : matrices that couple drivers to inds
+             inds       : indices of cells to simulate, in order
+             outputs    : indices of ouput cells, subset of inds
+    '''
+
+    cells, spacing, z, J = parse_qca_file(fn, one_zone=True)
+
+    # handle adjacency type
+    if not type(adj_typ) is str:
+        adj_typ = 'none'
+
+    if adj_typ.lower() == 'lim':
+        J = convert_to_lim_adjacency(cells, spacing, J)
+    elif adj_typ.lower() == 'full':
+        J = convert_to_full_adjacency(cells, spacing, J)
+    else:
+        pass    # leave adjacency as is (assume dealt with previously)
+
+    # find indices of inputs, inds, and fixed
+    Gz = construct_zone_graph(cells, [z], J)
+    node = Gz.node[(0, 0)]
+
+    drivers = node['drivers']
+    inds = node['inds']
+    fixed = node['fixed']
+    outputs = node['outputs']
+
+    C_fixed = np.matrix(J[fixed, :][:, inds])
+    C = np.matrix(J[drivers, :][:, inds])
+
+    # get h fixed cell contribution to h
+
+    pol_fixed = np.array([cells[i]['pol'] for i in fixed])
+    h = pol_fixed*C_fixed
+    J = -J[inds, :][:, inds]
+
+    return h, J, C, inds, outputs
 
 
 def build_hierarchy(fn):

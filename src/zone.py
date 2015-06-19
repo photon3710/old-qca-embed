@@ -16,6 +16,8 @@ from networkx import DiGraph
 
 from pprint import pprint
 
+XML_EXT = '.xml'
+
 class Zone:
     '''A Zone object contains all the relevant information needed about a
     single clock zone of a circuit. This includes the current h and J
@@ -166,7 +168,7 @@ class Zone:
         outs = {}
 
         for case in cases:
-            print case
+##            print case
             # compute driver contribution to h
             self.h_driver = .5*np.matrix(case[0])*self.C_driver
             # for each input zone, map pol key to state and get h contr.
@@ -211,7 +213,7 @@ class Zone:
         self.outputs = string_to_list(cell_indices.get('outputs'))
 
         self.J = string_to_2d_np_arr(node.find('J').get('J'))
-        self.h = strings_to_2d_np_arr(node.find('h').get('h'))
+        self.h = string_to_2d_np_arr(node.find('h').get('h'))
 
         self.N = len(self.inds)
 
@@ -242,15 +244,16 @@ def string_to_2d_np_arr(string):
 def write_zones_to_xml(Zones, file_name):
     '''writes all nodes in Zones to an xml specified by file_name'''
     root = ET.Element('all_zones')
-    for key in Zones:
-        zone = Zones[key]
+    if type(Zones) is dict:
+        Zones = Zones.values()
+    for zone in Zones:
         zone.write_to_file(root)
     tree = ET.ElementTree(root)
-    tree.write(file_name)
+    tree.write(file_name + XML_EXT)
 
 def read_zones_from_xml(file_name):
     '''returns a list of all zone elements stored in an xml'''
-    tree = ET.parse(file_name)
+    tree = ET.parse(file_name + XML_EXT)
     root = tree.getroot()
     zones = []
     for zone in root.findall('zone'):

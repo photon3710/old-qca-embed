@@ -50,7 +50,7 @@ def qca_sim(fn, **kwargs):
     '''Simulate all possible outcomes for each zone of a given qca circuit'''
 
     # parse QCADesigner file
-    cells, spacing, zones, J = parse_qca_file(fn, show=True)
+    cells, spacing, zones, J = parse_qca_file(fn, show=False)
 
     # check for specification of adjacency type
     if 'adj' in kwargs:
@@ -82,6 +82,7 @@ def qca_sim(fn, **kwargs):
 
     # write solution to file
     solution.write_to_file('./qca_sim_test')
+    print solution.get_inputs()
 
     # run solution inputs (single sets)
     input_inds = solution.get_inputs()
@@ -92,16 +93,16 @@ def qca_sim(fn, **kwargs):
     for pols in input_pols:
         out[pols] = solution.run_input_single(pols)
 
-    pprint(out)
+##    pprint(out)
 
 
 if __name__ == '__main__':
 
     try:
-        if True:
+        if False:
             fn = sys.argv[1]
         else:
-            fn = 'test_circuits/inverter'
+            fn = 'test_circuits/maj'
     except:
         print('No filename entered...')
         sys.exit()

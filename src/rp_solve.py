@@ -505,7 +505,7 @@ def rp_state_to_pol(amps, prod_states=None):
     return -np.sum((amps*amps)*modes, 0)
 
 
-def out_handler(h, J, gam, prod_states):
+def out_handler(h, J, gam, prod_states, parts_tree=None):
     '''Make an estimation of low energy spectrum using the determined
     applicable subset of product states and the problem parameters'''
 
@@ -532,10 +532,13 @@ def out_handler(h, J, gam, prod_states):
     # get cell polarizations for each eigenstate
     state_pols = [rp_state_to_pol(state, pstates) for state in states]
 
-    return E, states, Eps, pstates, state_pols
+    if parts_tree is None:
+        E, states, Eps, pstates, state_pols
+
+    return E, states, Eps, pstates, state_pols, parts_tree
 
 
-def rp_solve(h, J, gam, rec=False):
+def rp_solve(h, J, gam, rec=False, get_tree=False):
     '''Solve ising spin-glass configuration using recursive partitioning
     with low-energy spectrum mode composition'''
 
@@ -567,8 +570,11 @@ def rp_solve(h, J, gam, rec=False):
         # solve each partition
         ES = []
         PS = []
+        parts_tree = {}
         for i in xrange(nparts):
-            Es, prod_states = rp_solve(h_p[i], J_p[i], gam, rec=True)
+            Es, prod_states, p_tree = rp_solve(
+                h_p[i], J_p[i], gam, rec=True)
+            parts_tree[tuple(parts[i])] = p_tree
             ES.append(Es)
             PS.append(prod_states)
 
@@ -584,9 +590,11 @@ def rp_solve(h, J, gam, rec=False):
             states = proc_states(states, modes, parts)
 
     if not rec:
-        return out_handler(h, J, gam, prod_states)
+        if not get_tree:
+            parts_tree = None
+        return out_handler(h, J, gam, prod_states, parts_tree)
 
-    return Es, prod_states
+    return Es, prod_states, parts_tree
 
 
 if __name__ == '__main__':

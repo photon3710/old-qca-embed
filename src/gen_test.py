@@ -21,18 +21,18 @@ from dense_placement.embed import denseEmbed, setChimeraSize, \
 from generator import generateCircuit2, GtoCoef
 from auxil import coefToConn
 
-RUN_DENSE = True
+RUN_DENSE = False
 
 FLAG_SOL = False
 ONCE_FLAG = False    # continue after a single found solution
 
 SHOW = False
 
-NUM_RUNS = 100
+NUM_RUNS = 50
 NUM_TRIALS = 10
 TIMEOUT = 20    # seconds
-SIZE_RANGE = {'full': [230, 430],
-              'lim': [360, 550]}
+SIZE_RANGE = {'full': [260, 450],
+              'lim': [450, 520]}
 
 M, N, L = 16, 16, 4
 A_size = M*N*L*2
@@ -211,7 +211,7 @@ def main():
     OUT = {}
 
     try:
-        for full_adj in [True, False]:
+        for full_adj in [True]:
 
             if full_adj:
                 OUT['full'] = []

@@ -1,13 +1,12 @@
 from __future__ import division
 
-import sys
-import os, re
+import re
 import pylab as plt
 import numpy as np
 
 
-
 FS = 14
+LOG = False
 
 DENSE_ROOT = '../bench/dense/full/ser-add/sol'
 HEUR_ROOT = '../bench/heur/full/ser-add/solution'
@@ -124,28 +123,28 @@ def loadHeur(fn):
 
 
 def main():
-    
+
     dense_hist = {}
     heur_hist = {}
-    
+
     for i in [10]:
-        
+
         dense = loadDense(DENSE_ROOT + str(i))
         heur = loadHeur(HEUR_ROOT + str(i))
-        
+
         dense_lens = map(lambda x: len(x)-1, dense['paths'].values())
         heur_lens = map(len, heur.values())
-        
+
         max_len = max(dense_lens + heur_lens)
-        
-        for l in xrange(1,max_len+1):
+
+        for l in xrange(1, max_len+1):
             if not l in dense_hist:
                 dense_hist[l] = 0
             if not l in heur_hist:
                 heur_hist[l] = 0
             dense_hist[l] += dense_lens.count(l)
             heur_hist[l] += heur_lens.count(l)
-                
+
     max_len = max(dense_hist.keys() + heur_hist.keys())
     dense_hist_l = []
     heur_hist_l = []
@@ -158,27 +157,35 @@ def main():
             heur_hist_l.append(heur_hist[k])
         else:
             heur_hist_l.append(0)
-    
-    dense_mean = map(lambda x:x/sum(dense_hist_l),dense_hist_l)
-    heur_mean = map(lambda x:x/sum(heur_hist_l),heur_hist_l)
-    
+
+    dense_mean = map(lambda x: x/sum(dense_hist_l), dense_hist_l)
+    heur_mean = map(lambda x: x/sum(heur_hist_l), heur_hist_l)
+
     axes = plt.figure().add_subplot(111)
-        
+
     # Chain Lengths
-    bar_width=.2
+    bar_width = .2
     dx = .1
-    axes.bar([i-dx for i in xrange(max_len+1)],dense_mean,width=bar_width,color='blue')
-    axes.bar([i+bar_width for i in xrange(max_len+1)],heur_mean,width=bar_width,color='white')
+    if LOG:
+        dense_mean = np.log10(1+100*np.array(dense_mean, dtype=float))
+        heur_mean = np.log10(1+100*np.array(heur_mean, dtype=float))
 
+    axes.bar([i-dx for i in xrange(max_len+1)], dense_mean,
+             width=bar_width, color='blue')
+    axes.bar([i+bar_width for i in xrange(max_len+1)], heur_mean,
+             width=bar_width, color='white')
 
-    plt.xlabel('Chain/Model Size',fontsize=FS)
-    plt.ylabel('Percent Occurance',fontsize=FS)
+    plt.xlabel('Chain/Model Size', fontsize=FS)
+    if LOG:
+        plt.ylabel('Occurrence probability: log$(1+100P)$', fontsize=FS)
+    else:
+        plt.ylabel('Occurrence probability', fontsize=FS)
     #plt.title('Distribution of Qubit Group Sizes',fontsize=FS)
     axes.tick_params(axis='both', which='major', labelsize=FS)
-    plt.legend(['Dense Placement','Heuristic'],fontsize=FS)
-    plt.xlim([0,15])
+    plt.legend(['Dense Placement', 'Heuristic'], fontsize=FS)
+    plt.xlim([0, 15])
     plt.show()
-    
+
     print dense_mean
     print heur_mean
 

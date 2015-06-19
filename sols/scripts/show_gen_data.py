@@ -5,7 +5,7 @@ import pylab as plt
 import os
 from math import ceil
 
-SHOW_DENSE = True
+SHOW_DENSE = False
 
 ROOT_DIR = '../2kgen/0/'
 ROOT_DIR += 'dense/' if SHOW_DENSE else 'heur/'
@@ -19,14 +19,16 @@ IMG_ROOT += 'dense' if SHOW_DENSE else 'heur'
 
 SAVE = False
 
-BW = 15
+BW = 20
 MAX_RANGE = 600
+
+REL = False
 
 
 def load_outfile(fname):
     ''' '''
 
-    print 'reading file: %s' % fname,
+    print 'reading file: %s' % fname
 
     try:
         fp = open(fname, 'r')
@@ -86,6 +88,8 @@ def main():
             else:
                 X.append(d[0])
                 Y.append(d[ind])
+        if REL:
+            Y = [Y[i]*1./X[i] for i in xrange(len(Y))]
         if key == 'full':
             plt.plot(X, Y, c[0]+'x', markersize=5, markeredgewidth=2)
         else:
@@ -106,6 +110,9 @@ def main():
         plt.savefig(IMG_ROOT+'-gen-qbits.eps', bbox_inches='tight')
     plt.show(block=False)
 
+
+    for key in all_data:
+        print('{0}: {1} trials'.format(key, len(all_data[key])))
     # success probability
     plt.figure(1)
     plt.clf()
@@ -139,6 +146,7 @@ def main():
             plt.plot(X, rate, c[0]+'o', markersize=8, markeredgewidth=3,
                      markeredgecolor='blue')
     loc = 'upper right' if SHOW_DENSE else 'lower left'
+    loc = 'best'
     plt.legend(['Full Adjacency', 'Limited Adjacency'],
                numpoints=1, loc=loc, fontsize=FS)
     plt.xlabel('Number of Cells', fontsize=FS)

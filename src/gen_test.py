@@ -28,11 +28,11 @@ ONCE_FLAG = False    # continue after a single found solution
 
 SHOW = False
 
-NUM_RUNS = 50
+NUM_RUNS = 40
 NUM_TRIALS = 10
 TIMEOUT = 20    # seconds
-SIZE_RANGE = {'full': [260, 450],
-              'lim': [450, 520]}
+SIZE_RANGE = {'full': [0, 500],
+              'lim': [200, 600]}
 
 M, N, L = 16, 16, 4
 A_size = M*N*L*2
@@ -188,6 +188,8 @@ def runHeuristic(S, S_size, max_count):
             print 'solution ' + str(success_num) + ' found...'
             if ONCE_FLAG:
                 break
+        else:
+            print '*'
 
         count = success_num if FLAG_SOL else trial_num
 
@@ -211,7 +213,7 @@ def main():
     OUT = {}
 
     try:
-        for full_adj in [True]:
+        for full_adj in [True, False]:
 
             if full_adj:
                 OUT['full'] = []

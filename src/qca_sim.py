@@ -82,18 +82,19 @@ def qca_sim(fn, **kwargs):
 
     # write solution to file
     solution.write_to_file('./qca_sim_test')
-    print solution.get_inputs()
 
     # run solution inputs (single sets)
     input_inds = solution.get_inputs()
 
     input_pols = gen_pols(len(input_inds))  # set of all possible input pols
 
+    print 'start'
     out = {}    # dict of outputs lists for each input polarization list
     for pols in input_pols:
+        print pols
         out[pols] = solution.run_input_single(pols)
 
-##    pprint(out)
+    pprint(out)
 
 
 if __name__ == '__main__':
@@ -102,7 +103,7 @@ if __name__ == '__main__':
         if False:
             fn = sys.argv[1]
         else:
-            fn = 'test_circuits/maj'
+            fn = 'test_circuits/4clock'
     except:
         print('No filename entered...')
         sys.exit()

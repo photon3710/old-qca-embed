@@ -31,6 +31,7 @@ class Solution:
         elif type(args[0]) is nx.DiGraph:
             self.Gz = args[0]        # directed zone graph
             self.zones = []     # list of zone object
+            self.zone_dict = {} # dictionary of zone objects
             self.z_orders = []  # order of input zones for sols indexing
             self.sols = []      # list of sol dictionaries for each zone
         else:
@@ -65,6 +66,7 @@ class Solution:
             return False
 
         self.zones.append(zone)
+        self.zone_dict[zone.key] = zone
         self.z_orders.append(z_order)
         self.sols.append(fmt_out)
 
@@ -111,6 +113,8 @@ class Solution:
         self.Gz = Gz
 
         self.zones = read_zones_from_xml(fn + ZONE_EXT)
+        for zone in self.zones:
+            self.zone_dict[zone.key] = zone
 
         z_o = root.find('z_orders')
         self.z_orders = str_to_2d_list_of_tup(z_o.text)
@@ -142,20 +146,105 @@ class Solution:
         '''Get list of all input cell indices'''
         input_indices = []
         for zone in self.zones:
-            input_indices.append(zone.drivers)
+            for i in zone.drivers:
+                input_indices.append(i)
         return input_indices
 
     def run_input_single(self, pols):
-        '''Use the solution information to deterime the ouput polarizations
+        '''Use the solution information to determine the ouput polarizations
         for a single set of input polarizations'''
-        pass
+
+        zone_inputs = {(0,0): [(pols, )]}
+        inputs = {}
+        final_pol = {}
+        n_cells = 0
+
+        for i in range (len(self.zones)):
+            zone = self.zones[i]
+            zone_sols = self.sols[i]
+
+            out_pols, final_pol[zone.key] = get_output_polarizations\
+                (zone, self.zone_dict, zone_sols, zone_inputs[zone.key], n_cells)
+
+            # remove the duplicate polarizations
+            for key in out_pols:
+                out_pols[key] = list(set(out_pols[key]))
+
+            # flag to identify the first predecessor to the next clock cycle
+            first_to_next = False
+            # go through all the zones and format alll the future inputs
+            for key in zone.outs:
+                if key not in inputs:
+                    first_to_next = True
+                    inputs[key] = [((),out_pols[key][0])]
+
+                if first_to_next:
+                    for j in range(1,len(out_pols[key])):
+                        inputs[key].append(((),(out_pols[key][j])))
+                else:
+                    new_pols = []
+                    while inputs[key]:
+                        old_pol = inputs[key].pop()
+                        new_out_pol = list(old_pol)
+                        for out_pol in out_pols[key]:
+                            new_pols.append(tuple(new_out_pol + [out_pol]))
+                    inputs[key] = new_pols
+
+            # append to zone_inputs
+            for key in zone.outs:
+                if key in zone_inputs:
+                    zone_inputs[key].extend(inputs[key])
+                else:
+                    zone_inputs[key] = inputs[key]
+
+            n_cells += zone.N+len(zone.fixed)+len(zone.drivers)
+
+        return final_pol
 
     def run_input_sequence(self, pol_seq):
         '''Use the solution information to deterime the output sequence for a
         sequence of input sets (relevant for circuits with feedback'''
+
         pass
 
 ### HELPER FUNCTIONS
+
+def get_output_polarizations(zone, zone_dict, zone_sols, zone_inputs, n_cells):
+    '''given all the inputs to a zone, returns all the possible outputs'''
+
+    # find the zone-specific indices of cells that interact with the next zone
+    indices = {}
+
+    output_indices = []
+    for out_index in zone.outputs:
+        output_indices.append(out_index - n_cells)
+
+    for next_zone_key in zone.outs:
+        next_zone = zone_dict[next_zone_key]
+        for j in range(len(next_zone.C_ins[zone.key])):
+            if any(next_zone.C_ins[zone.key][j]):
+                if next_zone_key in indices:
+                    indices[next_zone_key].append(j)
+                else:
+                    indices[next_zone_key] = [j]
+    out_pols = {}
+    final_pol = set()
+    # retrieve the polarizations of the zone specific indices from all cases
+    for zone_input in zone_inputs:
+        case = zone_sols[zone_input]
+        for an_out_pols in case['pstates']:
+            final_pol.add(tuple(an_out_pols[j] for j in output_indices))
+
+            for key in zone.outs:
+                out_pol = tuple(an_out_pols[j] for j in indices[key])
+                if key in out_pols:
+                    out_pols[key].append(out_pol)
+                else:
+                    out_pols[key] = [out_pol]
+
+    return out_pols, final_pol
+
+### STRING CONVERSION FUNCTIONS
 
 def str_to_list(string):
     '''inverse of str(list[])'''

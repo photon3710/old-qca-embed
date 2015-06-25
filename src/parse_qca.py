@@ -335,6 +335,9 @@ def reorder_cells(cells, zones, J, flipy=False):
     cells = [cells[i] for i in order]
     J = J[order, :][:, order]
 
+    for i in xrange(len(cells)):
+        cells[i]['num'] = i
+
     # relabel each of the zones index lists
     inv_map = {order[i]: i for i in order}
     label_func = lambda lst: sorted([inv_map[c] for c in lst])

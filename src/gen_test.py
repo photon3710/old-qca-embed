@@ -21,18 +21,18 @@ from dense_placement.embed import denseEmbed, setChimeraSize, \
 from generator import generateCircuit2, GtoCoef
 from auxil import coefToConn
 
-RUN_DENSE = True
+RUN_DENSE = False
 
 FLAG_SOL = False
 ONCE_FLAG = False    # continue after a single found solution
 
 SHOW = False
 
-NUM_RUNS = 100
+NUM_RUNS = 40
 NUM_TRIALS = 10
 TIMEOUT = 20    # seconds
-SIZE_RANGE = {'full': [230, 430],
-              'lim': [360, 550]}
+SIZE_RANGE = {'full': [0, 500],
+              'lim': [200, 600]}
 
 M, N, L = 16, 16, 4
 A_size = M*N*L*2
@@ -188,6 +188,8 @@ def runHeuristic(S, S_size, max_count):
             print 'solution ' + str(success_num) + ' found...'
             if ONCE_FLAG:
                 break
+        else:
+            print '*'
 
         count = success_num if FLAG_SOL else trial_num
 

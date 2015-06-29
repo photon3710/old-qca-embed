@@ -28,7 +28,7 @@ def rp_solver(h, J, gam=0.):
     h = h.tolist()[0]
     gam = np.max(np.abs(J))*gam
 
-    E, states, Eps, pstates, state_pols = rp_solve(h, J, gam=gam)
+    E, states, Eps, pstates, state_pols, quick_fix = rp_solve(h, J, gam=gam)
 
     out = {'Es': E,
            'states': states,
@@ -103,7 +103,7 @@ if __name__ == '__main__':
         if False:
             fn = sys.argv[1]
         else:
-            fn = 'test_circuits/4clock'
+            fn = 'test_circuits/split'
     except:
         print('No filename entered...')
         sys.exit()

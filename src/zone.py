@@ -11,6 +11,7 @@
 import numpy as np
 import itertools
 import xml.etree.ElementTree as ET  # xml input and output
+import string_conversion as sc
 from auxil import gen_pols
 from networkx import DiGraph
 
@@ -189,10 +190,10 @@ class Zone:
             {'clk' : str(self.key[0]), 'i' : str(self.key[1])})
 
         ET.SubElement(this_zone, 'J', attrib = \
-            {'J' : str(np.array(self.J).tolist())})
+            {'J' : str(self.J)})
 
         ET.SubElement(this_zone, 'h', attrib = \
-            {'h' : str(np.array(self.h).tolist())})
+            {'h' : str(self.h)})
 
         cell_indices = {
             'inds' : str(self.inds),
@@ -201,43 +202,35 @@ class Zone:
             'outputs' : str(self.outputs)
         }
         ET.SubElement(this_zone, 'cell_indices', attrib = cell_indices)
+        outs = ET.SubElement(this_zone, 'successor_zones')
+        outs.text = str(self.outs)
+        C_ins = ET.SubElement(this_zone, 'c_ins')
+        for in_zone in self.C_ins:
+            C_in = ET.SubElement(C_ins, 'key', {'key' : str(in_zone)})
+            ET.SubElement(C_in, 'value').text = str(self.C_ins[in_zone])
 
     def read_from_file(self, node):
         '''Construct a Zone object from its xml node'''
-        self.zone = int(node.get('clk')), int(node.get('i'))
+        self.key = int(node.get('clk')), int(node.get('i'))
 
         cell_indices = node.find('cell_indices')
-        self.inds = string_to_list(cell_indices.get('inds'))
-        self.fixed = string_to_list(cell_indices.get('fixed'))
-        self.drivers = string_to_list(cell_indices.get('drivers'))
-        self.outputs = string_to_list(cell_indices.get('outputs'))
+        self.inds = sc.str_to_list(cell_indices.get('inds'))
+        self.fixed = sc.str_to_list(cell_indices.get('fixed'))
+        self.drivers = sc.str_to_list(cell_indices.get('drivers'))
+        self.outputs = sc.str_to_list(cell_indices.get('outputs'))
 
-        self.J = string_to_2d_np_arr(node.find('J').get('J'))
-        self.h = string_to_2d_np_arr(node.find('h').get('h'))
+        self.J = sc.str_to_2d_np_arr(node.find('J').get('J'), integer=False)
+        self.h = sc.str_to_2d_np_arr(node.find('h').get('h'), integer=False)
+
+        self.outs = sc.str_to_list_of_tup(node.find('successor_zones').text)
+
+        self.C_ins = {}
+        for C_in in node.find('c_ins').findall('key'):
+            key = sc.str_to_tuple(C_in.get('key'))
+            value = sc.str_to_2d_np_arr(C_in.find('value').text, integer=False)
+            self.C_ins[key] = value
 
         self.N = len(self.inds)
-
-
-### HELPER FUNCTIONS
-
-def string_to_list(string):
-    '''inverse of str(list[])'''
-    l = []
-    for i in string.strip('[]').split(','):
-        if i != '':
-            l.append(int(i.strip(' ')))
-    return l
-
-def string_to_2d_np_arr(string):
-    '''inverse function of str(np.array)'''
-    arr = []
-    for i in string.split('['):
-        l = []
-        if i.strip(' ') != '':
-            for j in i.strip(',[ ]').split(','):
-                l.append(float(j.strip('[ ]')))
-            arr.append(l)
-    return np.asarray(arr)
 
 ### WRITING/READING TO XML FILES
 

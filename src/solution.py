@@ -9,6 +9,7 @@
 #---------------------------------------------------------
 
 import xml.etree.ElementTree as ET
+import string_conversion as sc
 from zone import write_zones_to_xml, read_zones_from_xml
 import networkx as nx
 import numpy as np
@@ -106,18 +107,18 @@ class Solution:
         root = tree.getroot()
         Gz = nx.DiGraph()
         for edge in root.iter('edge'):
-            e = str_to_2d_tuple(edge.text)
+            e = sc.str_to_2d_tuple(edge.text)
             Gz.add_edge(e[0], e[1])
         for node in root.iter('node'):
-            Gz.add_node(str_to_tuple_int(node.text))
+            Gz.add_node(sc.str_to_tuple(node.text))
         self.Gz = Gz
-
+        self.zone_dict = {}
         self.zones = read_zones_from_xml(fn + ZONE_EXT)
         for zone in self.zones:
             self.zone_dict[zone.key] = zone
 
         z_o = root.find('z_orders')
-        self.z_orders = str_to_2d_list_of_tup(z_o.text)
+        self.z_orders = sc.str_to_2d_list_of_tup(z_o.text)
 
         sols = []
 
@@ -125,18 +126,18 @@ class Solution:
             zone_dict = {}
             for case in zone.iter('case'):
                 case_dict = {}
-                key = str_to_2d_tuple(case.find('case_key').text)
+                key = sc.str_to_2d_tuple(case.find('case_key').text)
 
                 #states
-                case_dict['states'] = str_to_list_of_nparr(case.find('states').text)
+                case_dict['states'] = sc.str_to_list_of_nparr(case.find('states').text, integer=False)
                 #pstates
-                case_dict['pstates'] = str_to_list_of_tup(case.find('pstates').text)
+                case_dict['pstates'] = sc.str_to_list_of_tup(case.find('pstates').text)
                 #state_pols
-                case_dict['state_pols'] = str_to_list_of_nparr(case.find('state_pols').text)
+                case_dict['state_pols'] = sc.str_to_list_of_nparr(case.find('state_pols').text, integer=False)
                 #Eps
-                case_dict['Eps'] = str_to_tuple_float(case.find('Eps').text)
+                case_dict['Eps'] = sc.str_to_tuple(case.find('Eps').text, integer=False)
                 #Es
-                case_dict['Es'] = str_to_nparr(case.find('Es').text)
+                case_dict['Es'] = sc.str_to_nparr(case.find('Es').text, integer=False)
 
                 zone_dict[key] = case_dict
             sols.append(zone_dict)
@@ -199,7 +200,7 @@ class Solution:
 
             n_cells += zone.N+len(zone.fixed)+len(zone.drivers)
 
-        return final_pol
+        return final_pol, zone_inputs
 
     def run_input_sequence(self, pol_seq):
         '''Use the solution information to deterime the output sequence for a
@@ -214,7 +215,6 @@ def get_output_polarizations(zone, zone_dict, zone_sols, zone_inputs, n_cells):
 
     # find the zone-specific indices of cells that interact with the next zone
     indices = {}
-
     output_indices = []
     for out_index in zone.outputs:
         output_indices.append(out_index - n_cells)
@@ -243,104 +243,3 @@ def get_output_polarizations(zone, zone_dict, zone_sols, zone_inputs, n_cells):
                     out_pols[key] = [out_pol]
 
     return out_pols, final_pol
-
-### STRING CONVERSION FUNCTIONS
-
-def str_to_list(string):
-    '''inverse of str(list[])'''
-    l = []
-    for i in string.strip('[]').split(','):
-        if i != '':
-            l.append(int(i.strip(' ')))
-    return l
-
-def str_to_nparr(string):
-    '''inverse of str(ndarray)'''
-    l = []
-    for i in string.strip('[]').split(' '):
-        if i != '':
-            l.append(float(i))
-    return np.asarray(l)
-
-def str_to_list_of_tup(string):
-    '''inverse of str([(,),(,)]'''
-    arr = []
-    for i in string.strip('[]').split('),'):
-        l = []
-        if i.strip('( )') == '':
-            l.append(tuple())
-        else:
-            for j in i.strip('( )').split(','):
-                l.append(int(j))
-        arr.append(tuple(l))
-    return arr
-
-def str_to_2d_list_of_tup(string):
-    '''inverse of str([[(,),(,)],[(,)...]])'''
-    arr = []
-    for i in string.split('],'):
-        l = []
-        if i.strip('[ ]') == '':
-            l.append(tuple())
-        else:
-            for j in i.strip(',[ ]').split('),'):
-                l.append(str_to_tuple_int(j.strip('[ ]')))
-        arr.append(l)
-    return arr
-
-def str_to_2d_np_arr(string):
-    '''inverse function of str(np.array)'''
-    arr = []
-    for i in string.split('['):
-        l = []
-        if i.strip(' ') != '':
-            for j in i.strip(',[ ]').split(','):
-                l.append(float(j.strip('[ ]')))
-            arr.append(l)
-    return np.asarray(arr)
-
-def str_to_tuple_int(string):
-    '''inverse operation of str(tuple)'''
-    arr = string.strip('()').split(',')
-    l = []
-    for i in arr:
-        l.append(int(i))
-    return tuple(l)
-
-def str_to_tuple_float(string):
-    '''inverse operation of str(tuple)'''
-    arr = string.strip('()').split(',')
-    l = []
-    for i in arr:
-        l.append(float(i))
-    return tuple(l)
-
-def str_to_2d_tuple(string):
-    '''inverse operation of str(tuple of tuples)'''
-    arr = string.strip('()').split('),')
-    l = []
-    for i in arr:
-        if i != '':
-            i = i.strip('( )').split(',')
-            il = []
-            for j in i:
-                if j != '':
-                    il.append(int(j.strip('( )')))
-            l.append(tuple(il))
-    return tuple(l)
-
-def str_to_list_of_nparr(string):
-    '''inverse of str([nd.array])'''
-    arr = string.strip('[]').split('array([')
-    l = []
-    for a in arr:
-        a = a.strip(']), ')
-        npl = []
-        if a != '':
-            a = a.split(',')
-            for n in a:
-                if n != '':
-                    npl.append(float(n))
-        if npl:
-            l.append(np.asarray(npl))
-    return l

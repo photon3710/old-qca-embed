@@ -256,7 +256,7 @@ def is_inv(Js, DX, DY, i):
     return False
 
 
-def construct_zone_graph(cells, zones, J, show=False):
+def construct_zone_graph(cells, zones, J, feedback, show=False):
     '''Construct a DiGraph for all the zones with keys given by (n, m) where
     n is the shell index and m is the zone index within the shell'''
 
@@ -287,6 +287,9 @@ def construct_zone_graph(cells, zones, J, show=False):
                 k2 = (shell, j)
                 if np.any(J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]):
                     G.add_edge(k1, k2)
+
+    for n in G.nodes_iter():
+        print 'The predecessors of %s are %s' %(str(n), str(G.predecessors(n)))
 
     if show:
         plt.figure('Zone-Graph')

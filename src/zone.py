@@ -73,6 +73,7 @@ class Zone:
             self.C_ins = {}     # dict of input zone coupling matrices
             self.outs = []      # list of ouput zones (only for searching)
 
+            print '%s => %s' %(str(zone), str(Gz.predecessors(zone)))
             for in_zone in Gz.predecessors(zone):
                 in_inds = Gz.node[in_zone]['inds']
                 C = J[in_inds, :][:, self.inds]

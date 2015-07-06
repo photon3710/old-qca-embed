@@ -18,6 +18,8 @@ import numpy as np
 from auxil import getEk, convert_to_lim_adjacency, convert_to_full_adjacency,\
     construct_zone_graph
 
+from pprint import pprint
+
 ## mapping for all possible cell functions and modes
 
 CELL_FUNCTIONS = {'QCAD_CELL_NORMAL': 0,
@@ -287,12 +289,13 @@ def zone_cells(cells, spacing, show=False):
         plt.show()
 
     # find input nodes, no predecessors
+##    for n in G.nodes_iter():
+##        print 'The predecessors of %s are %s' %(str(n), str(G.predecessors(n)))
     predecs = {n: len(G.predecessors(n)) for n in G.nodes_iter()}
     inputs = [ky for ky, val in predecs.iteritems() if val == 0]
 
     # expand from inputs
     visited = {key: False for key in G.nodes()}
-
     nodes = inputs
     order = [nodes]
     while nodes:
@@ -306,12 +309,29 @@ def zone_cells(cells, spacing, show=False):
         if nodes:
             order.append(nodes)
 
-    # reformat order list to contain zone indices
+    # find feedback interactions
+    feedback = []
+    for n in G.nodes_iter():
+        for p in G.predecessors(n):
+            pshell = 0
+            nshell = 0
+            pzone = 0
+            nzone = 0
+            for shell in order:
+                if p in shell:
+                    pshell = order.index(shell)
+                    pzone = shell.index(p)
+                if n in shell:
+                    nshell = order.index(shell)
+                    nzone = shell.index(n)
+            if pshell > nshell:
+                feedback.append(((pshell,pzone), (nshell,nzone)))
 
+    # reformat order list to contain zone indices
     form_func = lambda n: sub_ind[n[0]][n[1]]
     order = [[form_func(zone) for zone in shell] for shell in order]
 
-    return order, J
+    return order, J, feedback
 
 
 def reorder_cells(cells, zones, J, flipy=False):
@@ -364,7 +384,7 @@ def parse_qca_file(fn, one_zone=False, show=False):
             cell['clk'] = 0
 
     # group into clock zones
-    zones, J = zone_cells(cells, spacing, show=show)
+    zones, J, feedback = zone_cells(cells, spacing, show=show)
 
     # reorder cells by zone and position
     cells, zones, J = reorder_cells(cells, zones, J)
@@ -373,7 +393,7 @@ def parse_qca_file(fn, one_zone=False, show=False):
     if one_zone:
         zones = zones[0]
 
-    return cells, spacing, zones, J
+    return cells, spacing, zones, J, feedback
 
 
 if __name__ == '__main__':

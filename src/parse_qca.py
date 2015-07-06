@@ -310,7 +310,7 @@ def zone_cells(cells, spacing, show=False):
             order.append(nodes)
 
     # find feedback interactions
-    feedback = []
+    feedback = {}
     for n in G.nodes_iter():
         for p in G.predecessors(n):
             pshell = 0
@@ -325,7 +325,7 @@ def zone_cells(cells, spacing, show=False):
                     nshell = order.index(shell)
                     nzone = shell.index(n)
             if pshell > nshell:
-                feedback.append(((pshell,pzone), (nshell,nzone)))
+                feedback[(pshell,pzone)] =  (nshell,nzone)
 
     # reformat order list to contain zone indices
     form_func = lambda n: sub_ind[n[0]][n[1]]

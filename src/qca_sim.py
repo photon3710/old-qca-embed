@@ -92,7 +92,7 @@ def qca_sim(fn, **kwargs):
     out = {}    # dict of outputs lists for each input polarization list
     for pols in input_pols:
         input_pol = {(0,0): [(pols, )]}
-        out[pols] = solution.run_input_single(input_pol)
+        out[pols] = solution.run_input_sequence(input_pol)
 
     pprint(out)
 

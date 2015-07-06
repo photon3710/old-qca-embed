@@ -179,16 +179,16 @@ class Solution:
                         new_input = []
                         for j in range(len(zone.C_ins[input_zone])):
                             if any(zone.C_ins[input_zone][j]):
-                                new_input.append(DEFAULT_POL)
+                                new_input.append((DEFAULT_POL,))
 
                         new_pols = []
-                        defaulted_inputs = zone_inputs[zone.key]
-                        while zone_inputs[zone.key]:
-                            old_pol = zone_inputs[zone.key].pop()
+                        defaulted_inputs = list(inputs[zone.key])
+                        while inputs[zone.key]:
+                            old_pol = inputs[zone.key].pop()
                             new_out_pol = list(old_pol)
-                            for out_pol in out_pols[zone.key]:
+                            for out_pol in new_input:
                                 new_pols.append(tuple(new_out_pol + new_input))
-                        print '--- %s' %(zone.key)
+                        inputs[zone.key] = new_pols
                         zone_inputs[zone.key] = new_pols
 
 
@@ -196,8 +196,10 @@ class Solution:
             out_pols, final_pol[zone.key] = get_output_polarizations\
                 (zone, self.zone_dict, zone_sols, zone_inputs[zone.key], n_cells)
 
+##            print defaulted_inputs
             if defaulted_inputs:
-                zone_inputs[zone.key] = defaulted_inputs
+                inputs[zone.key] = defaulted_inputs
+                del zone_inputs[zone.key]
                 defaulted_inputs = None
 
             # remove the duplicate polarizations
@@ -233,28 +235,44 @@ class Solution:
                         complete_input = False
 
                 if complete_input:
+##                    print zone_inputs
                     if key in zone_inputs:
-                        print 'HERE: ',
-                        # ADD IT HERE
-                        print '%s --> %s' %(str(zone_inputs[key]), str(inputs[key]))
+                        # ADD IT HERE - NOT ALL ZONES GO THROUGH HERE yET (2nd run thorugh)
+                        print key
+                        print set(zone_inputs[key])
+                        print set(inputs[key])
+                        if set(zone_inputs[key]) == set(inputs[key]):
+                            pass
                     else:
 ##                        print '!'
+##                        print zone_inputs
                         zone_inputs[key] = inputs[key]
 ##                else:
 ##                    print '%s --> %s' %(str(zone.key), str(next_zone.key))
 
             n_cells += zone.N+len(zone.fixed)+len(zone.drivers)
 
-##        pprint(zone_inputs)
-##        print '-'*30
+        if sequence:
+            return final_pol, zone_inputs
+
         return final_pol
 
     def run_input_sequence(self, pol_seq):
         '''Use the solution information to deterime the output sequence for a
         sequence of input sets (relevant for circuits with feedback'''
         defaulted_inputs = {}
+        final_pol = None
+        zone_inputs = pol_seq
         while True:
-            pass
+            print '+1'
+            final_pol,ret_inputs = self.run_input_single(dict(zone_inputs), sequence=True)
+##            print '%s ==> %s' %(str(zone_inputs), str(ret_inputs))
+            if ret_inputs == zone_inputs:
+                print 'yes'
+                break
+            zone_inputs = ret_inputs
+        return final_pol
+
 
 ### HELPER FUNCTIONS
 

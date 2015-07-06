@@ -287,9 +287,8 @@ def construct_zone_graph(cells, zones, J, feedback, show=False):
                 k2 = (shell, j)
                 if np.any(J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]):
                     G.add_edge(k1, k2)
-
-    for n in G.nodes_iter():
-        print 'The predecessors of %s are %s' %(str(n), str(G.predecessors(n)))
+                if k2 in feedback:
+                    G.add_edge(k2, feedback[k2])
 
     if show:
         plt.figure('Zone-Graph')

@@ -20,26 +20,26 @@ from dense_placement.embed import denseEmbed, setChimeraSize, \
 
 from generator import generateCircuit2, GtoCoef
 from auxil import coefToConn
+from time import time
 
-RUN_DENSE = False
+import sys
 
 FLAG_SOL = False
 ONCE_FLAG = False    # continue after a single found solution
 
 SHOW = False
 
-NUM_RUNS = 40
+NUM_RUNS = 10
 NUM_TRIALS = 10
-TIMEOUT = 20    # seconds
-SIZE_RANGE = {'full': [0, 500],
-              'lim': [200, 600]}
+TIMEOUT = 120    # seconds
+SIZE_RANGE = {'full': [0, 300],
+              'lim': [0, 320]}
 
-M, N, L = 16, 16, 4
+M, N, L = 8, 8, 4
 A_size = M*N*L*2
 ndis = 0
 
-WRITE_DIR = '../sols/2kgen/%d/' % ndis
-WRITE_DIR += 'dense/' if RUN_DENSE else 'heur/'
+WRITE_DIR = '../sols/%dgen/%d/' % (2*M*N*L, ndis)
 
 
 def getFname(direc):
@@ -54,16 +54,19 @@ def getFname(direc):
     old_outs = filter(regex.match, os.listdir(direc))
     old_ext = map(lambda x: int(x[3::]), old_outs)
     old_max = max(old_ext) if len(old_ext) > 0 else -1
-    fname = WRITE_DIR + 'out%d' % (old_max+1)
+    fname = direc + 'out%d' % (old_max+1)
     return fname
 
 
-def writeToFile(OUT, append=False):
+def writeToFile(OUT, append=False, typ='dense'):
     '''write generated circuit results to file'''
 
     write_op = 'a' if append else 'w'
+
+    write_dir = WRITE_DIR + typ + '/'
+    print write_dir
     try:
-        fname = getFname(WRITE_DIR)
+        fname = getFname(write_dir)
         fp = open(fname, write_op)
     except:
         print 'Failed to open file: %s' % fname
@@ -78,7 +81,8 @@ def writeToFile(OUT, append=False):
     for key in OUT.keys():
         fp.write('<%s\>\n\n' % str(key))
         for d in OUT[key]:
-            fp.write('%d\t%.2f\t%d\n' % (d[0], d[1], d[2]))
+            fp.write('%d\t%.2f\t%d\t%.3f\t%.3f\n' %
+                     (d[0], d[1], d[2], d[3], d[4]))
         fp.write('\n\n')
 
     fp.close()
@@ -87,13 +91,13 @@ def writeToFile(OUT, append=False):
 def procDenseEmbed(embed):
     '''Process formatted dense placement solution'''
 
-    cell_map, paths = embed
+    cell_map, paths, t = embed
 
     chain_lengths = map(lambda x: len(x)-2, paths.values())
 
     qubits = len(cell_map) + sum(chain_lengths)
 
-    return qubits, chain_lengths
+    return qubits, chain_lengths, t
 
 
 def procHeurEmbed(embed):
@@ -104,6 +108,7 @@ def procHeurEmbed(embed):
     flags = [False]*A_size
     fail = False
 
+    embed, t = embed
     for chain in embed:
         for qbit in chain:
             if flags[qbit]:
@@ -115,9 +120,9 @@ def procHeurEmbed(embed):
         chain_lengths.append(len(chain))
 
     if fail:
-        return -1, chain_lengths
+        return -1, chain_lengths, t
     else:
-        return sum(chain_lengths), chain_lengths
+        return sum(chain_lengths), chain_lengths, t
 
 
 def formatCoef(h, J):
@@ -146,11 +151,12 @@ def runDense(h, J, max_count):
 
     while count < max_count:
         num_trials += 1
+        t = time()
         try:
             cell_map, paths = denseEmbed(source, write=False)
+            good_embeds.append([cell_map, paths, time()-t])
             num_success += 1
             print 'Solution %d found...' % num_success
-            good_embeds.append([cell_map, paths])
             if ONCE_FLAG:
                 break
         except Exception as e:
@@ -178,13 +184,14 @@ def runHeuristic(S, S_size, max_count):
 
     while count < max_count:
 
+        t = time()
         embeddings = find_embedding(S, S_size, A, A_size,
                                     verbose=0, tries=1, timeout=TIMEOUT)
         trial_num += 1
 
         if len(embeddings) == S_size:    # successful embedding
             success_num += 1
-            good_embeds.append(embeddings)
+            good_embeds.append([embeddings, time()-t])
             print 'solution ' + str(success_num) + ' found...'
             if ONCE_FLAG:
                 break
@@ -198,7 +205,7 @@ def runHeuristic(S, S_size, max_count):
     return good_embeds
 
 
-def main():
+def main(typ):
     ''' '''
 
     global M, N, L, ndis
@@ -235,31 +242,34 @@ def main():
                     if len(G) >= size_range[0] and len(G) <= size_range[1]:
                         break
                 h, J = GtoCoef(G)
-                if RUN_DENSE:
+                if typ == 'dense':
                     good_embeds = runDense(h, J, max_count=NUM_TRIALS)
                 else:
                     S, S_Size = formatCoef(h, J)
                     good_embeds = runHeuristic(S, S_Size, max_count=NUM_TRIALS)
 
                 QUBITS = []
+                TIMES = []
 
                 if good_embeds:
                     for embed in good_embeds:
-                        if RUN_DENSE:
-                            qubits, chain_lengths = procDenseEmbed(embed)
+                        if typ == 'dense':
+                            qubits, lengths, t = procDenseEmbed(embed)
                         else:
-                            qubits, chain_lengths = procHeurEmbed(embed)
+                            qubits, lengths, t = procHeurEmbed(embed)
                         QUBITS.append(qubits)
+                        TIMES.append(t)
                 else:
                     QUBITS = []
 
                 if QUBITS:
                     mean_qubits = np.mean(QUBITS)
                     min_qubits = max(0, np.min(QUBITS))
-
-                    out.append([len(h), mean_qubits, min_qubits])
+                    mean_time = np.mean(TIMES)
+                    p = len(good_embeds)*1./NUM_TRIALS
+                    out.append([len(h), mean_qubits, min_qubits, mean_time, p])
                 else:
-                    out.append([len(h), -1, -1])
+                    out.append([len(h), -1, -1, -1, 0.])
 
             if SHOW:
                 # show mean qubits
@@ -283,11 +293,19 @@ def main():
             #plt.title('Average Qubit Usage vs. Number of Cells')
             plt.show()
 
-        writeToFile(OUT)
+        writeToFile(OUT, typ=typ)
 
     except KeyboardInterrupt:
         print 'Keyboard interrupt...'
-        writeToFile(OUT)
+        writeToFile(OUT, typ=typ)
 
 if __name__ == '__main__':
-    main()
+
+    try:
+        typ = sys.argv[1].lower()
+        assert typ in ['dense', 'heur'], "Invalid embedding algorithm"
+    except:
+        print('Using default algorithm: dense')
+        typ = 'dense'
+
+    main(typ)

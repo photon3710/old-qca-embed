@@ -3,24 +3,20 @@
 from __future__ import division
 import pylab as plt
 import os
+import sys
 from math import ceil
 
-SHOW_DENSE = False
-
-ROOT_DIR = '../2kgen/0/'
-ROOT_DIR += 'dense/' if SHOW_DENSE else 'heur/'
+FILE_ROOT = '../512gen/0/'
+IMG_ROOT = '../../img/'
 
 SHOW_MIN = False
 
 FS = 18
 
-IMG_ROOT = '../../img/'
-IMG_ROOT += 'dense' if SHOW_DENSE else 'heur'
-
 SAVE = False
 
 BW = 20
-MAX_RANGE = 600
+MAX_RANGE = 350
 
 REL = False
 
@@ -50,18 +46,23 @@ def load_outfile(fname):
             n = int(d[0])
             av = float(d[1])
             mi = int(d[2])
-            dat.append([n, av, mi])
+            try:
+                t = float(d[3])
+                p = float(d[4])
+                dat.append([n, av, mi, t, p])
+            except KeyError:
+                dat.append([n, av, mi])
 
     #print '\t(%d,%d)' % (len(data['lim']), len(data['full']))
 
     return data
 
 
-def main():
+def main(file_dir, img_dir, bw):
     ''' '''
 
-    fnames = os.listdir(ROOT_DIR)
-    fnames = map(lambda s: ROOT_DIR+s, fnames)
+    fnames = os.listdir(file_dir)
+    fnames = map(lambda s: file_dir+s, fnames)
 
     all_data = {'lim': [], 'full': []}
 
@@ -71,9 +72,9 @@ def main():
             all_data['lim'] += data['lim']
             all_data['full'] += data['full']
 
-    # plotting
+    # plot qubit usage
 
-    plt.figure(0)
+    plt.figure('qubit-usage')
     plt.clf()
     ind = 2 if SHOW_MIN else 1
     for key in ['full', 'lim']:
@@ -107,22 +108,22 @@ def main():
     plt.tick_params(axis='both', labelsize=FS)
     #plt.title('Average Qubit Usage vs. Number of Cells')
     if SAVE:
-        plt.savefig(IMG_ROOT+'-gen-qbits.eps', bbox_inches='tight')
+        plt.savefig(img_dir+'-gen-qbits.eps', bbox_inches='tight')
     plt.show(block=False)
-
 
     for key in all_data:
         print('{0}: {1} trials'.format(key, len(all_data[key])))
-    # success probability
-    plt.figure(1)
+
+    # plot success probability
+
+    plt.figure('success-prob')
     plt.clf()
-    bw = BW  # bin width
 
     for key in ['full', 'lim']:
 
         c = ['g', 'r'] if key == 'full' else ['w', 'm']
         max_bin = max(map(lambda x: x[0], all_data[key]))
-        num_bins = int(ceil(max_bin/bw))
+        num_bins = int(ceil(max_bin/bw))+1
 
         success = [0 for _ in xrange(num_bins)]
         fail = [0 for _ in xrange(num_bins)]
@@ -145,7 +146,6 @@ def main():
         else:
             plt.plot(X, rate, c[0]+'o', markersize=8, markeredgewidth=3,
                      markeredgecolor='blue')
-    loc = 'upper right' if SHOW_DENSE else 'lower left'
     loc = 'best'
     plt.legend(['Full Adjacency', 'Limited Adjacency'],
                numpoints=1, loc=loc, fontsize=FS)
@@ -154,9 +154,61 @@ def main():
     plt.xlim([0, MAX_RANGE])
     plt.tick_params(axis='both', labelsize=FS)
     if SAVE:
-        plt.savefig(IMG_ROOT+'-gen-prob.eps', bbox_inches='tight')
+        plt.savefig(img_dir+'-gen-prob.eps', bbox_inches='tight')
+    plt.show(block=False)
+
+    # plot run-times
+
+    plt.figure('run-times')
+    plt.clf()
+
+    for key in ['full', 'lim']:
+
+        c = 'gx' if key == 'full' else 'wo'
+        X = []
+        Y = []
+        for d in all_data[key]:
+            try:
+                n, av, mi, t, p = d
+            except:
+                continue
+            if t < 0:
+                continue
+            X.append(n)
+            Y.append(t)
+        if key is 'full':
+            plt.plot(X, Y, c, markersize=5, markeredgewidth=2)
+        else:
+            plt.plot(X, Y, c, markersize=5, markeredgewidth=2,
+                     markeredgecolor='blue')
+
+    loc = 'best'
+    plt.legend(['Full Adjacency', 'Limited Adjacency'],
+               numpoints=1, loc=loc, fontsize=FS)
+    plt.xlabel('Number of Cells', fontsize=FS)
+    plt.ylabel('Run-time (s)', fontsize=FS)
+    plt.tick_params(axis='both', labelsize=FS)
+    if SAVE:
+        plt.savefig(img_dir+'-gen-runtimes.eps', bbox_inches='tight')
     plt.show()
 
-
 if __name__ == '__main__':
-    main()
+
+    try:
+        typ = sys.argv[1].strip().lower()
+    except:
+        typ = 'dense'
+
+    try:
+        bw = int(sys.argv[2])
+    except:
+        bw = BW
+
+    if typ == 'dense':
+        file_dir = FILE_ROOT + 'dense/'
+        img_dir = IMG_ROOT + 'dense'
+    else:
+        file_dir = FILE_ROOT + 'heur/'
+        img_dir = IMG_ROOT + 'heur'
+
+    main(file_dir, img_dir, bw)

@@ -152,7 +152,7 @@ class Solution:
                 input_indices.append(i)
         return input_indices
 
-    def run_input_single(self, zone_inputs, sequence=False):
+    def run_input_single(self, zone_inputs, sequence=False, first_run=True):
         '''Use the solution information to determine the ouput polarizations
         for a single set of input polarizations'''
 
@@ -172,7 +172,7 @@ class Solution:
 
             # check to see if all inputs have been set
             # if it hasn't revert to default polarization
-            if sequence:
+            if sequence and first_run:
                 DEFAULT_POL = 1
                 for input_zone in zone.C_ins:
                     if input_zone not in visited_zones:
@@ -196,9 +196,8 @@ class Solution:
             out_pols, final_pol[zone.key] = get_output_polarizations\
                 (zone, self.zone_dict, zone_sols, zone_inputs[zone.key], n_cells)
 
-##            print defaulted_inputs
             if defaulted_inputs:
-                inputs[zone.key] = defaulted_inputs
+                inputs[zone.key] = list(defaulted_inputs)
                 del zone_inputs[zone.key]
                 defaulted_inputs = None
 
@@ -228,26 +227,29 @@ class Solution:
 
             # append to zone_inputs
             for key in zone.outs:
+##                print key,
                 next_zone = self.zone_dict[key]
                 complete_input = True
-                for input_zone in next_zone.C_ins:
-                    if input_zone not in visited_zones:
-                        complete_input = False
+                if first_run:
+                    for input_zone in next_zone.C_ins:
+                        if input_zone not in visited_zones:
+                            complete_input = False
 
                 if complete_input:
 ##                    print zone_inputs
                     if key in zone_inputs:
                         # ADD IT HERE - NOT ALL ZONES GO THROUGH HERE yET (2nd run thorugh)
-                        print key
-                        print set(zone_inputs[key])
-                        print set(inputs[key])
+##                        print '?'
+##                        print zone_inputs[key]
+##                        print inputs[key]
                         if set(zone_inputs[key]) == set(inputs[key]):
                             pass
                     else:
 ##                        print '!'
 ##                        print zone_inputs
-                        zone_inputs[key] = inputs[key]
+                        zone_inputs[key] = list(inputs[key])
 ##                else:
+##                    print ';'
 ##                    print '%s --> %s' %(str(zone.key), str(next_zone.key))
 
             n_cells += zone.N+len(zone.fixed)+len(zone.drivers)
@@ -263,14 +265,26 @@ class Solution:
         defaulted_inputs = {}
         final_pol = None
         zone_inputs = pol_seq
+        first_run = True
+
+
+
         while True:
             print '+1'
-            final_pol,ret_inputs = self.run_input_single(dict(zone_inputs), sequence=True)
-##            print '%s ==> %s' %(str(zone_inputs), str(ret_inputs))
+            final_pol,ret_inputs = self.run_input_single(dict(zone_inputs),\
+                sequence=True, first_run=first_run)
+
+            for z in self.zones:
+                if z.key in zone_inputs:
+                    print '%s ==> %s' %(str(zone_inputs[z.key]), str(ret_inputs[z.key]))
+                else:
+                    print 'zone_inputs does not have %s'%(str(z.key))
+
             if ret_inputs == zone_inputs:
-                print 'yes'
+##                print 'yes'
                 break
             zone_inputs = ret_inputs
+            first_run = False
         return final_pol
 
 
@@ -293,16 +307,17 @@ def get_output_polarizations(zone, zone_dict, zone_sols, zone_inputs, n_cells):
                     indices[next_zone_key].append(j)
                 else:
                     indices[next_zone_key] = [j]
+
     out_pols = {}
     final_pol = set()
     # retrieve the polarizations of the zone specific indices from all cases
     for zone_input in zone_inputs:
         case = zone_sols[zone_input]
-        for an_out_pols in case['pstates']:
-            final_pol.add(tuple(an_out_pols[j] for j in output_indices))
+        for an_out_pol in case['pstates']:
+            final_pol.add(tuple(an_out_pol[j] for j in output_indices))
 
             for key in zone.outs:
-                out_pol = tuple(an_out_pols[j] for j in indices[key])
+                out_pol = tuple(an_out_pol[j] for j in indices[key])
                 if key in out_pols:
                     out_pols[key].append(out_pol)
                 else:

@@ -71,7 +71,7 @@ def qca_sim(fn, **kwargs):
 
     # set up zone formulation
     Gz = construct_zone_graph(cells, zones, J, feedback, show=False)
-    Zones = {key: Zone(key, Gz, J, cells) for key in Gz.nodes()}
+    Zones = {key: Zone(key, Gz, J, cells, feedback) for key in Gz.nodes()}
     # solve every zone for every possible set of inputs
     solution = Solution(Gz)
     for i in xrange(len(zones)):

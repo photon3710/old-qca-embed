@@ -325,7 +325,10 @@ def zone_cells(cells, spacing, show=False):
                     nshell = order.index(shell)
                     nzone = shell.index(n)
             if pshell > nshell:
-                feedback[(pshell,pzone)] =  (nshell,nzone)
+                if (pshell,pzone) in feedback:
+                    feedback[(pshell,pzone)].append((nshell,nzone))
+                else:
+                    feedback[(pshell,pzone)] =  [(nshell,nzone)]
 
     # reformat order list to contain zone indices
     form_func = lambda n: sub_ind[n[0]][n[1]]

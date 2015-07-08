@@ -288,7 +288,8 @@ def construct_zone_graph(cells, zones, J, feedback, show=False):
                 if np.any(J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]):
                     G.add_edge(k1, k2)
                 if k2 in feedback:
-                    G.add_edge(k2, feedback[k2])
+                    for fb in feedback[k2]:
+                        G.add_edge(k2, fb)
 
     if show:
         plt.figure('Zone-Graph')

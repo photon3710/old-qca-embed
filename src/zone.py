@@ -43,6 +43,7 @@ class Zone:
             Gz = args[1]
             J = args[2]
             cells = args[3]
+            feedback = args[4]
 
             self.key = zone     # for record keeping
 
@@ -81,6 +82,7 @@ class Zone:
             # store output zone keys
             for out_zone in Gz.successors(zone):
                 self.outs.append(out_zone)
+
         else:
             print 'Invalid arguments for Zone constructor'
             raise TypeError

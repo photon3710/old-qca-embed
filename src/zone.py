@@ -171,7 +171,6 @@ class Zone:
         outs = {}
 
         for case in cases:
-##            print case
             # compute driver contribution to h
             self.h_driver = .5*np.matrix(case[0])*self.C_driver
             # for each input zone, map pol key to state and get h contr.

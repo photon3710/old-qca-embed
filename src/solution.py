@@ -170,7 +170,7 @@ class Solution:
             zone_sols = self.sols[i]
             visited_zones.append(zone.key)
 
-            # check to see if all inputs have been set
+            # check to see if all inputs have been set (i.e. feedback loops)
             # if it hasn't revert to default polarization
             if sequence and first_run:
                 DEFAULT_POL = 1
@@ -192,10 +192,12 @@ class Solution:
                         zone_inputs[zone.key] = new_pols
 
 
-
+            # gets all possible output polarizations (to next zone or final)
+            # with regards to the possible inputs
             out_pols, final_pol[zone.key] = get_output_polarizations\
                 (zone, self.zone_dict, zone_sols, zone_inputs[zone.key], n_cells)
 
+            # removes defaulted inputs from zone_inputs
             if defaulted_inputs:
                 inputs[zone.key] = list(defaulted_inputs)
                 del zone_inputs[zone.key]
@@ -227,30 +229,20 @@ class Solution:
 
             # append to zone_inputs
             for key in zone.outs:
-##                print key,
                 next_zone = self.zone_dict[key]
                 complete_input = True
-                if first_run:
-                    for input_zone in next_zone.C_ins:
-                        if input_zone not in visited_zones:
-                            complete_input = False
+                for input_zone in next_zone.C_ins:
+                    if input_zone not in visited_zones:
+                        complete_input = False
 
                 if complete_input:
-##                    print zone_inputs
                     if key in zone_inputs:
-                        # ADD IT HERE - NOT ALL ZONES GO THROUGH HERE yET (2nd run thorugh)
-##                        print '?'
-##                        print zone_inputs[key]
-##                        print inputs[key]
-                        if set(zone_inputs[key]) == set(inputs[key]):
-                            pass
+                        if set(zone_inputs[key]) != set(inputs[key]):
+                            print 'writing over zone_inputs[%s] with %s'\
+                                %(str(key), str(inputs[key]))
+                            zone_inputs[key] = inputs[key]
                     else:
-##                        print '!'
-##                        print zone_inputs
                         zone_inputs[key] = list(inputs[key])
-##                else:
-##                    print ';'
-##                    print '%s --> %s' %(str(zone.key), str(next_zone.key))
 
             n_cells += zone.N+len(zone.fixed)+len(zone.drivers)
 
@@ -267,24 +259,18 @@ class Solution:
         zone_inputs = pol_seq
         first_run = True
 
-
-
+        # run input single until the inputs to zones remain const across runs
         while True:
-            print '+1'
             final_pol,ret_inputs = self.run_input_single(dict(zone_inputs),\
                 sequence=True, first_run=first_run)
 
-            for z in self.zones:
-                if z.key in zone_inputs:
-                    print '%s ==> %s' %(str(zone_inputs[z.key]), str(ret_inputs[z.key]))
-                else:
-                    print 'zone_inputs does not have %s'%(str(z.key))
-
+            # check returned inputs to previously returned inputs
             if ret_inputs == zone_inputs:
-##                print 'yes'
                 break
+
             zone_inputs = ret_inputs
             first_run = False
+
         return final_pol
 
 

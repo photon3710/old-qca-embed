@@ -238,8 +238,8 @@ class Solution:
                 if complete_input:
                     if key in zone_inputs:
                         if set(zone_inputs[key]) != set(inputs[key]):
-                            print 'writing over zone_inputs[%s] with %s'\
-                                %(str(key), str(inputs[key]))
+##                            print 'writing over zone_inputs[%s] with %s'\
+##                                %(str(key), str(inputs[key]))
                             zone_inputs[key] = inputs[key]
                     else:
                         zone_inputs[key] = list(inputs[key])
@@ -266,11 +266,11 @@ class Solution:
 
             # check returned inputs to previously returned inputs
             if ret_inputs == zone_inputs:
+                zone_inputs = ret_inputs
                 break
 
             zone_inputs = ret_inputs
             first_run = False
-
         return final_pol
 
 

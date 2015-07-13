@@ -92,7 +92,7 @@ def qca_sim(fn, **kwargs):
     out = {}    # dict of outputs lists for each input polarization list
     for pols in input_pols:
         input_pol = {(0,0): [(pols, )]}
-        out[pols] = solution.run_input(input_pol)
+        out[pols] = solution.run_input_sequence(input_pol)
 
     pprint(out)
 
@@ -103,7 +103,7 @@ if __name__ == '__main__':
         if False:
             fn = sys.argv[1]
         else:
-            fn = 'test_circuits/split'
+            fn = 'test_circuits/feedback'
     except:
         print('No filename entered...')
         sys.exit()

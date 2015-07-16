@@ -43,6 +43,7 @@ class Zone:
             Gz = args[1]
             J = args[2]
             cells = args[3]
+            feedback = args[4]
 
             self.key = zone     # for record keeping
 
@@ -81,6 +82,7 @@ class Zone:
             # store output zone keys
             for out_zone in Gz.successors(zone):
                 self.outs.append(out_zone)
+
         else:
             print 'Invalid arguments for Zone constructor'
             raise TypeError
@@ -169,7 +171,6 @@ class Zone:
         outs = {}
 
         for case in cases:
-##            print case
             # compute driver contribution to h
             self.h_driver = .5*np.matrix(case[0])*self.C_driver
             # for each input zone, map pol key to state and get h contr.

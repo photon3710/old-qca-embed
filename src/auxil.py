@@ -257,7 +257,7 @@ def is_inv(Js, DX, DY, i):
     return False
 
 
-def construct_zone_graph(cells, zones, J, show=False):
+def construct_zone_graph(cells, zones, J, feedback, show=False):
     '''Construct a DiGraph for all the zones with keys given by (n, m) where
     n is the shell index and m is the zone index within the shell'''
 
@@ -288,6 +288,9 @@ def construct_zone_graph(cells, zones, J, show=False):
                 k2 = (shell, j)
                 if np.any(J[G.node[k1]['inds'], :][:, G.node[k2]['inds']]):
                     G.add_edge(k1, k2)
+                if k2 in feedback:
+                    for fb in feedback[k2]:
+                        G.add_edge(k2, fb)
 
     if show:
         plt.figure('Zone-Graph')

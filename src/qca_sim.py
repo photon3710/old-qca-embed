@@ -50,7 +50,7 @@ def qca_sim(fn, **kwargs):
     '''Simulate all possible outcomes for each zone of a given qca circuit'''
 
     # parse QCADesigner file
-    cells, spacing, zones, J = parse_qca_file(fn, show=False)
+    cells, spacing, zones, J, feedback = parse_qca_file(fn, show=False)
 
     # check for specification of adjacency type
     if 'adj' in kwargs:
@@ -70,8 +70,8 @@ def qca_sim(fn, **kwargs):
         solver = SOLVERS['default']
 
     # set up zone formulation
-    Gz = construct_zone_graph(cells, zones, J, show=False)
-    Zones = {key: Zone(key, Gz, J, cells) for key in Gz.nodes()}
+    Gz = construct_zone_graph(cells, zones, J, feedback, show=False)
+    Zones = {key: Zone(key, Gz, J, cells, feedback) for key in Gz.nodes()}
     # solve every zone for every possible set of inputs
     solution = Solution(Gz)
     for i in xrange(len(zones)):
@@ -91,8 +91,8 @@ def qca_sim(fn, **kwargs):
     print 'start'
     out = {}    # dict of outputs lists for each input polarization list
     for pols in input_pols:
-        print pols
-        out[pols] = solution.run_input_single(pols)
+        input_pol = {(0,0): [(pols, )]}
+        out[pols] = solution.run_input_sequence(input_pol)
 
     pprint(out)
 
@@ -103,7 +103,7 @@ if __name__ == '__main__':
         if False:
             fn = sys.argv[1]
         else:
-            fn = 'test_circuits/split'
+            fn = 'test_circuits/feedback'
     except:
         print('No filename entered...')
         sys.exit()

@@ -13,6 +13,7 @@ import string_conversion as sc
 from zone import write_zones_to_xml, read_zones_from_xml
 import networkx as nx
 import numpy as np
+from pprint import pprint
 
 ZONE_EXT = '_zones'
 XML_EXT = '.xml'
@@ -151,21 +152,56 @@ class Solution:
                 input_indices.append(i)
         return input_indices
 
-    def run_input_single(self, pols):
+    def run_input_single(self, zone_inputs, sequence=False, first_run=True):
         '''Use the solution information to determine the ouput polarizations
         for a single set of input polarizations'''
 
-        zone_inputs = {(0,0): [(pols, )]}
+        # ASSUMES ZONES ARE IN ORDER
         inputs = {}
         final_pol = {}
         n_cells = 0
 
+        # only used for sequences
+        defaulted_inputs = None
+        visited_zones = []
+
         for i in range (len(self.zones)):
             zone = self.zones[i]
             zone_sols = self.sols[i]
+            visited_zones.append(zone.key)
 
+            # check to see if all inputs have been set (i.e. feedback loops)
+            # if it hasn't revert to default polarization
+            if sequence and first_run:
+                DEFAULT_POL = 1
+                for input_zone in zone.C_ins:
+                    if input_zone not in visited_zones:
+                        new_input = []
+                        for j in range(len(zone.C_ins[input_zone])):
+                            if any(zone.C_ins[input_zone][j]):
+                                new_input.append((DEFAULT_POL,))
+
+                        new_pols = []
+                        defaulted_inputs = list(inputs[zone.key])
+                        while inputs[zone.key]:
+                            old_pol = inputs[zone.key].pop()
+                            new_out_pol = list(old_pol)
+                            for out_pol in new_input:
+                                new_pols.append(tuple(new_out_pol + new_input))
+                        inputs[zone.key] = new_pols
+                        zone_inputs[zone.key] = new_pols
+
+
+            # gets all possible output polarizations (to next zone or final)
+            # with regards to the possible inputs
             out_pols, final_pol[zone.key] = get_output_polarizations\
                 (zone, self.zone_dict, zone_sols, zone_inputs[zone.key], n_cells)
+
+            # removes defaulted inputs from zone_inputs
+            if defaulted_inputs:
+                inputs[zone.key] = list(defaulted_inputs)
+                del zone_inputs[zone.key]
+                defaulted_inputs = None
 
             # remove the duplicate polarizations
             for key in out_pols:
@@ -193,20 +229,50 @@ class Solution:
 
             # append to zone_inputs
             for key in zone.outs:
-                if key in zone_inputs:
-                    zone_inputs[key].extend(inputs[key])
-                else:
-                    zone_inputs[key] = inputs[key]
+                next_zone = self.zone_dict[key]
+                complete_input = True
+                for input_zone in next_zone.C_ins:
+                    if input_zone not in visited_zones:
+                        complete_input = False
+
+                if complete_input:
+                    if key in zone_inputs:
+                        if set(zone_inputs[key]) != set(inputs[key]):
+##                            print 'writing over zone_inputs[%s] with %s'\
+##                                %(str(key), str(inputs[key]))
+                            zone_inputs[key] = inputs[key]
+                    else:
+                        zone_inputs[key] = list(inputs[key])
 
             n_cells += zone.N+len(zone.fixed)+len(zone.drivers)
 
-        return final_pol, zone_inputs
+        if sequence:
+            return final_pol, zone_inputs
+
+        return final_pol
 
     def run_input_sequence(self, pol_seq):
         '''Use the solution information to deterime the output sequence for a
         sequence of input sets (relevant for circuits with feedback'''
+        defaulted_inputs = {}
+        final_pol = None
+        zone_inputs = pol_seq
+        first_run = True
 
-        pass
+        # run input single until the inputs to zones remain const across runs
+        while True:
+            final_pol,ret_inputs = self.run_input_single(dict(zone_inputs),\
+                sequence=True, first_run=first_run)
+
+            # check returned inputs to previously returned inputs
+            if ret_inputs == zone_inputs:
+                zone_inputs = ret_inputs
+                break
+
+            zone_inputs = ret_inputs
+            first_run = False
+        return final_pol
+
 
 ### HELPER FUNCTIONS
 
@@ -227,16 +293,17 @@ def get_output_polarizations(zone, zone_dict, zone_sols, zone_inputs, n_cells):
                     indices[next_zone_key].append(j)
                 else:
                     indices[next_zone_key] = [j]
+
     out_pols = {}
     final_pol = set()
     # retrieve the polarizations of the zone specific indices from all cases
     for zone_input in zone_inputs:
         case = zone_sols[zone_input]
-        for an_out_pols in case['pstates']:
-            final_pol.add(tuple(an_out_pols[j] for j in output_indices))
+        for an_out_pol in case['pstates']:
+            final_pol.add(tuple(an_out_pol[j] for j in output_indices))
 
             for key in zone.outs:
-                out_pol = tuple(an_out_pols[j] for j in indices[key])
+                out_pol = tuple(an_out_pol[j] for j in indices[key])
                 if key in out_pols:
                     out_pols[key].append(out_pol)
                 else:

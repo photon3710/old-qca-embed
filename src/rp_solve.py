@@ -542,6 +542,9 @@ def rp_solve(h, J, gam, rec=False, get_tree=False):
     '''Solve ising spin-glass configuration using recursive partitioning
     with low-energy spectrum mode composition'''
 
+    # QUICK FIX
+    parts_tree = None
+
     if VERBOSE:
         print 'Detected problem size: %d...' % len(h)
 

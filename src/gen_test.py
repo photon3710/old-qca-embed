@@ -31,15 +31,17 @@ SHOW = False
 
 NUM_RUNS = 10
 NUM_TRIALS = 10
-TIMEOUT = 120    # seconds
-SIZE_RANGE = {'full': [0, 300],
-              'lim': [0, 320]}
+TIMEOUT = 300    # seconds
 
-M, N, L = 8, 8, 4
+MN = 14     # number of rows and columns of tiles
+M, N, L = MN, MN, 4
 A_size = M*N*L*2
 ndis = 0
 
-WRITE_DIR = '../sols/%dgen/%d/' % (2*M*N*L, ndis)
+SIZE_RANGE = {'full': [0, 400],
+              'lim': [0, 500]}
+
+WRITE_DIR = '../sols/%dgen/%d/' % (A_size, ndis)
 
 
 def getFname(direc):
@@ -64,7 +66,7 @@ def writeToFile(OUT, append=False, typ='dense'):
     write_op = 'a' if append else 'w'
 
     write_dir = WRITE_DIR + typ + '/'
-    print write_dir
+
     try:
         fname = getFname(write_dir)
         fp = open(fname, write_op)
@@ -78,10 +80,11 @@ def writeToFile(OUT, append=False, typ='dense'):
             print 'Failed...'
             return None
 
+    print 'Writing to: {0}'.format(fname)
     for key in OUT.keys():
         fp.write('<%s\>\n\n' % str(key))
         for d in OUT[key]:
-            fp.write('%d\t%.2f\t%d\t%.3f\t%.3f\n' %
+            fp.write('%d\t%.2f\t%d\t%.5f\t%.3f\n' %
                      (d[0], d[1], d[2], d[3], d[4]))
         fp.write('\n\n')
 

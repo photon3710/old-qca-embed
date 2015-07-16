@@ -14,6 +14,7 @@ import sys
 
 import networkx as nx
 import matplotlib.pyplot as plt
+from itertools import permutations
 
 ## PHYSICAL PARAMETERS
 eps0 = 8.85412e-12  # permittivity of free space
@@ -396,7 +397,7 @@ def generateHam(h, J, gamma=None):
     return H+upper
 
 
-#############################################################333
+################################################################
 ## FORMATTING FUNCTIONS
 
 
@@ -415,3 +416,222 @@ def coefToConn(h, J):
             D[j].append(i)
 
     return D
+
+
+################################################################
+## HASHING ALGORITHM
+
+
+def get_sub_problems(vals):
+    '''Return a dict of degenerate subproblems'''
+
+    counts = {key: [] for key in set(vals)}
+    for i in xrange(len(vals)):
+        counts[vals[i]].append(i)
+    return {key: counts[key] for key in counts if len(counts[key]) > 1}
+
+
+def sort_by_A(A):
+    ''' '''
+    n = A.shape[0]
+    vals, ninds = [list(x) for x in zip(*sorted(zip(A.tolist(), range(n))))]
+    vals = [tuple(x) for x in vals]
+
+    # get sub-problems of size >1
+    sub_probs = get_sub_problems(vals)
+    sub_probs = [sub_probs[x] for x in sorted(sub_probs)]
+
+    # set flag
+    flag = len(set(vals)) > 1
+
+    return ninds, sub_probs, flag
+
+
+def sort_by_B(B):
+    ''' '''
+
+    n, m = B.shape
+
+    if n > 2:
+        pass
+
+    # generate metrics for each row permutation
+    metrics = {}
+    for perm in permutations(range(n)):
+        metric = np.array(sorted(B[perm, :].T.tolist())).T.tolist()
+        metrics[perm] = metric
+
+    # sort permutations by metric
+    vals, perms = [list(x) for x in
+                   zip(*sorted([(metrics[p], p) for p in metrics]))]
+
+    # isolate lowest metric permutations (all of them)
+    cands = []  # candidate permutations
+    for v, p in zip(vals, perms):
+        if v > vals[0]:
+            break
+        else:
+            cands.append(list(p))
+
+    # pick first as ninds
+    ninds = cands[0]
+
+    return ninds, []
+
+
+def sub_seriate(M, pinds, inds):
+    '''Solve the sub-seriation problem in matrix M for problem indices pinds
+    and M seriation indices inds. M and inds are modified in place'''
+
+    m = len(pinds)
+
+    A = M[pinds, 0:pinds[0]]    # pre-matrix
+    B = M[pinds, pinds[-1]+1:]    # post-matrix
+
+    # each sorting approach returns the reordering of pinds, and
+    # the sub-problem indices (with respect to pinds)
+
+    # sort by A
+    if np.any(A):   # skip if A is empty or all zero
+        ninds, sub_probs, flag = sort_by_A(A)
+    else:
+        flag = False
+
+    if not flag and np.any(B):
+        ninds, sub_probs = sort_by_B(B)
+
+    # use ninds to reorder M and update inds
+    ninds = [pinds[i] for i in ninds]
+    M[pinds, :] = M[ninds, :]
+    M[:, pinds] = M[:, ninds]
+    ninds = [inds[i] for i in ninds]
+
+    for i in xrange(m):
+        inds[pinds[i]] = ninds[i]
+
+    # solve each sub-problem of >1 size
+    for sub_prob in sub_probs:
+        if len(sp) == 1:
+            continue
+        spinds = [pinds[i] for i in sub_prob]
+        sub_seriate(M, spinds, inds)
+
+
+def hash_mat(m):
+    '''return a hash value for the given matrix'''
+    # disable buffer writeability flag (make immutable)
+    m.flags.writeable = False
+    # generate hash value
+    h = hash(m.data)
+    # reet writeable flag
+    m.flags.writeable = True
+    return h
+
+
+def seriate(M, W=None):
+    '''Attempt to obtain a unique seriation of M with on-site immutables W.
+    There may be multiple index permutations which yield the same matrix. Only
+    one such permutation is returned. This method has not yet been robustly
+    check against a large range of circuits'''
+
+    # number of problem nodes
+    N = M.shape[0]
+
+    # map M values to positive integers
+    values = sorted(set(M.ravel().tolist()))
+    values.remove(0)
+
+    J = np.zeros(M.shape, dtype=int)
+
+    for i in xrange(len(values)):
+        J += (M == values[i])*(i+1)
+
+    # construct graph of J
+    G = nx.Graph(J)
+
+    # compute maximum eigenvalue of G
+    lmax = max(np.linalg.eigvalsh(J))
+
+    # scale factor for integer mapping
+    scale = max(1, int(np.max(np.abs(M))*1e6))
+
+    # Katz centrality
+    K = nx.katz_centrality_numpy(G, alpha=lmax, beta=1.0)
+    K = [int(scale*K[i]) for i in range(N)]
+
+    D = np.diag(M)
+
+    if W is None:
+        X = zip(K, D)
+    else:
+        X = zip(W, K, D)
+
+    vals, inds = [list(x) for x in zip(*sorted(zip(X, range(N))))]
+
+    # update J matrix
+    J = J[inds, :][:, inds]
+
+    # determine sub-problems
+    sub_probs = get_sub_problems(vals)
+
+    # solve each sub-problem
+    for key in sorted(sub_probs):
+        sub_seriate(J, sub_probs[key], inds)
+
+    return inds
+
+
+def hash_problem(h, J, g):
+    '''Assign a unique hash value for a given problem
+
+    inputs: h - 1d iterable of on-site energy terms
+            J - 2d iterable of coupling terms
+            g - 1d iterable of tunneling terms
+
+    outputs: val    - hash value
+             scale  - scale factor
+             inds   - index map
+    '''
+
+    # handle input formats
+    h = np.array(h).reshape(1, -1)
+
+    N = h.size
+
+    if not hasattr(g, '__len__'):
+        g = g*np.ones([1, N], dtype=float)
+    else:
+        g = np.array(g, dtype=float).reshape(1, -1)
+
+    try:
+        J = np.array(J).reshape(N, N)
+    except ValueError as e:
+        print('J is the wrong size/format...')
+        raise e
+
+    assert g.size == N, 'Invalid g size'
+    assert np.all(J == J.T), 'J either has diag elements or is not symmetric'
+
+    # extract scale factor and round for tollerance invariance
+    scale = np.max(np.abs(J))
+
+    assert scale > 0, 'No non-zero coupling terms'
+
+    h, J, g = [np.round(x/scale, 3) for x in [h, J, g]]
+
+    # formulate the problem for seriation
+    X = zip(h.tolist()[0], g.tolist()[0])
+
+    # run seriation
+    inds = seriate(J, W=X)
+
+    # reorder matrices
+    h = h[0, inds]
+    g = g[0, inds]
+    J = J[inds, :][:, inds]
+
+    # generate hash key
+    key = tuple([hash_mat(m) for m in [h, g, J]])
+    val = hash(key)
+
+    return val, scale, inds

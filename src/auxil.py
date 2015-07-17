@@ -15,6 +15,7 @@ import sys
 import networkx as nx
 import matplotlib.pyplot as plt
 from itertools import permutations
+from copy import deepcopy
 
 ## PHYSICAL PARAMETERS
 eps0 = 8.85412e-12  # permittivity of free space

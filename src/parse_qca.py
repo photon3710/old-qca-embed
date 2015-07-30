@@ -181,6 +181,10 @@ def proc_hierarchy(hier):
         cell['cm'] = CELL_MODES[cd['vars']['cell_options.mode']]
         cell['clk'] = int(cd['vars']['cell_options.clock'])
 
+        # just for show sol
+        cell['cx'] = float(cd['vars']['cell_options.cxCell'])
+        cell['cy'] = float(cd['vars']['cell_options.cyCell'])
+
         # position, first child will be the QCADesignObject
         design_object = cd['children'][0]
         cell['x'] = float(design_object['vars']['x'])
@@ -365,6 +369,9 @@ def reorder_cells(cells, zones, J, flipy=False):
     inv_map = {order[i]: i for i in order}
     label_func = lambda lst: sorted([inv_map[c] for c in lst])
     zones = [[label_func(zn) for zn in shell] for shell in zones]
+
+    for i in xrange(len(cells)):
+        cells[i]['number'] = i
 
     return cells, zones, J
 

@@ -11,10 +11,9 @@ from dense_placement.embed import denseEmbed, setChimeraSize, \
 from dense_placement.convert import convertToModels
 
 from build import createInv, createMAJ, createWire
-from auxil import generateAdjDict, adjToCoef, coefToConn, \
-    convertToNearestNeighbour
+from auxil import coefToConn, convert_to_lim_adjacency
 
-from parse_qca import parseQCAFile
+from parse_qca import parse_qca_file
 from random import random
 import sys
 
@@ -40,8 +39,11 @@ setQbitAdj(CF)
 
 # read from file or use default generator to build QCA circuit
 try:
-    fname = sys.argv[1]
-    cells, spacing = parseQCAFile(fname)
+
+    fn = 'test_circuits/feedback'#sys.argv[1]
+    cells, spacing, zones, J, feedback = parse_qca_file(fn, show=False)
+    J = convert_to_lim_adjacency(cells, spacing, J)
+
 except:
     print 'No input file detected... running default generator'
     if typ == 'wire':
@@ -55,12 +57,8 @@ except:
         print 'Unrecognized circuit type'
         sys.exit()
 
-
-adj, drivers = generateAdjDict(cells, spacing)
-if NEAREST:
-    adj = convertToNearestNeighbour(adj, drivers)
-h, J = adjToCoef(adj)
-source = coefToConn(h, J)
+source = coefToConn(J, J)
+print source
 
 if False:
     for i in source:
@@ -74,14 +72,15 @@ while j < NUM_SUCCESS:
     print '\n\nRUNNING TRIAL %d :: %d\n\n' % (i, j)
     i += 1
     try:
-        cell_map, paths = denseEmbed(source, write=False)
+        print 'start'
+        cell_map, paths = denseEmbed(source, write=True)
+        print 'end'
         n_ex = sum(map(lambda x: len(x)-2, paths.values()))
         print 'Extra qubits needed: %d' % n_ex
         j += 1
     except Exception as e:
-        #print e.message
-        pass
+        print "ERROR: " + e.message
 
 
 # run conversion method to minimize maximum model size
-models, max_model = convertToModels(paths, cell_map)
+##models, max_model = convertToModels(paths, cell_map)

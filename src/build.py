@@ -9,7 +9,7 @@
 #---------------------------------------------------------
 
 import numpy as np
-from parse_qca import ADJ_RADIUS
+ADJ_RADIUS = 1.5
 
 
 def JtoR(J, ds):

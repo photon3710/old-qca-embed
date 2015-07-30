@@ -135,7 +135,7 @@ def nodeCost(qbit):
         return _is_used[qbit]*(COST_BASE+_hist_cost[qbit])
 
 
-def expandPath():
+def expandPath(unavailable = []):
     '''Expand lowest cost path'''
     global _paths, _is_used, _curr_used, _qbitAdj
 
@@ -253,7 +253,6 @@ def resetQubits():
 def getPaths():
     '''Return paths'''
     return _allPaths
-
 
 def Routing(routes, reserved, writePath=''):
     '''Run routing algorithm. Find the lowest cost mutual paths for the list

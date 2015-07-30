@@ -19,6 +19,7 @@ import sys
 import os   # for avoiding file overwriting
 import re
 import itertools
+import time
 
 import routing as Routing
 
@@ -35,7 +36,7 @@ L = 4	  # number of qubits per half tile
 ### working variables
 
 # source variables
-_numAdj = {}        # number fo unplaced adjacent cells, source keyed
+_numAdj = {}        # number of unplaced adjacent cells, source keyed
 _numAdj2 = {}       # number of cells at a 2-distance
 _source = {}        # adjacency list for cell connectivity
 
@@ -80,7 +81,7 @@ VERBOSE = False
 WRITE = True
 
 WRITE_DIR = '../sols/temp/'
-WRITE_PATH = None
+WRITE_PATH = '../sols/testing/test'
 #ROUTE_PATH = 'routing' if WRITE else ''
 ROUTE_PATH = None
 PORT_PATH = '../bin/temp/port'
@@ -1053,7 +1054,9 @@ def checkSol():
     check = False
 
     if not all(map(lambda x: not x is None, _qubits.values())):
-        raise KeyError('Not all cell were assigned a qubit')
+        print _paths
+        print _qubits
+        raise KeyError('Not all cells were assigned a qubit')
 
     for c1 in _source:
         for c2 in _source[c1]:
@@ -1669,6 +1672,106 @@ def selectSeam(seam_dicts):
     return cands[int(random()*len(cands))]
 
 
+def removeLongPaths(used_qbits):
+
+    global _paths
+
+
+    allPaths = _paths.values()
+    longest = []
+    for path in allPaths:
+        if len(path) > len(longest):
+            longest = path
+
+    allPaths.remove(longest)
+    print '1'
+    reroute = [longest[0], longest[-1]]
+    print '2'
+    newPath = Routing.bestPath(reroute, used_qbits)
+    print '3'
+    allPaths.append(newPath)
+    print '4'
+    brokenPaths = []
+    print '5'
+    for path in allPaths:
+        for qbit in newPath:
+            if qbit in path:
+                brokenPaths.append([path[0], path[-1]])
+                allPaths.remove(path)
+    print '6'
+    for rt in brokenPaths:
+        reserved = used_qbits + allPaths
+        allPaths.append(Routing.bestPath(rt, reserved))
+    print '7'
+    pre_ex = sum(map(lambda x: len(x)-2, _paths.values()))
+    post_ex = sum(map(lambda x: len(x)-2, allPaths.values()))
+
+    print "change: %d" %(post_ex - pre_ex)
+    if post_ex < pre_ex:
+        _paths = newPath
+
+def get_wires():
+
+    wires = []
+    cells = _qubits.keys()
+    nodes = []
+
+    curr_c = None
+    for cell in cells:
+        if len(_source[cell]) > 2:
+            curr_c = cell
+            cells.remove(cell)
+            break
+
+    next_c = None
+    curr_wire = []
+    while cells:
+        curr_wire.append(curr_c)
+        print curr_wire
+
+        adj_cells = _source[curr_c]
+        if len(adj_cells) > 2:
+            nodes.append(curr_c)
+            if len(curr_wire) > 1:
+                wires.append(curr_wire)
+                curr_wire = [curr_c]
+
+        next_c = None
+        for cell in adj_cells:
+            if cell in cells:
+                next_c = cell
+                break
+
+        if next_c is None:
+            for cell in adj_cells:
+                if cell in nodes and cell not in curr_wire:
+                    curr_wire.append(cell)
+
+        if next_c is None:
+            for node in nodes:
+                for pcell in _source[node]:
+                    if pcell in cells:
+                        wires.append(curr_wire)
+                        curr_wire = [node]
+                        next_c = pcell
+                        break
+                if next_c:
+                    break
+
+        curr_c = next_c
+        cells.remove(next_c)
+
+    curr_wire.append(curr_c)
+    wires.append(curr_wire)
+
+    print "WIRES:",
+    print wires
+    print "NODES:",
+    print nodes
+
+
+
+
 #######################################################################
 #######################################################################
 ### MAIN ###
@@ -1690,6 +1793,9 @@ def denseEmbed(source, write=False):
     '''
 
     global _source, _cell_flags, _numAdj, _qbitAdj
+
+    ## TIMING FOR TESTING ##
+    start = time.time()
 
     ### INITIALIZE ###
 
@@ -1756,6 +1862,9 @@ def denseEmbed(source, write=False):
         doNow = sorted(doNext, key=lambda x: -_numAdj[x])
         doNext.clear()
 
+    get_wires()
+##    removeLongPaths(_qubits.values())
+
     checkSol()
     log('\n\n***Embedding complete\n\n')
     cell_map, paths = formatSol()
@@ -1784,7 +1893,11 @@ def denseEmbed(source, write=False):
                 writeSol(fp)
                 fp.close()
         except IOError as e:
-            #print e.message
+##            print e.message
             print 'Invalid filename: %s' % fname
+
+    ## JUST FOR TESTING
+    end = time.time()
+    print end-start
 
     return cell_map, paths

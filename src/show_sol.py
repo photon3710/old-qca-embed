@@ -10,7 +10,7 @@
 
 #import pylab as plt
 import Tkinter as tk
-from parse_qca import parseQCAFile, correctNumbering
+from parse_qca import parse_qca_file
 import sys
 
 
@@ -18,7 +18,7 @@ import sys
 ## GLOBALS
 
 VERBOSE = False
-USE_LABELS = False
+USE_LABELS = True
 
 # window parameters
 WIN_W = 1400
@@ -38,7 +38,7 @@ W_FACT = 20
 
 ## connectors
 CONN_THICK = 1            # relative to qubit thickness: factor
-CONN_CIRC_RAD = 1.3        # relative to CONN_THICK: factor
+CONN_CIRC_RAD = 1        # relative to CONN_THICK: factor
 CONN_CIRC_COLOR = 'black'
 CONN_COLOR = 'black'
 
@@ -51,10 +51,10 @@ QCA_COLORS = ['green', 'blue', 'red']    # [normal, output, driver]
 ROUTE_MARK = '_Route.txt'
 QBIT_SCALE = 1.
 
-QCA_W = .5*WIN_W
+QCA_W = 0.5*WIN_W
 QCA_H = WIN_H
 
-QCA_SCALE = 1.5
+QCA_SCALE = 1
 
 QBIT_W = WIN_W-QCA_W
 QBIT_H = WIN_H
@@ -69,9 +69,7 @@ class QCA_Frame(tk.Frame):
 
         # load qca file
 
-        cells, spacing = parseQCAFile(filename)
-
-        cells = correctNumbering(cells)
+        cells, spacing, zones, J, feedback = parse_qca_file(filename)
 
         # fix window size
 
@@ -176,11 +174,11 @@ class QCA_Frame(tk.Frame):
         y = self.region[3]-y
 
         # draw rectangle
-        canvas.create_rectangle(x, y, x+w, y-h, fill=QCA_COLORS[cell['type']])
+        canvas.create_rectangle(x, y, x+w, y-h, fill=QCA_COLORS[cell['cf']])
 
         # draw label: number of QCA cell
         if USE_LABELS:
-            canvas.create_text(x+.5*w, y-.5*h, text=str(n), font=('Arial', 14))
+            canvas.create_text(x+.5*w, y-.5*h, text=str(n), font=('Arial', 11))
 
     def drawCircuit(self, cells):
         '''draw all QCA cells'''
@@ -555,15 +553,18 @@ def main(fn, qca_fn):
 
 if __name__ == '__main__':
 
-    try:
-        fn = sys.argv[1]
-    except:
-        print('No file entered')
-        sys.exit()
+##    try:
+##        fn = sys.argv[1]
+##    except:
+##        print('No file entered')
+##        sys.exit()
+##
+##    try:
+##        qca_fn = sys.argv[2]
+##    except:
+##        qca_fn = None
 
-    try:
-        qca_fn = sys.argv[2]
-    except:
-        qca_fn = None
+    fn = '../sols/testing/test'
+    qca_fn = 'test_circuits/feedback'
 
     main(fn, qca_fn)

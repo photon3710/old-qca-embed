@@ -190,6 +190,7 @@ def convert_to_lim_adjacency(cells, spacing, J):
             if not (i in xovers and j in xovers):
                 if (i in invs or j in invs) and si < 2:
                     if dx**2 + dy**2 >= R_MAX**2:
+                        print 'it happened'
                         J[i][j] = 0
                         J[j][i] = 0
 
@@ -417,7 +418,7 @@ def coefToConn(h, J):
         d = list(J[i].nonzero()[0])
         for j in d:
             D[i].append(j)
-            D[j].append(i)
+            #D[j].append(i)
 
     return D
 
